@@ -9,6 +9,8 @@ import SpotDetail from '@quick/components/app/spot/SpotDetail.vue'
 import SpotConfirmDelete from '@quick/components/app/spot/ConfirmDelete.vue'
 import SpotUpdate from '@quick/components/app/spot/Update.vue'
 import WeightEditor from '@quick/components/app/weights/WeightEditor.vue'
+import FotograferList from '@quick/components/app/fotografer/List.vue'
+import FotograferCreate from '@quick/components/app/fotografer/Create.vue'
 
 const routes = [
   { path: '/', component: Landing },
@@ -19,6 +21,8 @@ const routes = [
     { path: 'spots/:id', component: SpotDetail, props: true },
     { path: 'spots/:id/confirm-delete', component: SpotConfirmDelete, props: true },
     { path: 'spots/:id/update', component: SpotUpdate, props: true },
+    { path: 'fotografer', component: FotograferList },
+    { path: 'fotografer/create', component: FotograferCreate },
     { 
       path: 'weights',
       component: WeightEditor

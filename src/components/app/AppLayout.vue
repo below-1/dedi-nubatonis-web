@@ -21,16 +21,7 @@
     <Navigation/>
   </nav>
   <div id="app-wrapper" class="flex flex-col min-h-screen ml-64">
-    <nav id="app-nav" class="h-24 flex items-center px-4 text-white">
-      <router-link to="/app">
-        <HomeIcon class="mr-4 w-8 h-8"/>
-      </router-link>
-      <div class="flex-grow">
-        <h1 class="text-2xl font-bold" style="line-height: 100%;">quick</h1>
-        <h2 class="text-gray-100">Penentuan Spot Prewedding</h2>
-      </div>
-    </nav>
-    <div class="flex-grow">
+    <div class="flex-grow flex flex-col">
       <router-view/>
     </div>
     <QuickFooter/>

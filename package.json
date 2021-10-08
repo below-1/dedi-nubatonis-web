@@ -7,10 +7,14 @@
     "serve": "vite preview"
   },
   "dependencies": {
+    "@apollo/client": "^3.4.16",
     "@heroicons/vue": "^1.0.4",
     "@oruga-ui/oruga-next": "^0.4.4",
+    "add": "^2.0.6",
     "axios": "^0.21.4",
     "daisyui": "^1.14.2",
+    "graphql": "^15.6.1",
+    "graphql-tag": "^2.12.5",
     "vue": "^3.2.6",
     "vue-inline-svg": "^3.1.0",
     "vue-router": "4"
