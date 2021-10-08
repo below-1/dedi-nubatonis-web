@@ -22,6 +22,7 @@
     background: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url(/landing.jpg);
     background-size: cover;
     background-position: 0% 100%;
+    background-attachment: fixed;
     height: 100vh;
   }
 
@@ -31,7 +32,7 @@
 </style>
 
 <template>
-  <section id="hero" class="w-screen flex flex-col text-white">
+  <section id="hero" class="flex flex-col text-white">
     <nav class="w-4/5 h-20 flex items-center mx-auto">
       <h1 class="flex-grow font-black text-2xl">quick photography</h1>
       <div class="w-3/5 flex items-center justify-between">
@@ -46,7 +47,7 @@
       <button class="btn">tentukan lokasi anda</button>
     </div>
   </section>
-  <section class="w-screen h-64">
+  <section class="h-64">
   </section>
   <!-- <div class="gradient bg-gradient-to-r from-purple-700 via-pink-600 to-red-600 text-white flex flex-col">
     <div class="h-24 container mx-auto flex items-center">

@@ -1,6 +1,7 @@
 <script setup>
   import { HomeIcon } from '@heroicons/vue/solid'
   import QuickFooter from '@quick/components/QuickFooter.vue'
+  import Navigation from './Navigation.vue'
 </script>
 
 <style>
@@ -10,7 +11,16 @@
 </style>
 
 <template>
-  <div id="app-wrapper" class="flex flex-col min-h-screen">
+  <nav class="w-64 fixed top-0 bottom-0 left-0 bg-gray-800">
+    <router-link 
+      to="/app"
+      class="block h-20 px-4 font-bold text-xl bg-indigo-900 flex items-center text-gray-100"
+    >
+      Quick Photography
+    </router-link>
+    <Navigation/>
+  </nav>
+  <div id="app-wrapper" class="flex flex-col min-h-screen ml-64">
     <nav id="app-nav" class="h-24 flex items-center px-4 text-white">
       <router-link to="/app">
         <HomeIcon class="mr-4 w-8 h-8"/>
