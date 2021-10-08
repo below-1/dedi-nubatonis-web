@@ -7,17 +7,21 @@ specifiers:
   '@vue/compiler-sfc': ^3.2.6
   autoprefixer: ^10.3.4
   axios: ^0.21.4
+  daisyui: ^1.14.2
   postcss: ^8.3.6
   tailwindcss: ^2.2.15
   vite: ^2.5.4
   vue: ^3.2.6
+  vue-inline-svg: ^3.1.0
   vue-router: '4'
 
 dependencies:
   '@heroicons/vue': 1.0.4_vue@3.2.11
   '@oruga-ui/oruga-next': 0.4.4_vue@3.2.11
   axios: 0.21.4
+  daisyui: 1.14.2
   vue: 3.2.11
+  vue-inline-svg: 3.1.0_vue@3.2.11
   vue-router: 4.0.11_vue@3.2.11
 
 devDependencies:
@@ -444,6 +448,10 @@ packages:
 
   /csstype/2.6.18:
     resolution: {integrity: sha512-RSU6Hyeg14am3Ah4VZEmeX8H7kLwEEirXe6aU2IPfKNvhXwTflK5HQRDNI0ypQXoqmm+QPyG2IaPuQE5zMwSIQ==}
+    dev: false
+
+  /daisyui/1.14.2:
+    resolution: {integrity: sha512-ER4k58JMUYF4EUDg3GgpaWPdvq6FYnMfetV2JXOEWAPNQVWs4jHtdhehFUdg7M1Lae9GGobb0roW3LuEmD/PuA==}
     dev: false
 
   /defined/1.0.0:
@@ -1229,6 +1237,14 @@ packages:
     optionalDependencies:
       fsevents: 2.3.2
     dev: true
+
+  /vue-inline-svg/3.1.0_vue@3.2.11:
+    resolution: {integrity: sha512-4FUu6q7l6jSL0sc8bs0lzV7MgWMsuSSQAJiQdKsxhGP9sNJfepCWiPfWxU1IPY1mf4LZjTtX93DAiEegWt6cTg==}
+    peerDependencies:
+      vue: ^3
+    dependencies:
+      vue: 3.2.11
+    dev: false
 
   /vue-router/4.0.11_vue@3.2.11:
     resolution: {integrity: sha512-sha6I8fx9HWtvTrFZfxZkiQQBpqSeT+UCwauYjkdOQYRvwsGwimlQQE2ayqUwuuXGzquFpCPoXzYKWlzL4OuXg==}
