@@ -5,6 +5,8 @@ import { router } from './router'
 import Oruga from '@oruga-ui/oruga-next'
 import '@oruga-ui/oruga-next/dist/oruga-full.css'
 
+import InlineSvg from 'vue-inline-svg'
+
 import QuickPageHeader from '@quick/components/QuickPageHeader.vue'
 import QuickField from '@quick/components/QuickField.vue'
 import QuickInput from '@quick/components/QuickInput.vue'
@@ -28,4 +30,5 @@ createApp(App)
   .component('q-action-bar', QuickActionBar)
   .component('q-loading-pane', QuickLoadingPane)
   .component('q-confirm-delete', QuickConfirmDelete)
+  .component('inline-svg', InlineSvg)
   .mount('#app')

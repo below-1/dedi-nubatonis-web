@@ -2,14 +2,23 @@
   import {
     reactive
   } from 'vue'
+  import useCreate from '@quick/compose/fotografer/create'
   import PageHeader from '@quick/components/app/PageHeader.vue'
   import PageContainer from '@quick/components/app/PageContainer.vue'
 
   const payload = reactive({
-    nama: '',
-    facebook: '',
-    instagram: ''
+    nama: 'dedi nubatonis',
+    description: '',
+    facebook: 'abcde',
+    instagram: 'abcde'
   })
+
+  const { mutate } = useCreate()
+  function createFotografer() {
+    mutate({
+      payload
+    })
+  }
 </script>
 
 <template>
@@ -18,7 +27,7 @@
     subtitle="Tambah fotografer"
   >
     <template #actions>
-      <button class="btn btn-primary">simpan data</button>
+      <button @click="createFotografer" class="btn btn-primary">simpan data</button>
     </template>
   </PageHeader>
   <PageContainer>
@@ -26,6 +35,9 @@
       <form class="form-control p-6 bg-white">
         <q-field label="Nama" class="mb-4">
           <q-input v-model="payload.nama" />
+        </q-field>
+        <q-field label="Info singkat fotografer" class="mb-4">
+          <textarea v-model="payload.description" class="w-full border border-gray-300"></textarea>
         </q-field>
         <q-field label="Facebook" class="mb-4">
           <q-input v-model="payload.facebook" />

@@ -5,6 +5,7 @@ specifiers:
   '@heroicons/vue': ^1.0.4
   '@oruga-ui/oruga-next': ^0.4.4
   '@vitejs/plugin-vue': ^1.6.1
+  '@vue/apollo-composable': ^4.0.0-alpha.15
   '@vue/compiler-sfc': ^3.2.6
   add: ^2.0.6
   autoprefixer: ^10.3.4
@@ -23,6 +24,7 @@ dependencies:
   '@apollo/client': 3.4.16_graphql@15.6.1
   '@heroicons/vue': 1.0.4_vue@3.2.11
   '@oruga-ui/oruga-next': 0.4.4_vue@3.2.11
+  '@vue/apollo-composable': 4.0.0-alpha.15_a93eca279f7010442cf2a5cc508bba1b
   add: 2.0.6
   axios: 0.21.4
   daisyui: 1.14.2
@@ -166,6 +168,24 @@ packages:
     dependencies:
       '@vue/compiler-sfc': 3.2.11
     dev: true
+
+  /@vue/apollo-composable/4.0.0-alpha.15_a93eca279f7010442cf2a5cc508bba1b:
+    resolution: {integrity: sha512-c/xk/po4nTcAnwIG+ZK0XFwY84BiKJquGnK2T+qolp0Saeb5amoTtHu6CEZ6Xd635otqUTY8SODOoFraoAttNQ==}
+    peerDependencies:
+      '@apollo/client': ^3.4.13
+      graphql: ^15.3.0
+      vue: ^2.6.0 || ^3.1.0
+    dependencies:
+      '@apollo/client': 3.4.16_graphql@15.6.1
+      graphql: 15.6.1
+      throttle-debounce: 3.0.1
+      ts-essentials: 8.1.0
+      vue: 3.2.11
+      vue-demi: 0.11.4_vue@3.2.11
+    transitivePeerDependencies:
+      - '@vue/composition-api'
+      - typescript
+    dev: false
 
   /@vue/compiler-core/3.2.11:
     resolution: {integrity: sha512-bcbsLx5XyQg8WDDEGwmpX0BfEfv82wIs9fWFelpyVhNRGMaABvUTalYINyfhVT+jOqNaD4JBhJiVKd/8TmsHWg==}
@@ -1326,6 +1346,11 @@ packages:
       - ts-node
     dev: true
 
+  /throttle-debounce/3.0.1:
+    resolution: {integrity: sha512-dTEWWNu6JmeVXY0ZYoPuH5cRIwc0MeGbJwah9KUNYSJwommQpCzTySTpEe8Gs1J23aeWEuAobe4Ag7EHVt/LOg==}
+    engines: {node: '>=10'}
+    dev: false
+
   /tmp/0.2.1:
     resolution: {integrity: sha512-76SUhtfqR2Ijn+xllcI5P1oyannHNHByD80W1q447gU3mp9G9PSpGdWmjUOHRDPiHYacIk66W7ubDTuPF3BEtQ==}
     engines: {node: '>=8.17.0'}
@@ -1343,6 +1368,12 @@ packages:
     dependencies:
       is-number: 7.0.0
     dev: true
+
+  /ts-essentials/8.1.0:
+    resolution: {integrity: sha512-34xALeQADWRYq9kbtprP4KdpTQ3v3BBIs/U4SpaP+C4++B8ijXY5NnILRJLchQVMzw7YBzKuGMUMrI9uT+ALVw==}
+    peerDependencies:
+      typescript: '>=4.0.0'
+    dev: false
 
   /ts-invariant/0.9.3:
     resolution: {integrity: sha512-HinBlTbFslQI0OHP07JLsSXPibSegec6r9ai5xxq/qHYCsIQbzpymLpDhAUsnXcSrDEcd0L62L8vsOEdzM0qlA==}
@@ -1376,6 +1407,21 @@ packages:
     optionalDependencies:
       fsevents: 2.3.2
     dev: true
+
+  /vue-demi/0.11.4_vue@3.2.11:
+    resolution: {integrity: sha512-/3xFwzSykLW2HiiLie43a+FFgNOcokbBJ+fzvFXd0r2T8MYohqvphUyDQ8lbAwzQ3Dlcrb1c9ykifGkhSIAk6A==}
+    engines: {node: '>=12'}
+    hasBin: true
+    requiresBuild: true
+    peerDependencies:
+      '@vue/composition-api': ^1.0.0-rc.1
+      vue: ^3.0.0-0 || ^2.6.0
+    peerDependenciesMeta:
+      '@vue/composition-api':
+        optional: true
+    dependencies:
+      vue: 3.2.11
+    dev: false
 
   /vue-inline-svg/3.1.0_vue@3.2.11:
     resolution: {integrity: sha512-4FUu6q7l6jSL0sc8bs0lzV7MgWMsuSSQAJiQdKsxhGP9sNJfepCWiPfWxU1IPY1mf4LZjTtX93DAiEegWt6cTg==}

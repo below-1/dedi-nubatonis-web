@@ -11,6 +11,7 @@ import SpotUpdate from '@quick/components/app/spot/Update.vue'
 import WeightEditor from '@quick/components/app/weights/WeightEditor.vue'
 import FotograferList from '@quick/components/app/fotografer/List.vue'
 import FotograferCreate from '@quick/components/app/fotografer/Create.vue'
+import FotograferEdit from '@quick/components/app/fotografer/Edit.vue'
 
 const routes = [
   { path: '/', component: Landing },
@@ -23,6 +24,9 @@ const routes = [
     { path: 'spots/:id/update', component: SpotUpdate, props: true },
     { path: 'fotografer', component: FotograferList },
     { path: 'fotografer/create', component: FotograferCreate },
+    { path: 'fotografer/:id/edit', component: FotograferEdit, 
+      props: route => ({ id: parseInt(route.params.id) })
+    },
     { 
       path: 'weights',
       component: WeightEditor
