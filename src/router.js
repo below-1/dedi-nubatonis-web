@@ -1,5 +1,7 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
-import HelloWorld from '@quick/components/HelloWorld.vue'
+
+import AuthSignup from '@quick/components/auth/Signup.vue'
+import AuthLogin from '@quick/components/auth/Login.vue'
 import Landing from '@quick/components/landing/Landing.vue'
 import AppLayout from '@quick/components/app/AppLayout.vue'
 import Home from '@quick/components/app/Home.vue'
@@ -17,6 +19,8 @@ import LokasiCreate from '@quick/components/app/lokasi/Create.vue'
 
 const routes = [
   { path: '/', component: Landing },
+  { path: '/auth/signup', component: AuthSignup },
+  { path: '/auth/login', component: AuthLogin },
   { path: '/app', component: AppLayout, children: [
     { path: '', component: Home },
     { path: 'spots', component: SpotList },

@@ -16,6 +16,7 @@ import QuickPadContainer from '@quick/components/QuickPadContainer.vue'
 import QuickActionBar from '@quick/components/QuickActionBar.vue'
 import QuickLoadingPane from '@quick/components/QuickLoadingPane.vue'
 import QuickConfirmDelete from '@quick/components/QuickConfirmDelete.vue'
+import QuickSpinner from '@quick/components/QuickSpinner.vue'
 
 createApp(App)
   .use(Oruga)
@@ -30,5 +31,6 @@ createApp(App)
   .component('q-action-bar', QuickActionBar)
   .component('q-loading-pane', QuickLoadingPane)
   .component('q-confirm-delete', QuickConfirmDelete)
+  .component('q-spinner', QuickSpinner)
   .component('inline-svg', InlineSvg)
   .mount('#app')
