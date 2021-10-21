@@ -1,4 +1,7 @@
 <script setup>
+  import {
+    MenuIcon
+  } from '@heroicons/vue/solid'
   import QuickFooter from '@quick/components/QuickFooter.vue'
   import LandingCollage from './LandingCollage.vue'
   import LandingLoginPane from './LandingLoginPane.vue'
@@ -15,15 +18,17 @@
     { path: '/#', label: 'tentang kami' },
     { path: '/#', label: 'produk' }
   ]
+
+  const weddings = [
+  ]
 </script>
 
 <style scoped>
   #hero {
-    background: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url(/landing.jpg);
+    background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.1)), url(/landing.jpg);
     background-size: cover;
     background-position: 0% 100%;
     background-attachment: fixed;
-    height: 100vh;
   }
 
   #hero > nav {
@@ -32,22 +37,28 @@
 </style>
 
 <template>
-  <section id="hero" class="flex flex-col text-white">
-    <nav class="w-4/5 h-20 flex items-center mx-auto">
-      <h1 class="flex-grow font-black text-2xl">quick photography</h1>
-      <div class="w-3/5 flex items-center justify-between">
-        <button class="hover:text-pink-400" v-for="menu in menus" :key="menu.label">
-          {{ menu.label }}
-        </button>
-      </div>
-    </nav>  
-    <div class="flex-grow flex flex-col items-center justify-center">
-      <h2 class="text-4xl font-thin">Applikasi SPK Penentuan Lokasi Prewedding</h2>
-      <h1 class="font-mono text-6xl font-black">Quick Photography</h1>
-      <button class="btn">tentukan lokasi anda</button>
+  <nav class="w-4/5 h-28 flex items-center mx-auto">
+    <h1 class="flex-grow font-black text-2xl"><span class="text-pink-600">quick</span> photography</h1>
+    <div class="hidden md:flex w-3/5 items-center justify-between">
+      <button class="hover:text-pink-400" v-for="menu in menus" :key="menu.label">
+        {{ menu.label }}
+      </button>
     </div>
-  </section>
-  <section class="h-64">
+    <button class="md:hidden p-2">
+      <MenuIcon class="w-6 h-6"/>
+    </button>
+  </nav>  
+  <div class="px-3 pb-20">
+    <section id="hero" class="flex flex-col text-white" style="height: calc(100vh - 7rem);">
+      <div class="flex-grow flex flex-col items-center justify-center">
+        <h1 class="font-mono text-6xl font-black text-center">Simpan Semua Memori</h1>
+        <button class="btn bg-pink-600">tentukan lokasi anda</button>
+      </div>
+    </section>
+  </div>
+  <section class="py-20 bg-gray-100">
+    <h2 class="text-xl text-yellow-400 tracking-widest uppercase text-center">Portfolio</h2>
+    <h3 class="font-bold text-3xl text-center">Pernikahan Terbaru</h3>
   </section>
   <!-- <div class="gradient bg-gradient-to-r from-purple-700 via-pink-600 to-red-600 text-white flex flex-col">
     <div class="h-24 container mx-auto flex items-center">

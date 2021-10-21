@@ -12,6 +12,8 @@ import WeightEditor from '@quick/components/app/weights/WeightEditor.vue'
 import FotograferList from '@quick/components/app/fotografer/List.vue'
 import FotograferCreate from '@quick/components/app/fotografer/Create.vue'
 import FotograferEdit from '@quick/components/app/fotografer/Edit.vue'
+import LokasiList from '@quick/components/app/lokasi/List.vue'
+import LokasiCreate from '@quick/components/app/lokasi/Create.vue'
 
 const routes = [
   { path: '/', component: Landing },
@@ -27,6 +29,8 @@ const routes = [
     { path: 'fotografer/:id/edit', component: FotograferEdit, 
       props: route => ({ id: parseInt(route.params.id) })
     },
+    { path: 'lokasi', component: LokasiList },
+    { path: 'lokasi/create', component: LokasiCreate },
     { 
       path: 'weights',
       component: WeightEditor
