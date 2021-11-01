@@ -3,9 +3,8 @@
     reactive
   } from 'vue'
   import { useRouter } from 'vue-router'
-  import { useMutation } from '@vue/apollo-composable'
+  import { usePOST } from '@quick/compose/axios'
   import Container from './Container.vue'
-  import { login as GQL_login } from '@quick/gql/auth'
 
   const payload = reactive({
     username: '',
@@ -13,21 +12,15 @@
   })
 
   const router = useRouter()
-
-  const { 
-    mutate: login, 
-    loading: loginLoading,
-    onDone
-  } = useMutation(GQL_login, () => ({
-    variables: {
-      payload
-    }
-  }))
-
-  onDone((result) => {
-    localStorage.setItem('quick.token', result.data.login)
-    router.push('/app')
+  const { post, status } = usePOST({
+    url: '/auth/login'
   })
+
+  async function login() {
+    const response = await post(payload)
+    localStorage.setItem('quick.token', response)
+    router.push('/app')
+  }
 </script>
 
 <template>
@@ -48,7 +41,7 @@
             @click="login"
             class="btn btn-primary"
           >
-            <template v-if="!loginLoading">
+            <template v-if="status == 'idle'">
               <span>login</span>
             </template>
             <q-spinner v-else class="w-4 h-4">

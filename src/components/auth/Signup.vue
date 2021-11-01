@@ -2,9 +2,9 @@
   import {
     reactive
   } from 'vue'
-  import { useMutation } from '@vue/apollo-composable'
   import Container from './Container.vue'
-  import { signup as GQL_signup } from '@quick/gql/auth'
+  import { usePOST } from '@quick/compose/axios'
+  import { useRouter } from 'vue-router'
 
   const payload = reactive({
     nama: '',
@@ -12,14 +12,16 @@
     password: ''
   })
 
-  const { 
-    mutate: signup, 
-    loading: signupLoading 
-  } = useMutation(GQL_signup, () => ({
-    variables: {
-      payload
-    }
-  }))
+  const { post, status } = usePOST({
+    url: '/auth/signup'
+  })
+
+  const router = useRouter()
+
+  async function signup() {
+    const response = await post(payload)
+    router.push('/auth/login')
+  }
 </script>
 
 <template>
@@ -43,7 +45,7 @@
             @click="signup"
             class="btn btn-primary"
           >
-            <template v-if="!signupLoading">
+            <template v-if="status == 'idle'">
               <span>signup</span>
             </template>
             <q-spinner v-else class="w-4 h-4">

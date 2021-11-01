@@ -12,11 +12,16 @@ export function usePOST(options) {
   }
 
   const status = ref('idle')
-  async function post(payload) {
+  let _onSuccess = null
+  async function post() {
     status.value = 'loading'
+    const payload = unref(options.payload)
     try {
       const response = await api.post(unref(options.url), payload)
       status.value = 'idle'
+      if (_onSuccess) {
+        _onSuccess(response.data)
+      }
       return response.data
     } catch (err) {
       console.log(err)
@@ -26,7 +31,10 @@ export function usePOST(options) {
 
   return {
     status,
-    post
+    post,
+    onSuccess: (f) => {
+      _onSuccess = f
+    }
   }
 }
 
@@ -38,16 +46,20 @@ export function useGET(options) {
     type: 'loading'
   })
   const status = ref('idle')
-  async function get(params) {
-    let realParams = params ? params : {}
+  let _onSuccess = null
+  async function get(getOptions) {
+    const params = unref(options.params)
     result.value = {
       type: 'loading'
     }
     try {
-      const response = await api.get(unref(options.url), { params: realParams })
+      const response = await api.get(unref(options.url), { params })
       result.value = {
         type: 'data',
-        ...response.data
+        data: response.data
+      }
+      if (_onSuccess) {
+        _onSuccess(response.data)
       }
       return response.data
     } catch (err) {
@@ -61,20 +73,19 @@ export function useGET(options) {
 
   return {
     get,
-    result
+    result,
+    onSuccess: (f) => {
+      _onSuccess = f
+    }
   }
 }
 
 export function useDELETE(options) {
-  if (!options.url) {
-    throw new Error(`url is undefined`)
-  }
-
   const status = ref('idle')
-  async function del(payload) {
+  async function del(url) {
     status.value = 'loading'
     try {
-      const response = await api.delete(unref(options.url))
+      const response = await api.delete(unref(url))
       status.value = 'idle'
       return response.data
     } catch (err) {
@@ -95,11 +106,19 @@ export function usePUT(options) {
   }
 
   const status = ref('idle')
-  async function put(payload) {
+  let _onSuccess = null
+  async function put() {
     status.value = 'loading'
     try {
+      let payload = unref(options.payload)
+      if (options.transformPayload) {
+        payload = options.transformPayload(payload)
+      }
       const response = await api.put(unref(options.url), payload)
       status.value = 'idle'
+      if (_onSuccess) {
+        _onSuccess(response.dat)
+      }
       return response.data
     } catch (err) {
       console.log(err)
@@ -109,6 +128,9 @@ export function usePUT(options) {
 
   return {
     status,
-    put
+    put,
+    onSuccess: (f) => {
+      _onSuccess = f
+    }
   }
 }

@@ -2,6 +2,7 @@ lockfileVersion: 5.3
 
 specifiers:
   '@apollo/client': ^3.4.16
+  '@headlessui/vue': ^1.4.1
   '@heroicons/vue': ^1.0.4
   '@oruga-ui/oruga-next': ^0.4.4
   '@vitejs/plugin-vue': ^1.6.1
@@ -14,7 +15,7 @@ specifiers:
   graphql: ^15.6.1
   graphql-tag: ^2.12.5
   postcss: ^8.3.6
-  tailwindcss: ^2.2.15
+  tailwindcss: ^2.2.19
   vite: ^2.5.4
   vue: ^3.2.6
   vue-inline-svg: ^3.1.0
@@ -22,6 +23,7 @@ specifiers:
 
 dependencies:
   '@apollo/client': 3.4.16_graphql@15.6.1
+  '@headlessui/vue': 1.4.1_vue@3.2.11
   '@heroicons/vue': 1.0.4_vue@3.2.11
   '@oruga-ui/oruga-next': 0.4.4_vue@3.2.11
   '@vue/apollo-composable': 4.0.0-alpha.15_a93eca279f7010442cf2a5cc508bba1b
@@ -39,7 +41,7 @@ devDependencies:
   '@vue/compiler-sfc': 3.2.11
   autoprefixer: 10.3.4_postcss@8.3.6
   postcss: 8.3.6
-  tailwindcss: 2.2.15_4dc2d3db2b138fb8fa7d5c7b0c803aba
+  tailwindcss: 2.2.19_4dc2d3db2b138fb8fa7d5c7b0c803aba
   vite: 2.5.8
 
 packages:
@@ -109,6 +111,15 @@ packages:
       graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0
     dependencies:
       graphql: 15.6.1
+    dev: false
+
+  /@headlessui/vue/1.4.1_vue@3.2.11:
+    resolution: {integrity: sha512-yLgpqxJGdGw+ylouZfxxuXXBqCWRZq+Jh1jb23cXQIuAngbisN5BlSO8pPpvKOvk6hXr8dx9bPohSn45cbIIHw==}
+    engines: {node: '>=10'}
+    peerDependencies:
+      vue: ^3.0.0
+    dependencies:
+      vue: 3.2.11
     dev: false
 
   /@heroicons/vue/1.0.4_vue@3.2.11:
@@ -1300,8 +1311,8 @@ packages:
     engines: {node: '>=0.10'}
     dev: false
 
-  /tailwindcss/2.2.15_4dc2d3db2b138fb8fa7d5c7b0c803aba:
-    resolution: {integrity: sha512-WgV41xTMbnSoTNMNnJvShQZ+8GmY86DmXTrCgnsveNZJdlybfwCItV8kAqjYmU49YiFr+ofzmT1JlAKajBZboQ==}
+  /tailwindcss/2.2.19_4dc2d3db2b138fb8fa7d5c7b0c803aba:
+    resolution: {integrity: sha512-6Ui7JSVtXadtTUo2NtkBBacobzWiQYVjYW0ZnKaP9S1ZCKQ0w7KVNz+YSDI/j7O7KCMHbOkz94ZMQhbT9pOqjw==}
     engines: {node: '>=12.13.0'}
     hasBin: true
     peerDependencies:

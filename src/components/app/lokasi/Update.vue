@@ -1,15 +1,18 @@
 <script setup>
   import {
-    reactive
+    reactive,
+    computed,
+    onMounted
   } from 'vue'
   import { useRouter } from 'vue-router'
-  import { useMutation } from '@vue/apollo-composable'
-  import { create as GQL_create } from '@quick/gql/lokasi'
+  import { useGET, usePUT } from '@quick/compose/axios'
   import PageHeader from '@quick/components/app/PageHeader.vue'
   import PageContainer from '@quick/components/app/PageContainer.vue'
-  import { usePOST } from '@quick/compose/axios'
 
   const router = useRouter()
+  const props = defineProps({
+    id: String
+  })
 
   const payload = reactive({
     nama: '',
@@ -20,19 +23,40 @@
     waktu: 0
   })
 
+  const url = computed(() => `/v1/api/locations/${props.id}`)
+
   const {
-    post: createLokasi,
-    status,
-    onSuccess
-  } = usePOST({
-    url: '/v1/api/locations',
-    payload
+    get: getInitialData,
+    result: initialData,
+    onSuccess: onSuccessInitialData
+  } = useGET({ url })
+
+  onSuccessInitialData((data) => {
+    const _initialData = {
+      ...data,
+      price: parseInt(data.price.$numberDecimal)
+    }
+    Object.assign(payload, _initialData)
   })
 
-  onSuccess(() => {
-    alert('sukses menambah data lokasi')
-    router.back()
+  const {
+    put: updateLocation,
+    result,
+    onSuccess: onSuccessUpdate
+  } = usePUT({ 
+    url,
+    payload,
+    transformPayload: p => ({
+      ...p,
+      price: `${p.price}`
+    })
   })
+
+  onSuccessUpdate(() => {
+    router.push('/app/lokasi')
+  })
+
+  onMounted(getInitialData)
 </script>
 
 <template>
@@ -42,9 +66,10 @@
   >
     <template #actions>
       <button
-        @click="createLokasi"
+        :disabled="initialData.type != 'data'"
+        @click="updateLocation"
         class="btn btn-primary"
-      >simpan data</button>
+      >Simpan</button>
     </template>
   </PageHeader>
   <PageContainer>
@@ -53,7 +78,7 @@
         <q-field label="Nama" class="mb-4">
           <q-input v-model="payload.nama" />
         </q-field>
-        <q-field label="Harga" class="mb-4">
+        <q-field label="Price" class="mb-4">
           <q-input type="number" v-model="payload.price" />
         </q-field>
         <q-field label="Latitude" class="mb-4">
