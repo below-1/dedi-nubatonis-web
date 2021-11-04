@@ -4,45 +4,35 @@
     reactive,
     computed
   } from 'vue'
-  import { useGET, usePOST } from '@quick/compose/axios'
+  import { useGET, usePUT } from '@quick/compose/axios'
+  import PageHeader from '@quick/components/app/PageHeader.vue'
+  import PageContainer from '@quick/components/app/PageContainer.vue'
 
-  const url = '/weights'
-  const {
-    result: getResult,
-    get
-  } = useGET({
-    url
+  const url = '/v1/api/settings/weights'
+  const { get: getInitialData } = useGET({ url })
+
+  const payload = reactive({
+    distance: 1,
+    numberOfSpots: 1,
+    price: 1,
+    transportation: 1,
+    theme: 1,
+    time: 1
   })
 
   const {
     status,
-    post
-  } = usePOST({
-    url
-  })
-
-  const payload = reactive({
-    c1: 1,
-    c2: 1,
-    c3: 1,
-    c4: 1,
-    c5: 1,
-    c6: 1
-  })
+    put
+  } = usePUT({ url, payload })
 
   async function loadInitialData() {
     try {
-      const data = await get()
+      const data = await getInitialData()
       if (!data) {
         console.log('data not found')
         return
       }
-      payload.c1 = data.c1
-      payload.c2 = data.c2
-      payload.c3 = data.c3
-      payload.c4 = data.c4
-      payload.c5 = data.c5
-      payload.c6 = data.c6
+      Object.assign(payload, data)
     } catch (err) {
       console.log(err)
     }
@@ -51,7 +41,7 @@
   const loading = computed(() => status.value == 'loading')
   async function onSubmit() {
     try {
-      await post(payload)
+      await put(payload)
     } catch (err) {
       console.log(err)
       alert('gagal mengubah bobot perangkingan')
@@ -69,33 +59,31 @@
     subtitle="Bobot yang digunakan pada perangkingan"
   >
   </q-action-bar>
-  <q-pad-container>
-    <form>
+  <PageContainer>
+    <div class="w-1/3 mx-auto my-2 bg-white border border-gray-200 rounded p-4">
       <q-field label="Jarak" class="mb-4">
-        <q-input type="number" :min="1" v-model="payload.c1"></q-input>
+        <q-input type="number" :min="1" v-model="payload.distance"></q-input>
       </q-field>
       <q-field label="Jumlah Spot" class="mb-4">
-        <q-input type="number" :min="1" v-model="payload.c2"></q-input>
+        <q-input type="number" :min="1" v-model="payload.numberOfSpots"></q-input>
       </q-field>
       <q-field label="Biaya" class="mb-4">
-        <q-input type="number" :min="1" v-model="payload.c3"></q-input>
+        <q-input type="number" :min="1" v-model="payload.price"></q-input>
       </q-field>
       <q-field label="Transportasi" class="mb-4">
-        <q-input type="number" :min="1" v-model="payload.c4"></q-input>
+        <q-input type="number" :min="1" v-model="payload.transportation"></q-input>
       </q-field>
       <q-field label="Tema" class="mb-4">
-        <q-input type="number" :min="1" v-model="payload.c5"></q-input>
+        <q-input type="number" :min="1" v-model="payload.theme"></q-input>
       </q-field>
       <q-field label="Waktu" class="mb-4">
-        <q-input type="number" :min="1" v-model="payload.c6"></q-input>
+        <q-input type="number" :min="1" v-model="payload.time"></q-input>
       </q-field>
-    </form>
-  </q-pad-container>
-  <div class="flex">
-    <q-form-btn 
-      @click="onSubmit" 
-      :loading="loading" 
-      label="Submit" 
-    />
-  </div>
+      <q-form-btn 
+        @click="onSubmit" 
+        :loading="loading" 
+        label="Submit" 
+      />
+    </div>
+  </PageContainer>
 </template>

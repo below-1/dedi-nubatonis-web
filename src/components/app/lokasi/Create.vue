@@ -17,7 +17,8 @@
     latitude: '',
     longitude: '',
     spots: 0,
-    waktu: 0
+    time: 0,
+    theme: 'indoor'
   })
 
   const {
@@ -68,6 +69,22 @@
         <q-field label="Waktu Sewa" class="mb-4">
           <q-input type="number" v-model="payload.waktu" />
         </q-field>
+
+        <q-field label="Tema" class="mb-4">
+          <div class="form-control">
+            <label class="cursor-pointer label">
+              <span class="label-text">Indoor</span> 
+              <input type="radio" checked="checked" class="radio radio-primary" value="">
+            </label>
+          </div> 
+          <div class="form-control">
+            <label class="cursor-pointer label">
+              <span class="label-text">Outdoor</span> 
+              <input type="radio" class="radio radio-primary" value="">
+            </label>
+          </div> 
+        </q-field>
+
       </form>
     </div>
   </PageContainer>

@@ -18,6 +18,7 @@
     class="px-2 py-4 bg-green-600 text-white text-center font-bold text-lg flex-grow flex justify-center"
     :class="buttonDynamicClass"
     :disabled="disabled"
+    type="button"
   >
     <span v-if="!loading">{{ label }}</span>
     <img v-else class="w-6 h-6" src="/svg-loaders/bars.svg"/>
