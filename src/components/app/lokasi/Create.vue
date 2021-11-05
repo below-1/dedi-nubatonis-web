@@ -74,13 +74,13 @@
           <div class="form-control">
             <label class="cursor-pointer label">
               <span class="label-text">Indoor</span> 
-              <input type="radio" checked="checked" class="radio radio-primary" value="">
+              <input type="radio" v-model="payload.theme" class="radio radio-primary" value="indoor">
             </label>
           </div> 
           <div class="form-control">
             <label class="cursor-pointer label">
               <span class="label-text">Outdoor</span> 
-              <input type="radio" class="radio radio-primary" value="">
+              <input type="radio" v-model="payload.theme" class="radio radio-primary" value="outdoor">
             </label>
           </div> 
         </q-field>

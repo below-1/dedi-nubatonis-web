@@ -19,8 +19,9 @@
     price: 0,
     latitude: '',
     longitude: '',
-    spots: 0,
-    waktu: 0
+    numberOfSpots: 0,
+    waktu: 0,
+    theme: 'indoor'
   })
 
   const url = computed(() => `/v1/api/locations/${props.id}`)
@@ -88,10 +89,24 @@
           <q-input v-model="payload.longitude" />
         </q-field>
         <q-field label="Jumlah Spot" class="mb-4">
-          <q-input type="number" v-model="payload.spots" />
+          <q-input type="number" v-model="payload.numberOfSpots" />
         </q-field>
         <q-field label="Waktu Sewa" class="mb-4">
           <q-input type="number" v-model="payload.waktu" />
+        </q-field>
+        <q-field label="Tema" class="mb-4">
+          <div class="form-control">
+            <label class="cursor-pointer label">
+              <span class="label-text">Indoor</span> 
+              <input type="radio" v-model="payload.theme" class="radio radio-primary" value="indoor">
+            </label>
+          </div> 
+          <div class="form-control">
+            <label class="cursor-pointer label">
+              <span class="label-text">Outdoor</span> 
+              <input type="radio" v-model="payload.theme" class="radio radio-primary" value="outdoor">
+            </label>
+          </div> 
         </q-field>
       </form>
     </div>

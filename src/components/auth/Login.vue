@@ -13,11 +13,12 @@
 
   const router = useRouter()
   const { post, status } = usePOST({
-    url: '/auth/login'
+    url: '/auth/login',
+    payload
   })
 
   async function login() {
-    const response = await post(payload)
+    const response = await post()
     localStorage.setItem('quick.token', response)
     router.push('/app')
   }
