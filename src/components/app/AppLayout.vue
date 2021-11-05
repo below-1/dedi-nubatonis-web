@@ -40,7 +40,7 @@
 </style>
 
 <template>
-  <nav class="w-64 fixed top-0 bottom-0 left-0 bg-gray-800">
+  <nav class="hidden md:block fixed md:w-64 top-0 bottom-0 left-0 bg-gray-800">
     <router-link 
       to="/app"
       class="block h-20 px-4 font-bold text-xl bg-indigo-900 flex items-center text-gray-100"
@@ -49,7 +49,7 @@
     </router-link>
     <Navigation/>
   </nav>
-  <div id="app-wrapper" class="flex flex-col min-h-screen ml-64">
+  <div id="app-wrapper" class="flex flex-col min-h-screen md:ml-64">
     <div class="flex-grow flex flex-col">
       <router-view/>
     </div>

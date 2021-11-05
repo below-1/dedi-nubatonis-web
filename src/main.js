@@ -15,6 +15,7 @@ import QuickFormButton from '@quick/components/QuickFormButton.vue'
 import QuickPadContainer from '@quick/components/QuickPadContainer.vue'
 import QuickActionBar from '@quick/components/QuickActionBar.vue'
 import QuickLoadingPane from '@quick/components/QuickLoadingPane.vue'
+import QuickLoading from '@quick/components/QuickLoading.vue'
 import QuickConfirmDelete from '@quick/components/QuickConfirmDelete.vue'
 import QuickSpinner from '@quick/components/QuickSpinner.vue'
 
@@ -30,6 +31,7 @@ createApp(App)
   .component('q-pad-container', QuickPadContainer)
   .component('q-action-bar', QuickActionBar)
   .component('q-loading-pane', QuickLoadingPane)
+  .component('q-loading', QuickLoading)
   .component('q-confirm-delete', QuickConfirmDelete)
   .component('q-spinner', QuickSpinner)
   .component('inline-svg', InlineSvg)

@@ -17,6 +17,7 @@ import FotograferEdit from '@quick/components/app/fotografer/Edit.vue'
 import LokasiList from '@quick/components/app/lokasi/List.vue'
 import LokasiCreate from '@quick/components/app/lokasi/Create.vue'
 import LokasiUpdate from '@quick/components/app/lokasi/Update.vue'
+import NewSession from '@quick/components/app/sessions/NewSession.vue'
 
 const routes = [
   { path: '/', component: Landing },
@@ -40,6 +41,10 @@ const routes = [
     { 
       path: 'weights',
       component: WeightEditor
+    },
+    { 
+      path: 'session/new',
+      component: NewSession
     }
   ]}
 ]
