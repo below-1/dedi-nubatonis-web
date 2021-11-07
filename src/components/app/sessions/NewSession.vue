@@ -13,6 +13,7 @@
   import PersonalForm from './PersonalForm.vue'
   import LocationForm from './LocationForm.vue'
   import Bobot from './Bobot.vue'
+  import useORS from '@quick/compose/ors'
 
   const position = ref([0, 0])
   const initDone = ref(false)
@@ -26,8 +27,12 @@
     url: '/v1/api/locations'
   })
   const activeItem = computed(() => formItems[itemIndex.value])
+  const {
+    calculateDistance
+  } = useORS()
 
   provide('position', position)
+  provide('calculateDistance', calculateDistance)
 
   onMounted(async () => {
     await get()

@@ -17,6 +17,7 @@
     "daisyui": "^1.14.2",
     "graphql": "^15.6.1",
     "graphql-tag": "^2.12.5",
+    "openrouteservice-js": "^0.1.29",
     "vue": "^3.2.6",
     "vue-inline-svg": "^3.1.0",
     "vue-router": "4"

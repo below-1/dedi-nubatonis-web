@@ -1,5 +1,12 @@
 <script setup>
-  import { ref, reactive, computed, onMounted } from 'vue'
+  import { 
+    ref, 
+    reactive, 
+    computed, 
+    onMounted,
+    inject,
+    watch
+  } from 'vue'
 
   const props = defineProps({
     location: Object,
@@ -11,14 +18,32 @@
     }
   })
   const loading = ref(true)
-
+  const position = inject('position')
+  const calculateDistance = inject('calculateDistance')
   const payload = reactive({
     location: {},
-    distance: 0,
+    distance: -1,
     transportation: 'bike',
   })
-
   const watchedTransportation = computed(() => payload.transportation)
+
+  async function onTransportationChange() {
+    const orsStartPos = [ ...position.value ].reverse()
+    const orsEndPos = [ props.location.longitude, props.location.latitude ]
+    console.log('start = ', orsStartPos)
+    console.log('end = ', orsEndPos)
+    loading.value = true
+    try {
+      const distance = await calculateDistance(orsStartPos, orsEndPos, watchedTransportation.value)
+      payload.distance = distance
+    } catch  (err) {
+      alert('gagal menghitung jarak')
+    } finally {
+      loading.value = false
+    }
+  }
+
+  watch(watchedTransportation, onTransportationChange)
 
   const options = [
     { value: 'bike', label: 'Motor' },
@@ -45,12 +70,14 @@
     </div>
     <div class="flex justify-center">
       <q-loading v-if="loading" size="12" class="py-4" />
-      <button 
-        v-else
-        class="btn btn-primary my-12"
-      >
-        Selanjutnya
-      </button>
+      <div v-else>
+        <h3>Jarak menuju lokasi: {{ payload.distance }}</h3>
+        <button 
+          class="btn btn-primary my-12"
+        >
+          Selanjutnya
+        </button>
+      </div>
     </div>
   </section>
 </template>
