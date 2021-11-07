@@ -2,28 +2,46 @@
   import {
     reactive
   } from 'vue'
+  import { useRouter } from 'vue-router'
   import { usePOST } from '@quick/compose/axios'
   import useCreate from '@quick/compose/fotografer/create'
   import PageHeader from '@quick/components/app/PageHeader.vue'
   import PageContainer from '@quick/components/app/PageContainer.vue'
+  import imgToBase64 from '@quick/serv/imgToBase64'
+
+  const router = useRouter()
 
   const payload = reactive({
     nama: 'dedi nubatonis',
     description: '',
+    summary: '',
     facebook: 'abcde',
-    instagram: 'abcde'
+    instagram: 'abcde',
+    avatar: ''
   })
 
-  const {} = usePOST({
-    url: '/v1/api/photographers'
-  })
-
-  const { mutate } = useCreate()
-  function createFotografer() {
-    mutate({
-      payload
-    })
+  async function avatarChangeHandler(event) {
+    let files = event.target.files || event.dataTransfer.files;
+    if (!files.length) {
+      return;
+    }
+    const base64 = await imgToBase64( files[0] )
+    payload.avatar = base64
   }
+
+  const {
+    post,
+    status,
+    onSuccess
+  } = usePOST({
+    url: '/v1/api/photographers',
+    payload
+  })
+
+  onSuccess(() => {
+    alert('sukses menambah data fotografer')
+    router.back()
+  })
 </script>
 
 <template>
@@ -32,7 +50,7 @@
     subtitle="Tambah fotografer"
   >
     <template #actions>
-      <button @click="createFotografer" class="btn btn-primary">simpan data</button>
+      <button @click="post" class="btn btn-primary">simpan data</button>
     </template>
   </PageHeader>
   <PageContainer>
@@ -42,13 +60,16 @@
           <q-input v-model="payload.nama" />
         </q-field>
         <q-field label="Info singkat fotografer" class="mb-4">
-          <textarea v-model="payload.description" class="w-full border border-gray-300"></textarea>
+          <textarea v-model="payload.summary" class="w-full border border-gray-300"></textarea>
         </q-field>
         <q-field label="Facebook" class="mb-4">
           <q-input v-model="payload.facebook" />
         </q-field>
         <q-field label="Instagram" class="mb-4">
           <q-input v-model="payload.instagram" />
+        </q-field>
+        <q-field label="Avatar" class="mb-4">
+          <file-input @change="avatarChangeHandler" />
         </q-field>
       </form>
     </div>

@@ -8,6 +8,7 @@
   import { useGET, usePUT } from '@quick/compose/axios'
   import PageHeader from '@quick/components/app/PageHeader.vue'
   import PageContainer from '@quick/components/app/PageContainer.vue'
+  import imgToBase64 from '@quick/serv/imgToBase64'
 
   const router = useRouter()
   const props = defineProps({
@@ -21,8 +22,18 @@
     longitude: '',
     numberOfSpots: 0,
     waktu: 0,
-    theme: 'indoor'
+    theme: 'indoor',
+    avatar: ''
   })
+
+  async function avatarChangeHandler(event) {
+    let files = event.target.files || event.dataTransfer.files;
+    if (!files.length) {
+      return;
+    }
+    const base64 = await imgToBase64( files[0] )
+    payload.avatar = base64
+  }
 
   const url = computed(() => `/v1/api/locations/${props.id}`)
 
@@ -107,6 +118,9 @@
               <input type="radio" v-model="payload.theme" class="radio radio-primary" value="outdoor">
             </label>
           </div> 
+        </q-field>
+        <q-field label="Avatar" class="mb-4">
+          <file-input @change="avatarChangeHandler" />
         </q-field>
       </form>
     </div>

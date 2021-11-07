@@ -18,6 +18,7 @@ import QuickLoadingPane from '@quick/components/QuickLoadingPane.vue'
 import QuickLoading from '@quick/components/QuickLoading.vue'
 import QuickConfirmDelete from '@quick/components/QuickConfirmDelete.vue'
 import QuickSpinner from '@quick/components/QuickSpinner.vue'
+import FileInput from '@quick/components/FileInput.vue'
 
 createApp(App)
   .use(Oruga)
@@ -34,5 +35,6 @@ createApp(App)
   .component('q-loading', QuickLoading)
   .component('q-confirm-delete', QuickConfirmDelete)
   .component('q-spinner', QuickSpinner)
+  .component('file-input', FileInput)
   .component('inline-svg', InlineSvg)
   .mount('#app')

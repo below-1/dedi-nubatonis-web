@@ -2,54 +2,70 @@
   import {
     reactive,
     onMounted,
-    watch
+    watch,
+    computed
   } from 'vue'
-  import { 
-    useQuery,
-    useResult,
-    useMutation
-  } from '@vue/apollo-composable'
-  import { 
-    getOne as GQL_getOne, 
-    update as GQL_update 
-  } from '@quick/gql/fotografer'
-  import useCreate from '@quick/compose/fotografer/create'
+  import {
+    useGET,
+    usePUT
+  } from '@quick/compose/axios'
+  import { useRouter } from 'vue-router'
   import PageHeader from '@quick/components/app/PageHeader.vue'
   import PageContainer from '@quick/components/app/PageContainer.vue'
+  import imgToBase64 from '@quick/serv/imgToBase64'
+
+  const router = useRouter()
 
   const props = defineProps({
-    id: Number
+    id: [Number, String]
   })
 
   const payload = reactive({
     nama: '',
     description: '',
     facebook: 'abcde',
-    instagram: 'abcde'
+    instagram: 'abcde',
+    avatar: ''
   })
 
-  const { 
-    result: getResult, 
-    onResult: onGetResult
-  } = useQuery(GQL_getOne, props, {
-    fetchPolicy: 'network-only'
-  })
-  const photographerData = useResult(getResult, data => data.photographer)
-
-  onGetResult(result => {
-    console.log('photographerData')
-    console.log(photographerData)
-    Object.assign(payload, { ...photographerData.value })
-  })
-
-  // watch(photographerData, (data) => {
-  //   console.log('data')
-  //   console.log(data)
-  // })
-
-  // const { mutate } = useCreate()
-  function createFotografer() {
+  async function avatarChangeHandler(event) {
+    let files = event.target.files || event.dataTransfer.files;
+    if (!files.length) {
+      return;
+    }
+    const base64 = await imgToBase64( files[0] )
+    payload.avatar = base64
   }
+
+  const url = computed(() => `/v1/api/photographers/${props.id}`)
+  const {
+    get: getInitialData,
+    onSuccess: onSuccessGetInitialData
+  } = useGET({
+    url
+  })
+
+  onSuccessGetInitialData((data) => {
+    Object.assign(payload, data)
+  })
+
+  const {
+    status,
+    put: updatePhotographer,
+    onSuccess: onSuccessUpdate
+  } = usePUT({
+    url,
+    payload
+  })
+
+  onSuccessUpdate(() => {
+    alert('sukses mengubah data fotografer')
+    router.back()
+  })
+
+  onMounted(() => {
+    getInitialData()
+  })
 </script>
 
 <template>
@@ -58,7 +74,7 @@
     subtitle="Tambah fotografer"
   >
     <template #actions>
-      <button @click="createFotografer" class="btn btn-primary">simpan data</button>
+      <button @click="updatePhotographer" class="btn btn-primary">simpan data</button>
     </template>
   </PageHeader>
   <PageContainer>
@@ -75,6 +91,9 @@
         </q-field>
         <q-field label="Instagram" class="mb-4">
           <q-input v-model="payload.instagram" />
+        </q-field>
+        <q-field label="Avatar" class="mb-4">
+          <file-input @change="avatarChangeHandler" />
         </q-field>
       </form>
     </div>

@@ -42,6 +42,7 @@ export function useGET(options) {
   if (!options.url) {
     throw new Error(`url is undefined`)
   }
+  console.log(options.url.value)
   const result = ref({
     type: 'loading'
   })

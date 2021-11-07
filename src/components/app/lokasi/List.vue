@@ -72,7 +72,7 @@
         <li class="flex py-4 px-6 bg-white border-b border-gray-200">
           <img 
             class="w-20 h-20 mr-4" 
-            :src="`https://i.pravatar.cc/150?img=${i + 1}`" />
+            :src="item.avatar" />
           <div class="flex-grow">
             <div class="text-gray-800 capitalize text-xl">{{ item.nama }}</div>
             <!-- <div class="text-sm md:w-3/5">IDR {{ parseInt(item.price.$numberDecimal).toLocaleString() }}</div> -->

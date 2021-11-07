@@ -11,7 +11,6 @@
     { path: '/app/fotografer', label: 'Fotografer', icon: CameraIcon },
     { path: '/app/lokasi', label: 'Lokasi', icon: LocationMarkerIcon },
     { path: '/app/user', label: 'User', icon: UserIcon },
-    { path: '/app/session', label: 'Session', icon: DocumentIcon },
     { path: '/app/weights', label: 'Bobot', icon: DocumentIcon }
   ]
 </script>

@@ -10,6 +10,7 @@
   import Hero from './Hero.vue'
   import About from './About.vue'
   import Fotografer from './Fotografer.vue'
+  import NewSession from '@quick/components/app/sessions/NewSession.vue'
   import Lokasi from './Lokasi.vue'
 
   const showMobileMenu = ref(false)
@@ -55,9 +56,7 @@
       {{ menu.label }}
     </button>
   </nav>
-  <Hero/>
-  <Lokasi/>
-  <Fotografer/>
+  <NewSession />
   <About />
   <QuickFooter/>
   <div class="py-6 bg-gray-100 text-center">

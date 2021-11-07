@@ -3,6 +3,7 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 import AuthSignup from '@quick/components/auth/Signup.vue'
 import AuthLogin from '@quick/components/auth/Login.vue'
 import Landing from '@quick/components/landing/Landing.vue'
+import LandingPreferensi from '@quick/components/landing/Preferensi.vue'
 import AppLayout from '@quick/components/app/AppLayout.vue'
 import Home from '@quick/components/app/Home.vue'
 import SpotList from '@quick/components/app/spot/List.vue'
@@ -21,6 +22,7 @@ import NewSession from '@quick/components/app/sessions/NewSession.vue'
 
 const routes = [
   { path: '/', component: Landing },
+  { path: '/pref', component: LandingPreferensi },
   { path: '/auth/signup', component: AuthSignup },
   { path: '/auth/login', component: AuthLogin },
   { path: '/app', component: AppLayout, children: [
@@ -32,9 +34,7 @@ const routes = [
     { path: 'spots/:id/update', component: SpotUpdate, props: true },
     { path: 'fotografer', component: FotograferList },
     { path: 'fotografer/create', component: FotograferCreate },
-    { path: 'fotografer/:id/edit', component: FotograferEdit, 
-      props: route => ({ id: parseInt(route.params.id) })
-    },
+    { path: 'fotografer/:id/edit', component: FotograferEdit, props: true },
     { path: 'lokasi', component: LokasiList },
     { path: 'lokasi/create', component: LokasiCreate },
     { path: 'lokasi/:id/edit', component: LokasiUpdate, props: true },

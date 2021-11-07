@@ -6,6 +6,12 @@
   provide(DefaultApolloClient, apollo)
 </script>
 
+<style>
+html {
+  scroll-behavior: smooth;
+}
+</style>
+
 <template>
   <div id="main">
     <router-view/>
