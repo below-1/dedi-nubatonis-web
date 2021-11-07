@@ -2,6 +2,7 @@
   import {
     reactive
   } from 'vue'
+  import { usePOST } from '@quick/compose/axios'
   import useCreate from '@quick/compose/fotografer/create'
   import PageHeader from '@quick/components/app/PageHeader.vue'
   import PageContainer from '@quick/components/app/PageContainer.vue'
@@ -11,6 +12,10 @@
     description: '',
     facebook: 'abcde',
     instagram: 'abcde'
+  })
+
+  const {} = usePOST({
+    url: '/v1/api/photographers'
   })
 
   const { mutate } = useCreate()

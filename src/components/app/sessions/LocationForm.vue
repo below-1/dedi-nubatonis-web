@@ -17,6 +17,11 @@
       default: false
     }
   })
+  const emit  = defineEmits([
+    'done',
+    'back'
+  ])
+  const initialLoading = ref(true)
   const loading = ref(true)
   const position = inject('position')
   const calculateDistance = inject('calculateDistance')
@@ -26,8 +31,9 @@
     transportation: 'bike',
   })
   const watchedTransportation = computed(() => payload.transportation)
+  const watchedLocation = computed(() => props.location)
 
-  async function onTransportationChange() {
+  async function getDistance() {
     const orsStartPos = [ ...position.value ].reverse()
     const orsEndPos = [ props.location.longitude, props.location.latitude ]
     console.log('start = ', orsStartPos)
@@ -43,7 +49,39 @@
     }
   }
 
+  async function onLocationChange() {
+    getDistance()
+  }
+
+  async function onTransportationChange() {
+    getDistance()
+  }
+
+  function fakeLoading() {
+    initialLoading.value = true
+    setTimeout(() => {
+      initialLoading.value = false
+    }, 1000)
+  }
+
+  function onDone() {
+    emit('done', {
+      payload: {          
+        location: props.location,
+        distance: payload.distance,
+        transportation: payload.transportation,
+      },
+      type: 'location'
+    })
+    fakeLoading()
+  }
+
   watch(watchedTransportation, onTransportationChange)
+  watch(watchedLocation, onLocationChange)
+  onMounted(() => {
+    fakeLoading()
+    getDistance()
+  })
 
   const options = [
     { value: 'bike', label: 'Motor' },
@@ -54,7 +92,8 @@
 
 <template>
   <!-- <q-loading size="12" class="flex-grow" /> -->
-  <section>
+  <q-loading v-if="initialLoading" size="12" class="py-4" />
+  <section v-else>
     <h2 class="text-3xl text-gray-700 font-bold mb-4">{{ location.nama }}</h2>
     <div>
       <label class="block text-2xl text-gray-500 mb-4">Pilih Mode Transportasi...</label>
@@ -74,8 +113,15 @@
         <h3>Jarak menuju lokasi: {{ payload.distance }}</h3>
         <button 
           class="btn btn-primary my-12"
+          @click="onDone"
         >
           Selanjutnya
+        </button>
+        <button 
+          @click="$emit('back')"
+          class="btn btn-ghost my-12"
+        >
+          Kembali
         </button>
       </div>
     </div>

@@ -6,6 +6,10 @@
   } from 'vue'
 
   const props = defineProps({
+    label: {
+      type: String,
+      default: 'Anda'
+    },
     selected: {
       type: Array,
       default: []
@@ -60,7 +64,7 @@
 </script>
 
 <template>
-  <h1 class="text-2xl text-gray-500 text-center mb-12">Pilih 3 Kategori Yang Diutamakan</h1>
+  <h1 class="text-2xl text-gray-500 text-center mb-12">Pilih 3 Kategori Yang {{ label }} Utamakan</h1>
   <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
     <button 
       v-for="item, index in bobots"

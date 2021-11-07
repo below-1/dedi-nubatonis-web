@@ -5,6 +5,10 @@
   } from 'vue'
 
   const props = defineProps({
+    label: {
+      type: String,
+      default: 'Anda'
+    },
     name: String,
     gender: String,
     back: {
@@ -41,7 +45,7 @@
 
 <template>
   <div>
-    <label class="text-2xl text-gray-500 mb-2">Nama Anda...</label>
+    <label class="text-2xl text-gray-500 mb-2">Nama {{ label }}...</label>
     <input 
       v-model="payload.name"
       type="text" 

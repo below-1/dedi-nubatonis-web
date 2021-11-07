@@ -16,7 +16,7 @@
     price: 0,
     latitude: '',
     longitude: '',
-    spots: 0,
+    numberOfSpots: 0,
     time: 0,
     theme: 'indoor'
   })
@@ -64,7 +64,7 @@
           <q-input v-model="payload.longitude" />
         </q-field>
         <q-field label="Jumlah Spot" class="mb-4">
-          <q-input type="number" v-model="payload.spots" />
+          <q-input type="number" v-model="payload.numberOfSpots" />
         </q-field>
         <q-field label="Waktu Sewa" class="mb-4">
           <q-input type="number" v-model="payload.waktu" />
