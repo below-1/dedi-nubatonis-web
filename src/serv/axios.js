@@ -1,7 +1,7 @@
 import { create } from 'axios'
 
 export const api = create({
-  baseURL: 'http://localhost:5000'
+  baseURL: 'https://quick-photography-kupang.herokuapp.com/'
 })
 
 api.interceptors.request.use(
