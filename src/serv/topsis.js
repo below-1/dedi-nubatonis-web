@@ -5,15 +5,15 @@ export function transformRow(row) {
 	else if (row[0] >= 7 && row[0] < 11) { result.push(2); }
 	else { result.push(1) }
 
-	if (row[1] >= 10 && row[1] < 12) { result.push(4) }
+	if (row[1] >= 10) { result.push(4) }
 	else if (row[1] >= 8 && row[1] < 10) { result.push(3) }
 	else if (row[1] >= 6 && row[1] < 8) { result.push(2) }
 	else { result.push(1) }
 
-	if (row[2] > 1000000) { result.push(4) }
-	else if (row[2] >= 700000 && row[2] < 1000000) { result.push(3) }
-	else if (row[2] >= 400000 && row[2] < 700000) { result.push(2) }
-	else { result.push(1) }
+	if (row[2] > 1000000) { result.push(1) }
+	else if (row[2] >= 700000 && row[2] < 1000000) { result.push(2) }
+	else if (row[2] >= 400000 && row[2] < 700000) { result.push(3) }
+	else { result.push(4) }
 
 	if (row[3] == 'car') { result.push(3) }
 	else if (row[3] == 'rental-car') { result.push(2) }
@@ -22,8 +22,9 @@ export function transformRow(row) {
 	if (row[4] == 'outdoor') { result.push(4) }
 	else { result.push(2) }
 
-	if (row[5] < 12) { result.push(4) }
-	else { result.push(2) }
+	result.push(row[5])
+	// if (row[5] < 12) { result.push(4) }
+	// else { result.push(2) }
 
 	return result
 }
@@ -35,8 +36,13 @@ export function topsis({ data, weights }) {
 	});
 	const C = [ 0, 0, 0, 0, 0, 0 ]
 	for (let i = 0; i < 6; i++) {
-		C[i] = Math.sqrt(temp_1.map(row => row[i])
-			.reduce((curr, prev) => curr + prev, 0));
+		C[i] = Math.sqrt(
+			Math.pow(
+				temp_1.map(row => row[i])
+					.reduce((curr, prev) => curr + prev, 0),
+				2
+			)
+		);
 	}
 
 	const M = data.map(row =>
@@ -46,6 +52,8 @@ export function topsis({ data, weights }) {
 	const MW = M.map(row =>
 		row.map((x, j) => x * weights[j])
 	)
+	console.log('MW')
+	console.log(MW)
 
 
 	const IDEAL = {

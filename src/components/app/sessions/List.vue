@@ -23,7 +23,7 @@
 
   async function removeItem(id) {
     try {
-      const response = await del(`/v1/api/locations/${id}`)
+      const response = await del(`/v1/api/sessions/${id}`)
       alert('sukses menghapus data')
     } catch (err) {
       alert('gagal menghapus data')
@@ -32,8 +32,8 @@
 
   function promptDelete(item) {
     alert({
-      title: 'Hapus data lokasi',
-      description: 'Apakah anda yakin akan menghapus data lokasi',
+      title: 'Hapus data sesi',
+      description: 'Apakah anda yakin akan menghapus data sesi',
       onYes: async () => {
         await removeItem(item._id)
         get()
@@ -42,9 +42,9 @@
   }
 
   const { get, result } = useGET({
-    url: '/v1/api/locations'
+    url: '/v1/api/sessions'
   })
-  const locations = computed(() => {
+  const sessions = computed(() => {
     if (result.value.type != 'data') {
       return []
     }
@@ -56,33 +56,28 @@
 
 <template>
   <PageHeader
-    title="Lokasi"
-    subtitle="Daftar lokasi"
+    title="Sesi"
+    subtitle="Daftar sesi"
   >
     <template #actions>
-      <a class="btn"><router-link to="/app/lokasi/create">tambah lokasi</router-link></a>
+      <a class="btn btn-primary"><router-link to="/app/lokasi/create">Pilih Lokasi</router-link></a>
     </template>
   </PageHeader>
   <PageContainer>
     <ul v-if="result">
       <template 
-        v-for="item, i in locations"
-        :key="item.id"
+        v-for="item, i in sessions"
+        :key="item._id"
       >
         <li class="flex py-4 px-6 bg-white border-b border-gray-200">
           <img 
             class="w-20 h-20 mr-4" 
-            :src="item.avatar" />
+            :src="item.location.avatar" />
           <div class="flex-grow">
-            <div class="text-gray-800 capitalize text-xl">{{ item.nama }}</div>
-            <div class="text-sm md:w-3/5">IDR {{ parseInt(item.price.$numberDecimal).toLocaleString() }}, {{ item.distance }} km, {{ item.numberOfSpots }} spot</div>
+            <div class="text-gray-800 capitalize text-xl">{{ item.man }} dan {{ item.woman }}</div>
+            <div class="text-sm md:w-3/5">{{ item.location.nama }}</div>
           </div>
           <div class="flex items-center">
-            <router-link :to="`/app/lokasi/${item._id}/edit`">
-              <button class="btn btn-circle btn-primary btn-sm mr-2">
-                <PencilIcon class="w-4 h-4" />
-              </button>
-            </router-link>
             <button 
               @click="promptDelete(item)"
               class="btn btn-circle btn-sm bg-red-600 border-red-600">

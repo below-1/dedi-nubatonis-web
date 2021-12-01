@@ -1,42 +1,28 @@
 <script setup>
   import {
-    reactive,
-    ref,
-    inject
+    reactive
   } from 'vue'
-  import { useRouter } from 'vue-router'
-  import { usePOST, useGET } from '@quick/compose/axios'
   import Container from './Container.vue'
+  import { usePOST } from '@quick/compose/axios'
+  import { useRouter } from 'vue-router'
 
   const payload = reactive({
+    nama: '',
     username: '',
-    password: ''
+    password: '',
+    role: 'user'
   })
-  const currentUser = inject('currentUser')
 
-  const router = useRouter()
   const { post, status } = usePOST({
-    url: '/auth/login',
+    url: '/auth/signup',
     payload
   })
-  const buttonLoading = ref(false)
 
-  const {
-    get: getCurentUser
-  } = useGET({
-    url: '/auth/me'
-  })
+  const router = useRouter()
 
-  async function login() {
-    buttonLoading.value = true
+  async function signup() {
     const response = await post()
-    localStorage.setItem('quick.token', response)
-    const user = await getCurentUser()
-    currentUser.value = user
-    setTimeout(() => {
-      buttonLoading.value = false
-      router.push('/app')
-    }, 2000)
+    router.push('/auth/login')
   }
 </script>
 
@@ -44,8 +30,11 @@
   <Container>
     <div class="card bg-white shadow-2xl">
       <div class="card-body">
-        <h2 class="card-title">Login untuk masuk kedalam sistem</h2>
+        <h2 class="card-title">Daftar untuk masuk kedalam sistem</h2>
         <form>
+          <q-field label="Nama" class="mb-3">
+            <q-input v-model="payload.nama" />
+          </q-field>
           <q-field label="Username" class="mb-3">
             <q-input v-model="payload.username" />
           </q-field>
@@ -55,11 +44,11 @@
         </form>
         <div class="justify-center card-actions">
           <button 
-            @click="login"
+            @click="signup"
             class="btn btn-primary"
           >
-            <template v-if="!buttonLoading">
-              <span>login</span>
+            <template v-if="status == 'idle'">
+              <span>signup</span>
             </template>
             <q-spinner v-else class="w-4 h-4">
             </q-spinner>

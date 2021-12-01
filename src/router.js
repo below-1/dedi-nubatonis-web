@@ -1,6 +1,7 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 
 import AuthSignup from '@quick/components/auth/Signup.vue'
+import AuthSignupUser from '@quick/components/auth/SignupUser.vue'
 import AuthLogin from '@quick/components/auth/Login.vue'
 import Landing from '@quick/components/landing/Landing.vue'
 import LandingPreferensi from '@quick/components/landing/Preferensi.vue'
@@ -18,12 +19,14 @@ import FotograferEdit from '@quick/components/app/fotografer/Edit.vue'
 import LokasiList from '@quick/components/app/lokasi/List.vue'
 import LokasiCreate from '@quick/components/app/lokasi/Create.vue'
 import LokasiUpdate from '@quick/components/app/lokasi/Update.vue'
-import NewSession from '@quick/components/app/sessions/NewSession.vue'
+import NewSession2 from '@quick/components/app/sessions/NewSession2.vue'
+import ListSession from '@quick/components/app/sessions/List.vue'
 
 const routes = [
   { path: '/', component: Landing },
   { path: '/pref', component: LandingPreferensi },
   { path: '/auth/signup', component: AuthSignup },
+  { path: '/auth/signup_user', component: AuthSignupUser },
   { path: '/auth/login', component: AuthLogin },
   { path: '/app', component: AppLayout, children: [
     { path: '', component: Home },
@@ -44,7 +47,11 @@ const routes = [
     },
     { 
       path: 'session/new',
-      component: NewSession
+      component: NewSession2
+    },
+    { 
+      path: 'session',
+      component: ListSession
     }
   ]}
 ]

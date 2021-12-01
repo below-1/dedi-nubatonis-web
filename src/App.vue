@@ -1,9 +1,12 @@
 <script setup>
-  import { provide } from 'vue'
+  import { provide, ref } from 'vue'
   import { DefaultApolloClient } from '@vue/apollo-composable'
   import { apollo } from '@quick/serv/apollo'
 
+  const currentUser = ref(null)
+
   provide(DefaultApolloClient, apollo)
+  provide('currentUser', currentUser)
 </script>
 
 <style>

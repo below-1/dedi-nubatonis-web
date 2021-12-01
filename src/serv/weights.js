@@ -1,15 +1,15 @@
 const defaultWeights = {
-	distance: 2,
-	transportation: 2,
-	price: 2,
-	theme: 2,
-	waktu: 2,
-	numberOfSpots: 2
+	distance: 1,
+	transportation: 1,
+	price: 1,
+	theme: 1,
+	waktu: 1,
+	numberOfSpots: 1
 }
 export function changeWeights(criteriaKeys) {
 	let result = { ...defaultWeights }
 	criteriaKeys.forEach(k => {
-		result[k] = 4
+		result[k] = 10
 	})
 	return result
 }

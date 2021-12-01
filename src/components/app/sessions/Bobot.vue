@@ -5,6 +5,7 @@
     onMounted
   } from 'vue'
 
+  const ncrit = 2
   const props = defineProps({
     label: {
       type: String,
@@ -46,9 +47,9 @@
 
   function onClickCriteria(index) {
     const currentValue = bobots[index].selected
-    if (totalSelected.value == 3 && !currentValue) {
-      return
-    }
+    // if (totalSelected.value == ncrit && !currentValue) {
+    //   return
+    // }
     bobots[index].selected = !currentValue
   }
 
@@ -79,7 +80,6 @@
   <div class="flex justify-center">
     <button 
       @click="onDone"
-      v-if="totalSelected == 3"
       class="btn btn-primary my-12"
     >
       Selanjutnya
