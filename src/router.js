@@ -21,6 +21,7 @@ import LokasiCreate from '@quick/components/app/lokasi/Create.vue'
 import LokasiUpdate from '@quick/components/app/lokasi/Update.vue'
 import NewSession2 from '@quick/components/app/sessions/NewSession2.vue'
 import ListSession from '@quick/components/app/sessions/List.vue'
+import Dashboard from '@quick/components/app/Dashboard.vue'
 
 const routes = [
   { path: '/', component: Landing },
@@ -29,7 +30,8 @@ const routes = [
   { path: '/auth/signup_user', component: AuthSignupUser },
   { path: '/auth/login', component: AuthLogin },
   { path: '/app', component: AppLayout, children: [
-    { path: '', component: Home },
+    { path: '', component: Dashboard },
+    { path: 'dashboard', component: Dashboard },
     { path: 'spots', component: SpotList },
     { path: 'spots/create', component: SpotCreate },
     { path: 'spots/:id', component: SpotDetail, props: true },

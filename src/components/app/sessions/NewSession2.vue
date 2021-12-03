@@ -13,7 +13,7 @@
   import PageContainer from '@quick/components/app/PageContainer.vue'
   import PersonalForm from './PersonalForm.vue'
   import LocationForm from './LocationForm.vue'
-  import Bobot from './Bobot.vue'
+  import Bobot from './BobotRev1.vue'
   import useORS from '@quick/compose/ors'
   import { changeWeights, asArray } from '@quick/serv/weights'
   import { topsis, transformRow } from '@quick/serv/topsis'
@@ -64,11 +64,24 @@
   })
 
   onSuccess((data) => {
-    formItems.push({ payload: { selected: [] }, type: 'criteria' })
-    formItems.push({ payload: { name: 'A', gender: 'man' }, type: 'personal' })
-    formItems.push({ payload: { selected: [] }, type: 'criteria' })
-    formItems.push({ payload: { name: 'B', gender: 'woman' }, type: 'personal' })
+    formItems.push({ payload: {}, type: 'criteria' })
+    formItems.push({ payload: { name: '', gender: 'man' }, type: 'personal' })
+    formItems.push({ payload: {}, type: 'criteria' })
+    formItems.push({ payload: { name: '', gender: 'woman' }, type: 'personal' })
+    formItems.push({ payload: {}, type: 'criteria' })
     initDone.value = true
+  })
+
+  const criteriaLabel = computed(() => {
+    if (itemIndex.value == formItems.length - 1) {
+      return 'Fotografer'
+    } else {
+      if (itemIndex.value > 0) {
+        return 'Pasangan Anda'
+      } else {
+        return 'Anda'
+      }
+    }
   })
 
   function buildPayload() {
@@ -78,7 +91,14 @@
       const fi = formItems[i]
       switch (fi.type) {
         case 'criteria':
-          weights.push(changeWeights(fi.payload.selected))
+          weights.push([
+            fi.payload.distance,
+            fi.payload.numberOfSpots,
+            fi.payload.price,
+            fi.payload.transportation,
+            fi.payload.theme,
+            fi.payload.waktu
+          ]);
           break;
         case 'personal':
           break;
@@ -86,25 +106,24 @@
           break;
       }
     }
-    const firstHalf = locations.value.map(fi => [
-      fi.distance,
-      fi.numberOfSpots,
-      parseInt(fi.price.$numberDecimal),
-      fi.transportation,
-      fi.theme,
-      fi.waktu
-    ])
-    const secondHalf = locations.value.map(fi => [
-      fi.distance,
-      fi.numberOfSpots,
-      parseInt(fi.price.$numberDecimal),
-      fi.transportation,
-      fi.theme,
-      fi.waktu
-    ])
+
+    function buildLocationsValues() {
+      return locations.value.map(fi => [
+        fi.distance,
+        fi.numberOfSpots,
+        parseInt(fi.price.$numberDecimal),
+        fi.transportation,
+        fi.theme,
+        fi.waktu
+      ])
+    }
+
+    const firstHalf = buildLocationsValues()
+    const secondHalf = buildLocationsValues()
+    const lastHalf = buildLocationsValues()
 
     return {
-      altValues: [ firstHalf, secondHalf ],
+      altValues: [ firstHalf, secondHalf, lastHalf ],
       weights
     }
   }
@@ -119,8 +138,6 @@
       if (item.type == 'personal') {
         // It's a man
         if (!sessionData.man) {
-          console.log('item')
-          console.log(item)
           sessionData.man = item.payload.name
         } else {
           sessionData.woman = item.payload.name
@@ -141,16 +158,21 @@
 
   function runTopsis() {
     const { altValues, weights } = buildPayload()
+
     let topsisResults = []
-    for (let i = 0; i < 2; i++) {
+    const N_PREF = 3;
+
+    for (let i = 0; i < N_PREF; i++) {
       const _AV = altValues[i]
       const _W = weights[i]
       const AV = _AV.map(transformRow)
-      const W = asArray(_W)
+      const W = _W
       const ranked = topsis({ data: AV, weights: W })
       topsisResults.push(ranked)
     }
+
     const N_ALT = locations.value.length;
+
     // Alternatif Index
     let bordaResults = []
     for (let i = 0; i < N_ALT; i++) {
@@ -167,6 +189,7 @@
       }
       bordaResults.push(bordaAltRow.reduce((a, b) => a + b, 0))
     }
+
     const totalBordaPoints = bordaResults.reduce((a, b) => a + b, 0)
     const bordaNormalized = bordaResults.map(x => x / totalBordaPoints)
     const bordaPacked = bordaNormalized.map((b, i) => {
@@ -212,7 +235,7 @@
         <Bobot
           v-if="activeItem.type == 'criteria'"
           v-bind="activeItem.payload"
-          :label="itemIndex > 0 ? 'Pasangan Anda' : 'Anda'"
+          :label="criteriaLabel"
           @done="onDoneItem"
         />
         <PersonalForm

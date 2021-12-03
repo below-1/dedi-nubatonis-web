@@ -7,6 +7,9 @@ import '@oruga-ui/oruga-next/dist/oruga-full.css'
 
 import InlineSvg from 'vue-inline-svg'
 
+import { Chart, registerables } from 'chart.js';
+Chart.register(...registerables);
+
 import QuickPageHeader from '@quick/components/QuickPageHeader.vue'
 import QuickField from '@quick/components/QuickField.vue'
 import QuickInput from '@quick/components/QuickInput.vue'

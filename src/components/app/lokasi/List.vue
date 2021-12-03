@@ -22,6 +22,7 @@
   } = useDELETE()
 
   async function removeItem(id) {
+    console.log('here')
     try {
       const response = await del(`/v1/api/locations/${id}`)
       alert('sukses menghapus data')

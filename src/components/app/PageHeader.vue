@@ -1,4 +1,14 @@
 <script setup>
+  import { computed } from 'vue'
+  import { useRoute } from 'vue-router'
+
+  const route = useRoute()
+
+  const showCreateSession = computed(() => {
+    console.log(route.fullPath)
+    return route.fullPath != '/app/session'
+  })
+
   const props = defineProps({
     title: String,
     subtitle: String
@@ -14,7 +24,10 @@
     <slot name="actions">
     </slot>
     <div>
-      <router-link to="/app/session/new" class="btn btn-info md:ml-4">Tentukan Lokasi</router-link>
+      <router-link 
+        v-if="showCreateSession"
+        to="/app/session/new" 
+        class="btn btn-info md:ml-4">Tentukan Lokasi</router-link>
     </div>
   </div>
 </template>

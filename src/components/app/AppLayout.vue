@@ -1,6 +1,7 @@
 <script setup>
   import { ref, provide, inject, onMounted } from 'vue'
   import { useRouter } from 'vue-router'
+  import useCurrentUser from '@quick/compose/current-user';
   import { HomeIcon, LogoutIcon } from '@heroicons/vue/solid'
   import QuickFooter from '@quick/components/QuickFooter.vue'
   import Navigation from './Navigation.vue'
@@ -24,7 +25,8 @@
   })
 
   const router = useRouter()
-  const currentUser = inject('currentUser')
+  const { currentUser, status } = useCurrentUser();
+
   function logout() {
     localStorage.removeItem('quick.token')
     currentUser.value = null
@@ -40,12 +42,6 @@
     dialogDescription.value = options.description
     dialogIsOpen.value = true
   })
-
-  onMounted(() => {
-    if (!currentUser.value) {
-      router.replace('/auth/login')
-    }
-  })
 </script>
 
 <style>
@@ -55,24 +51,28 @@
 </style>
 
 <template>
-  <nav class="hidden md:flex fixed md:w-64 top-0 bottom-0 left-0 bg-gray-800 flex-col">
-    <router-link 
-      to="/app"
-      class="block h-20 px-4 font-bold text-xl bg-indigo-900 flex items-center text-gray-100"
-    >
-      Quick Photography
-    </router-link>
-    <Navigation class="flex-grow"/>
-    <button @click="logout" class="flex items-center justify-start py-4 px-4 text-gray-200 hover:bg-gray-600">
-      <LogoutIcon class="mr-4 w-6 h-6"/>
-      <span class="lowercase text-lg font-bold">Logout</span>
-    </button>
-  </nav>
-  <div id="app-wrapper" class="flex flex-col min-h-screen md:ml-64">
-    <div class="flex-grow flex flex-col">
-      <router-view/>
+  <div v-if="status == 'loading' && !currentUser">
+  </div>
+  <div v-else-if="currentUser">
+    <nav class="hidden md:flex fixed md:w-64 top-0 bottom-0 left-0 bg-gray-800 flex-col">
+      <router-link 
+        to="/app"
+        class="block h-20 px-4 font-bold text-xl bg-indigo-900 flex items-center text-gray-100"
+      >
+        Quick Photography
+      </router-link>
+      <Navigation class="flex-grow"/>
+      <button @click="logout" class="flex items-center justify-start py-4 px-4 text-gray-200 hover:bg-gray-600">
+        <LogoutIcon class="mr-4 w-6 h-6"/>
+        <span class="lowercase text-lg font-bold">Logout</span>
+      </button>
+    </nav>
+    <div id="app-wrapper" class="flex flex-col min-h-screen md:ml-64">
+      <div class="flex-grow flex flex-col">
+        <router-view/>
+      </div>
+      <QuickFooter/>
     </div>
-    <QuickFooter/>
   </div>
 
   <TransitionRoot appear :show="dialogIsOpen" as="template">

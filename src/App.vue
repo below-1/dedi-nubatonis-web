@@ -5,7 +5,6 @@
 
   const currentUser = ref(null)
 
-  provide(DefaultApolloClient, apollo)
   provide('currentUser', currentUser)
 </script>
 

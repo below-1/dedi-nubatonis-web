@@ -46,7 +46,7 @@
 
 <template>
   <q-pad-container>
-    <nav class="grid grid-cols-2 gap-6 px-4">
+    <nav class="grid grid-cols-2 gap-6 px-20">
       <template v-for="menu in menus" :key="menu.path">
         <router-link 
           :to="'/app/' + menu.path" 
