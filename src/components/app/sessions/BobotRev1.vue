@@ -78,6 +78,7 @@
 
 <template>
   <h1 class="text-2xl text-gray-500 text-center mb-12">Input Bobot Kriteria Yang {{ label }} Utamakan</h1>
+  <h1 class="text-xl font-medium text-gray-700 text-center mb-12">In 2.15.0 and later (Postgres only), you can filter scalar lists - for example, a list of String or Enum types. The following example returns all posts where the tags list includes databases and typescript</h1>
   <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
     <template v-for="item in payload">
       <q-field :label="item.label" class="mb-4">

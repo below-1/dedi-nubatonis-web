@@ -13,13 +13,14 @@
   })
 
   const { post, status } = usePOST({
-    url: '/auth/signup'
+    url: '/auth/signup',
+    payload
   })
 
   const router = useRouter()
 
   async function signup() {
-    const response = await post(payload)
+    const response = await post()
     router.push('/auth/login')
   }
 </script>
