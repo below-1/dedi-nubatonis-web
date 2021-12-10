@@ -27,7 +27,9 @@
       <router-link 
         v-if="showCreateSession"
         to="/app/session/new" 
-        class="btn btn-info md:ml-4">Tentukan Lokasi</router-link>
+        class="btn btn-info flex my-2 md:ml-4"
+        tag="button"
+      >Tentukan Lokasi</router-link>
     </div>
   </div>
 </template>

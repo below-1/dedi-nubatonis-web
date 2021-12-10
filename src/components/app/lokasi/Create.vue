@@ -94,12 +94,8 @@
             :options="waktuOptions"
           />
         </q-field>
-        <q-field label="Transportasi" class="mb-4">
-          <q-select
-            v-model="payload.transportation"
-            :options="transportationOptions"
-          />
-        </q-field>
+       
+       
         <q-field label="Tema" class="mb-4">
           <div class="form-control">
             <label class="cursor-pointer label">

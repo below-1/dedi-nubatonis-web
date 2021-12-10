@@ -10,7 +10,10 @@
   import FacebookRSVG from '@quick/assets/facebook.svg'
   import InstagramRSVG from '@quick/assets/instagram.svg'
 
+  const currentUser = inject('currentUser')
   const alert = inject('alert')
+
+  const isAdmin = computed(() => currentUser.value.role == 'admin')
 
   const {
     del,
@@ -63,19 +66,19 @@
         v-for="item, i in photographers"
         :key="item._id"
       >
-        <li class="flex py-4 px-6 bg-white border-b border-gray-200">
+        <li class="flex py-4 px-3 md:px-6 bg-white border-b border-gray-200">
           <img 
-            class="w-20 h-20 mr-4" 
+            class="w-12 h-12 rounded-full md:w-20 md:h-20 mr-2 md:mr-4" 
             :src="item.avatar" />
           <div class="flex-grow">
             <div class="text-gray-800 capitalize text-xl">{{ item.nama }}</div>
-            <div class="text-sm md:w-3/5">{{ item.summary }}</div>
+            <div class="hidden md:block text-sm md:w-3/5">{{ item.summary }}</div>
           </div>
           <div class="flex items-center">
             <a 
               :href="item.instagram"
               target="_blank"
-              class="btn btn-ghost btn-circle btn-sm mr-4 border-none">
+              class="btn btn-ghost btn-circle btn-sm mr-2 md:mr-4 border-none">
               <inline-svg
                 :src="InstagramRSVG"
                 class="w-6 h-6"
@@ -93,16 +96,18 @@
               >
               </inline-svg>
             </a>
-            <router-link :to="`/app/fotografer/${item._id}/edit`">
-              <button class="btn btn-circle btn-sm mr-4">
-                <PencilIcon class="w-4 h-4" />
+            <template v-if="isAdmin">
+              <router-link :to="`/app/fotografer/${item._id}/edit`">
+                <button class="btn btn-circle btn-sm mr-4">
+                  <PencilIcon class="w-4 h-4" />
+                </button>
+              </router-link>
+              <button 
+                @click="promptDelete(item)"
+                class="btn btn-circle btn-sm bg-red-600 border-red-600">
+                <TrashIcon class="w-4 h-4" />
               </button>
-            </router-link>
-            <button 
-              @click="promptDelete(item)"
-              class="btn btn-circle btn-sm bg-red-600 border-red-600">
-              <TrashIcon class="w-4 h-4" />
-            </button>
+            </template>
           </div>
         </li>
       </template>

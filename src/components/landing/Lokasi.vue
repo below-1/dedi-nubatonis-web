@@ -16,7 +16,7 @@
 </script>
 
 <template>
-	<section id="sec-lokasi" class="bg-gray-100 py-12 md:py-0 md:h-screen flex flex-col items-center justify-center">
+	<section id="sec-lokasi" class="bg-gray-100 py-12 md:py-12 flex flex-col items-center justify-center">
     <h2 class="text-xl text-yellow-400 tracking-widest uppercase text-center">Lokasi Foto</h2>
     <h3 class="font-bold text-3xl text-center">Daftar Lokasi Foto Prewedding</h3>
     <div 

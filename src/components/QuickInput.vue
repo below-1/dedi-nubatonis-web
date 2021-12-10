@@ -22,6 +22,10 @@
     max: {
       type: Number,
       required: false
+    },
+    readonly: {
+      type: Boolean,
+      default: false
     }
   })
   const emit = defineEmits([
@@ -54,6 +58,7 @@
       :type="type"
       :max="max"
       :min="min"
+      :readonly="readonly"
       class="px-2 py-1 border-b-2 border-gray-300 focus:border-indigo-500 focus:border-b-3 focus:bg-white outline-none ring-none text-sm text-gray-800 py-1 transition-colors duration-300"
     />
     <span v-if="error" class="text-red-700 text-sm">{{ error }}</span>

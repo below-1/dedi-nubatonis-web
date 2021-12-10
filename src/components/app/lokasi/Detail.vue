@@ -21,6 +21,7 @@
     latitude: '',
     longitude: '',
     numberOfSpots: 0,
+    transportation: 'car',
     waktu: 4,
     theme: 'indoor',
     avatar: ''
@@ -31,6 +32,9 @@
     { value: 'car', text: 'Mobil Pribadi' },
     { value: 'rental-car', text: 'Rental Mobil' }
   ]
+  const transportationFormat = computed(() => {
+    return transportationOptions.find(it => it.value == payload.transportation).text;
+  });
 
   const waktuOptions = [
     { value: 4, text: '06:00 AM - 06:00 PM' },
@@ -96,56 +100,41 @@
     </template>
   </PageHeader>
   <PageContainer>
-    <div class="w-2/5 mx-auto">
-      <form class="form-control p-6 bg-white">
-        <q-field label="Nama" class="mb-4">
-          <q-input v-model="payload.nama" />
-        </q-field>
-        <q-field label="Transportasi" class="mb-4">
-          <q-select
-            v-model="payload.transportation"
-            :options="transportationOptions"
-          />
-        </q-field>
-        <q-field label="Jarak" class="mb-4">
-          <q-input type="number" v-model="payload.distance" />
-        </q-field>
-        <q-field label="Price" class="mb-4">
-          <q-input type="number" v-model="payload.price" />
-        </q-field>
-        <q-field label="Latitude" class="mb-4">
-          <q-input v-model="payload.latitude" />
-        </q-field>
-        <q-field label="Longitude" class="mb-4">
-          <q-input v-model="payload.longitude" />
-        </q-field>
-        <q-field label="Jumlah Spot" class="mb-4">
-          <q-input type="number" v-model="payload.numberOfSpots" />
-        </q-field>
-        <q-field label="Waktu" class="mb-4">
-          <q-select
-            v-model="payload.waktu"
-            :options="waktuOptions"
-          />
-        </q-field>
-        <q-field label="Tema" class="mb-4">
-          <div class="form-control">
-            <label class="cursor-pointer label">
-              <span class="label-text">Indoor</span> 
-              <input type="radio" v-model="payload.theme" class="radio radio-primary" value="indoor">
-            </label>
-          </div> 
-          <div class="form-control">
-            <label class="cursor-pointer label">
-              <span class="label-text">Outdoor</span> 
-              <input type="radio" v-model="payload.theme" class="radio radio-primary" value="outdoor">
-            </label>
-          </div> 
-        </q-field>
-        <q-field label="Avatar" class="mb-4">
-          <file-input @change="avatarChangeHandler" />
-        </q-field>
-      </form>
+    <div class="w-full md:w-2/5">
+      <ul>
+        <li class="py-4 px-2 flex justify-between items-center border-b border-grey-200">
+          <span>Nama</span>
+          <span class="font-bold">{{ payload.nama }}</span>
+        </li>
+        <li class="py-4 px-2 flex justify-between items-center border-b border-grey-200">
+          <span>Transportasi</span>
+          <span class="font-bold">{{ transportationFormat }}</span>
+        </li>
+        <li class="py-4 px-2 flex justify-between items-center border-b border-grey-200">
+          <span>Jarak</span>
+          <span class="font-bold">{{ payload.distance }} km</span>
+        </li>
+        <li class="py-4 px-2 flex justify-between items-center border-b border-grey-200">
+          <span>Harga</span>
+          <span class="font-bold">IDR {{ payload.price }}</span>
+        </li>
+        <li class="py-4 px-2 flex justify-between items-center border-b border-grey-200">
+          <span>Lokasi</span>
+          <span class="text-xs font-bold">{{ payload.latitude }}, {{ payload.longitude }}</span>
+        </li>
+        <li class="py-4 px-2 flex justify-between items-center border-b border-grey-200">
+          <span>Jumlah Spot</span>
+          <span class="font-bold">{{ payload.numberOfSpots }}</span>
+        </li>
+        <li class="py-4 px-2 flex justify-between items-center border-b border-grey-200">
+          <span>Waktu</span>
+          <span class="font-bold">{{ payload.waktu }}</span>
+        </li>
+        <li class="py-4 px-2 flex justify-between items-center border-b border-grey-200">
+          <span>Tema</span>
+          <span class="font-bold capitalize">{{ payload.theme }}</span>
+        </li>
+      </ul>
     </div>
   </PageContainer>
 </template>

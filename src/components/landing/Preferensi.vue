@@ -10,7 +10,7 @@
   import Hero from './Hero.vue'
   import About from './About.vue'
   import Fotografer from './Fotografer.vue'
-  import NewSession from '@quick/components/app/sessions/NewSession.vue'
+  import NewSession from '@quick/components/app/sessions/NewSession2.vue'
   import Lokasi from './Lokasi.vue'
 
   const showMobileMenu = ref(false)

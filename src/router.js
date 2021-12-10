@@ -19,6 +19,7 @@ import FotograferEdit from '@quick/components/app/fotografer/Edit.vue'
 import LokasiList from '@quick/components/app/lokasi/List.vue'
 import LokasiCreate from '@quick/components/app/lokasi/Create.vue'
 import LokasiUpdate from '@quick/components/app/lokasi/Update.vue'
+import LokasiDetail from '@quick/components/app/lokasi/Detail.vue'
 import NewSession2 from '@quick/components/app/sessions/NewSession2.vue'
 import ListSession from '@quick/components/app/sessions/List.vue'
 import Dashboard from '@quick/components/app/Dashboard.vue'
@@ -43,6 +44,7 @@ const routes = [
     { path: 'lokasi', component: LokasiList },
     { path: 'lokasi/create', component: LokasiCreate },
     { path: 'lokasi/:id/edit', component: LokasiUpdate, props: true },
+    { path: 'lokasi/:id/detail', component: LokasiDetail, props: true },
     { 
       path: 'weights',
       component: WeightEditor

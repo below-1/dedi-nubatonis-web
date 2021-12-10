@@ -64,7 +64,7 @@
     </template>
   </PageHeader>
   <PageContainer>
-    <ul v-if="result">
+    <ul v-if="sessions.length">
       <template 
         v-for="item, i in sessions"
         :key="item._id"
@@ -76,6 +76,7 @@
           <div class="flex-grow">
             <div class="text-gray-800 capitalize text-xl">{{ item.man }} dan {{ item.woman }}</div>
             <div class="text-sm md:w-3/5">{{ item.location.nama }}</div>
+            <div class="text-sm italic text-gray-500 md:w-3/5">{{ item.createdAt }}</div>
           </div>
           <div class="flex items-center">
             <button 
@@ -87,5 +88,6 @@
         </li>
       </template>
     </ul>
+    <h1 class="bg-gray-200 p-12 text-2xl font-bold text-center" v-else>Belum ada data</h1>
   </PageContainer>
 </template>

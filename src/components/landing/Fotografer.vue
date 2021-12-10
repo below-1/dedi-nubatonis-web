@@ -16,7 +16,7 @@
 </script>
 
 <template>	
-	<section id="sec-fotografer" class="md:h-screen py-12 md:py-0 flex flex-col items-center justify-center">
+	<section id="sec-fotografer" class="py-12 md:py-12 flex flex-col items-center justify-center">
     <h2 class="text-xl text-yellow-400 tracking-widest uppercase text-center">Daftar Photographer</h2>
     <h3 class="font-bold text-3xl text-center">Daftar Fotografer Pada Quick Photography</h3>
     <div 

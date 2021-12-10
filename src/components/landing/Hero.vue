@@ -11,7 +11,7 @@
   <section id="hero" class="flex flex-col text-white" style="height: calc(100vh - 7rem);">
     <div class="flex-grow flex flex-col items-center justify-center">
       <h1 class="font-mono text-6xl font-black text-center">Simpan Semua Memori</h1>
-      <router-link to="/pref" class="btn bg-pink-600">tentukan lokasi anda</router-link>
+      <router-link to="/auth/login" class="btn bg-pink-600">tentukan lokasi anda</router-link>
     </div>
   </section>
 </template>

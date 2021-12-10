@@ -9,7 +9,7 @@
   import PageContainer from '@quick/components/app/PageContainer.vue'
   import { useGET, useDELETE } from '@quick/compose/axios'
 
-  import { BarChart } from 'vue-chart-3';
+  import { BarChart, PieChart } from 'vue-chart-3';
 
   const {
     get: getStat,
@@ -30,7 +30,7 @@
       {
         label: 'Presentase Jumlah Lokasi Yang Dipilih',
         data: stats.value.data.map(it => it.total),
-        backgroundColor: ['#77CEFF', '#0079AF', '#123E6B', '#97B0C4', '#A5C8ED']
+        backgroundColor: ['#000D6B', '#9C19E0', '#FF5DA2', '#99DDCC', '#9A0680']
       }
     ]
     return {
@@ -49,6 +49,23 @@
               display: false
           }
        }]
+    },
+     plugins: {
+      tooltip: {
+        enabled: true,
+        callbacks: {
+          footer: (ttItem) => {
+            let sum = 0;
+            let dataArr = ttItem[0].dataset.data;
+            dataArr.map(data => {
+              sum += Number(data);
+            });
+
+            let percentage = (ttItem[0].parsed * 100 / sum).toFixed(2) + '%';
+            return `Presentase data: ${percentage}`;
+          }
+        }
+      }
     }
   })
 
@@ -62,6 +79,7 @@
   >
   </PageHeader>
   <PageContainer>
-    <BarChart :chartData="chartData" :options="chartOptions" />
+    <h1 class="text-center font-bold text-xl md:text-3xl my-4">Presentase Jumlah Data Lokasi Yang Dipilih</h1>
+    <PieChart :chartData="chartData" :options="chartOptions" />
   </PageContainer>
 </template>
