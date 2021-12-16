@@ -23,6 +23,8 @@ import LokasiDetail from '@quick/components/app/lokasi/Detail.vue'
 import NewSession2 from '@quick/components/app/sessions/NewSession2.vue'
 import ListSession from '@quick/components/app/sessions/List.vue'
 import Dashboard from '@quick/components/app/Dashboard.vue'
+import Survey from '@quick/components/app/Survey.vue'
+import SurveyResult from '@quick/components/app/SurveyResult.vue'
 
 const routes = [
   { path: '/', component: Landing },
@@ -32,6 +34,8 @@ const routes = [
   { path: '/auth/login', component: AuthLogin },
   { path: '/app', component: AppLayout, children: [
     { path: '', component: Dashboard },
+    { path: 'survey', component: Survey },
+    { path: 'survey-result', component: SurveyResult },
     { path: 'dashboard', component: Dashboard },
     { path: 'spots', component: SpotList },
     { path: 'spots/create', component: SpotCreate },

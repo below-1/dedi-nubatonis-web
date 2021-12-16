@@ -14,17 +14,20 @@ export default function useCurrentUser() {
   const status = computed(() => result.value.type);
   const router = useRouter();
 
-  onMounted(async () => {
-  	const user = await get();
-  	if (!user) {
-  		router.replace('/auth/login');
-  		return;
-  	}
-  	currentUser.value = user;
-  });
+  async function loadUser() {
+    const user = await get();
+    if (!user) {
+      router.replace('/auth/login');
+      return;
+    }
+    currentUser.value = user;
+  }
+
+  onMounted(loadUser);
 
   return {
   	currentUser,
-  	status
+  	status,
+    loadUser
   };
 }

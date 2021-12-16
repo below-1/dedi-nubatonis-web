@@ -14,15 +14,25 @@ export function useMenus() {
     { path: '/app/dashboard', label: 'Dashboard', icon: ChartBarIcon },
     { path: '/app/fotografer', label: 'Fotografer', icon: CameraIcon },
     { path: '/app/lokasi', label: 'Lokasi', icon: LocationMarkerIcon },
-    { path: '/app/session', label: 'Session', icon: DocumentIcon },
-    // { path: '/app/user', label: 'User', icon: UserIcon, secure: true },
-    { path: '/app/weights', label: 'Bobot', icon: DocumentIcon, secure: true }
+    { path: '/app/session', label: 'Session', icon: DocumentIcon }
   ]
-  const menus = computed(() => baseMenus.filter(bm => {
-    if (!bm.secure) return true;
-    const cu = currentUser.value
-    return bm.secure && cu && cu.role == 'admin'
-  }))
+
+  const adminMenus = [
+    ...baseMenus,
+    { path: '/app/weights', label: 'Bobot', icon: DocumentIcon },
+    { path: '/app/survey-result', label: 'Hasil Survey', icon: DocumentIcon }
+  ]
+
+  const userMenus = [
+    ...baseMenus,
+    { path: '/app/survey', label: 'Survey', icon: DocumentIcon }
+  ]
+
+  const menus = computed(() => {
+    const cu = currentUser.value;
+    if (cu && cu.role == 'admin') return adminMenus;
+    return userMenus;
+  })
 
   return {
   	menus

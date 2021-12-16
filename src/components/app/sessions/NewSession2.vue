@@ -8,7 +8,7 @@
     watch
   } from 'vue'
   import { api } from '@quick/serv/axios'
-  import { useGET } from '@quick/compose/axios'
+  import { useGET, usePOST } from '@quick/compose/axios'
   import PageHeader from '@quick/components/app/PageHeader.vue'
   import PageContainer from '@quick/components/app/PageContainer.vue'
   import PersonalForm from './PersonalForm.vue'
@@ -51,17 +51,6 @@
 
   provide('position', position)
   provide('calculateDistance', calculateDistance)
-
-  onMounted(async () => {
-    await getLocations()
-    navigator.geolocation.getCurrentPosition(
-      (geoPos) => {
-        position.value = [ geoPos.coords.latitude, geoPos.coords.longitude ]
-      }, 
-      (geoPosError) => {
-        alert('gagal mengambil data lokasi')
-      })
-  })
 
   onSuccess((data) => {
     formItems.push({ payload: {}, type: 'criteria' })
@@ -206,9 +195,81 @@
     return choosen
   }
 
-  function onDoneItem(payload) {
+  const currentSessionData = reactive({
+    step: 0,
+    items: [
+      {
+        name: '',
+        gender: 'man',
+        weights: {}
+      },
+      {
+        name: '',
+        gender: 'woman',
+        weights: {}
+      }
+    ]
+  });
+
+  const {
+    post: saveCurrentState
+  } = usePOST({
+    payload: currentSessionData,
+    url: '/v1/api/sessions/current'
+  });
+
+  const {
+    get: getCurrentSessionData
+  } = useGET({
+    url: '/v1/api/sessions/current'
+  });
+
+  async function buildCurrentSessionData(currentPayload) {
+    const currentIndex = itemIndex.value;
+
+    const items = [
+      {
+        name: formItems[1].payload.name,
+        gender: formItems[1].payload.gender,
+        weights: formItems[0].payload
+      },
+      {
+        name: formItems[3].payload.name,
+        gender: formItems[3].payload.gender,
+        weights: formItems[2].payload
+      }
+    ];
+
+    currentSessionData.items = items;
+    currentSessionData.step = currentIndex;
+    console.log('formItems');
+    console.log(formItems);
+    console.log('items');
+    console.log(items);
+    await saveCurrentState();
+  }
+
+  async function loadCurrentSessionData() {
+    const response = await getCurrentSessionData();
+    if (!isNaN(response.step) && response.items) {
+      formItems[0].payload = response.items[0].weights;
+      formItems[1].payload.name = response.items[0].name;
+      formItems[1].payload.gender = response.items[0].gender;
+      formItems[2].payload = response.items[1].weights;
+      formItems[3].payload.name = response.items[1].name;
+      formItems[3].payload.gender = response.items[1].gender;
+      itemIndex.value = response.step;
+    }
+  }
+
+  async function onDoneItem(payload) {
     formItems[itemIndex.value] = payload
-    nextItem()
+    const currentIndex = itemIndex.value;
+    // console.log('payload');
+    // console.log(payload.payload);
+    await buildCurrentSessionData(payload.payload);
+
+    nextItem();
     if (itemIndex.value == formItems.length) {
       runTopsis()
     }
@@ -219,8 +280,13 @@
   }
 
   function onBack() {
-    itemIndex.value -= 1
+    itemIndex.value -= 1;
   }
+
+  onMounted(async () => {
+    await getLocations();
+    await loadCurrentSessionData();
+  })
 </script>
 
 <template>

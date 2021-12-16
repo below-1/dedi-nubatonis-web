@@ -65,6 +65,10 @@
             </q-spinner>
           </button>
         </div>
+        <div class="flex-col justify-center items-center card-actions">
+          <h4>Belum Punya Akun?</h4>
+          <router-link to="/auth/signup" class="underline font-bold text-blue-800">Daftar</router-link>
+        </div>
       </div>
     </div>
   </Container>
