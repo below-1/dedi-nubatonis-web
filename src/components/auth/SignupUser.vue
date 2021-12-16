@@ -8,6 +8,7 @@
 
   const payload = reactive({
     nama: '',
+    gender: '',
     username: '',
     password: '',
     role: 'user'
@@ -34,6 +35,9 @@
         <form>
           <q-field label="Nama" class="mb-3">
             <q-input v-model="payload.nama" />
+          </q-field>
+          <q-field label="Gender" class="mb-3">
+            <q-select v-model="payload.gender" :options="['man', 'woman']" />
           </q-field>
           <q-field label="Username" class="mb-3">
             <q-input v-model="payload.username" />
