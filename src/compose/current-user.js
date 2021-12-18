@@ -26,6 +26,7 @@ export default function useCurrentUser() {
   onMounted(loadUser);
 
   return {
+    getCurrentUser: get,
   	currentUser,
   	status,
     loadUser

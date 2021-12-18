@@ -20,8 +20,11 @@ import LokasiList from '@quick/components/app/lokasi/List.vue'
 import LokasiCreate from '@quick/components/app/lokasi/Create.vue'
 import LokasiUpdate from '@quick/components/app/lokasi/Update.vue'
 import LokasiDetail from '@quick/components/app/lokasi/Detail.vue'
+
+import SessionV3 from '@quick/components/app/sessionsv2/SessionForm.vue'
 import NewSession2 from '@quick/components/app/sessions/NewSession2.vue'
 import ListSession from '@quick/components/app/sessions/List.vue'
+
 import Dashboard from '@quick/components/app/Dashboard.vue'
 import Survey from '@quick/components/app/Survey.vue'
 import SurveyResult from '@quick/components/app/SurveyResult.vue'
@@ -56,6 +59,10 @@ const routes = [
     { 
       path: 'session/new',
       component: NewSession2
+    },
+    { 
+      path: 'sessionv3',
+      component: SessionV3
     },
     { 
       path: 'session',

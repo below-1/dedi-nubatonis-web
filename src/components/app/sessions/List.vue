@@ -71,11 +71,12 @@
       >
         <li class="flex py-4 px-6 bg-white border-b border-gray-200">
           <img 
+            v-if="item.location"
             class="w-20 h-20 mr-4" 
             :src="item.location.avatar" />
           <div class="flex-grow">
             <div class="text-gray-800 capitalize text-xl">{{ item.man }} dan {{ item.woman }}</div>
-            <div class="text-sm md:w-3/5">{{ item.location.nama }}</div>
+            <div v-if="item.location" class="text-sm md:w-3/5">{{ item.location.nama }}</div>
             <div class="text-sm italic text-gray-500 md:w-3/5">{{ item.createdAt }}</div>
           </div>
           <div class="flex items-center">

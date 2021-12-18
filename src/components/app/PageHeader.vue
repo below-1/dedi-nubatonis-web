@@ -1,13 +1,48 @@
 <script setup>
   import { computed } from 'vue'
-  import { useRoute } from 'vue-router'
+  import { useRoute, useRouter } from 'vue-router'
+  import useCurrentUser from '@quick/compose/current-user';
+  import { usePOST } from '@quick/compose/axios';
 
   const route = useRoute()
+  const router = useRouter()
+
+  const {
+    currentUser,
+    getCurrentUser
+  } = useCurrentUser();
+
+  const currentSession = computed(() => currentUser.value ? currentUser.value.currentSession : null);
+
+  const {
+    post: createSession,
+    status: createSessionStatus
+  } = usePOST({
+    url: '/v1/api/sessions',
+    payload: {}
+  });
 
   const showCreateSession = computed(() => {
     console.log(route.fullPath)
     return route.fullPath != '/app/session'
   })
+
+  async function editCurrentSession() {
+    router.push('/app/sessionv3');
+  }
+
+  async function onOpenSession() {
+    if (!currentUser.value) {
+      return;
+    }
+    const user = currentUser.value;
+    if (!user.currentSession) {
+      await createSession();
+      await getCurrentUser();
+      // After creating new session...
+      console.log('time open new session...');
+    }
+  }
 
   const props = defineProps({
     title: String,
@@ -23,13 +58,27 @@
     </div>
     <slot name="actions">
     </slot>
-    <div>
-      <router-link 
+    <div class="flex items-center">
+      <button 
+        @click="editCurrentSession"
+        class="btn btn-info flex my-2 md:mr-4"
+        tag="button"
+      >
+        <span>edit data bobot anda</span>
+      </button>
+
+      <button 
         v-if="showCreateSession"
-        to="/app/session/new" 
+        @click="onOpenSession"
         class="btn btn-info flex my-2 md:ml-4"
         tag="button"
-      >Tentukan Lokasi</router-link>
+      >
+        <template v-if="createSessionStatus != 'loading'">
+          <span>tentukan lokasi</span>
+        </template>
+        <q-spinner v-else class="w-4 h-4">
+        </q-spinner>
+      </button>
     </div>
   </div>
 </template>
