@@ -27,7 +27,7 @@
   const { menus } = useMenus();
 
   const router = useRouter()
-  const { currentUser, status } = useCurrentUser();
+  const { currentUser, status, loadUser } = useCurrentUser();
   const mobileMenu = ref(false);
 
   function toggleMobileMenu() {
@@ -49,6 +49,8 @@
     dialogDescription.value = options.description
     dialogIsOpen.value = true
   })
+
+  onMounted(loadUser)
 </script>
 
 <style>

@@ -76,7 +76,7 @@ export function useGET(options) {
     get,
     result,
     onSuccess: (f) => {
-      _onSuccess = f
+      _onSuccess = f;
     }
   }
 }
@@ -108,6 +108,7 @@ export function usePUT(options) {
 
   const status = ref('idle')
   let _onSuccess = null
+  let _onError = null
   async function put() {
     status.value = 'loading'
     try {
@@ -122,6 +123,9 @@ export function usePUT(options) {
       }
       return response.data
     } catch (err) {
+      if (_onError) {
+        _onError(err)
+      }
       console.log(err)
       status.value = 'error'
     }
@@ -132,6 +136,9 @@ export function usePUT(options) {
     put,
     onSuccess: (f) => {
       _onSuccess = f
+    },
+    onError: (f) => {
+      _onError = f
     }
   }
 }

@@ -29,6 +29,8 @@ import Dashboard from '@quick/components/app/Dashboard.vue'
 import Survey from '@quick/components/app/Survey.vue'
 import SurveyResult from '@quick/components/app/SurveyResult.vue'
 
+import Account from '@quick/components/app/Account.vue'
+
 const routes = [
   { path: '/', component: Landing },
   { path: '/pref', component: LandingPreferensi },
@@ -37,6 +39,7 @@ const routes = [
   { path: '/auth/login', component: AuthLogin },
   { path: '/app', component: AppLayout, children: [
     { path: '', component: Dashboard },
+    { path: 'account', component: Account },
     { path: 'survey', component: Survey },
     { path: 'survey-result', component: SurveyResult },
     { path: 'dashboard', component: Dashboard },

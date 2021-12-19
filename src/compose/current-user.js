@@ -23,8 +23,6 @@ export default function useCurrentUser() {
     currentUser.value = user;
   }
 
-  onMounted(loadUser);
-
   return {
     getCurrentUser: get,
   	currentUser,

@@ -13,6 +13,7 @@
   import FacebookRSVG from '@quick/assets/facebook.svg'
   import InstagramRSVG from '@quick/assets/instagram.svg'
   import { useGET, useDELETE } from '@quick/compose/axios'
+  import SessionItem from './SessionItem.vue'
 
   const alert = inject('alert')
 
@@ -44,6 +45,7 @@
   const { get, result } = useGET({
     url: '/v1/api/sessions'
   })
+  
   const sessions = computed(() => {
     if (result.value.type != 'data') {
       return []
@@ -69,7 +71,10 @@
         v-for="item, i in sessions"
         :key="item._id"
       >
-        <li class="flex py-4 px-6 bg-white border-b border-gray-200">
+        <SessionItem
+          :session="item"
+        />
+        <!-- <li class="flex py-4 px-6 bg-white border-b border-gray-200">
           <img 
             v-if="item.location"
             class="w-20 h-20 mr-4" 
@@ -86,7 +91,7 @@
               <TrashIcon class="w-4 h-4" />
             </button>
           </div>
-        </li>
+        </li> -->
       </template>
     </ul>
     <h1 class="bg-gray-200 p-12 text-2xl font-bold text-center" v-else>Belum ada data</h1>

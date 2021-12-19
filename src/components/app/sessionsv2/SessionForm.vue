@@ -9,6 +9,9 @@
     watch
   } from 'vue'
   import { api } from '@quick/serv/axios'
+  import {
+    useCurrentSession
+  } from '@quick/compose/current-session';
   import { useGET, usePUT } from '@quick/compose/axios'
   import PageHeader from '@quick/components/app/PageHeader.vue'
   import PageContainer from '@quick/components/app/PageContainer.vue'
@@ -24,32 +27,21 @@
     { label: 'jumlah spot', key: 'numberOfSpots', value: 1 }
   ])
 
-  const postPayload = computed(() => {
-    let result = {};
-    payload.forEach(it => {
-      result[it.key] = it.value;
-    })
-    return result;
-  }) 
+  const { 
+    updateSession,
+    $updateStatus,
+    onSuccessUpdate,
+    onErrorUpdate
+  } = useCurrentSession({
+    payload
+  });
 
-  const url = computed(() => {
-    if (!currentUser.value || !currentUser.value.currentSession) {
-      return '';
-    }
-    const { currentSession } = currentUser.value;
-    return `/v1/api/sessions/${currentSession._id}`
+  onSuccessUpdate(() => {
+    alert('sukses mengubah bobot')
   })
 
-  const {
-    put: saveSession,
-    status: saveSessionStatus
-  } = usePUT({
-    url,
-    payload: postPayload
-  })
-
-  onMounted(() => {
-    console.log(currentUser.value.currentSession);
+  onErrorUpdate(() => {
+    alert('gagal mengubah bobot')
   })
 </script>
 
@@ -72,10 +64,14 @@
       </div>
       <div class="flex justify-center">
         <button 
-          @click="saveSession"
+          @click="updateSession"
           class="btn btn-primary my-12"
         >
-          Simpan Bobot
+          <template v-if="$updateStatus == 'idle'">
+            Simpan Bobot
+          </template>
+          <q-spinner v-else class="w-4 h-4">
+          </q-spinner>
         </button>
       </div>
     </div>

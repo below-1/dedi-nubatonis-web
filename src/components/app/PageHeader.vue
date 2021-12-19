@@ -40,7 +40,8 @@
       await createSession();
       await getCurrentUser();
       // After creating new session...
-      console.log('time open new session...');
+      router.push('/app/sessionv3')
+      // console.log('time open new session...');
     }
   }
 
@@ -60,8 +61,9 @@
     </slot>
     <div class="flex items-center">
       <button 
+        v-if="currentSession"
         @click="editCurrentSession"
-        class="btn btn-info flex my-2 md:mr-4"
+        class="btn btn-info flex my-2 md:ml-4"
         tag="button"
       >
         <span>edit data bobot anda</span>

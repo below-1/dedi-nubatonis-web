@@ -14,7 +14,8 @@ export function useMenus() {
     { path: '/app/dashboard', label: 'Dashboard', icon: ChartBarIcon },
     { path: '/app/fotografer', label: 'Fotografer', icon: CameraIcon },
     { path: '/app/lokasi', label: 'Lokasi', icon: LocationMarkerIcon },
-    { path: '/app/session', label: 'Session', icon: DocumentIcon }
+    { path: '/app/session', label: 'Session', icon: DocumentIcon },
+    { path: '/app/account', label: 'Akun', icon: DocumentIcon }
   ]
 
   const adminMenus = [
