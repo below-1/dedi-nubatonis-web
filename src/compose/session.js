@@ -1,7 +1,7 @@
 import { ref, unref, inject, onMounted, computed } from 'vue'
 import { usePUT, useGET } from '@quick/compose/axios'
 
-export function useSession({ $id, payload }) {
+export function useSession({ $id, payload, $gender }) {
   const url = computed(() => {
     const id = unref($id)
     return `/v1/api/sessions/${id}`
@@ -13,18 +13,12 @@ export function useSession({ $id, payload }) {
     onSuccess } = useGET({ url })
 
   onSuccess((data) => {
-    if (data.currentSession) {
-      const sess = data.currentSession;
-      const gender = data.gender;
-
-      if (sess.weights) {
-        const weights = sess.weights[gender];
-        payload.forEach(row => {
-          row.value = weights[row.key];
-        });
-      }
-
-      $sessionId.value = sess._id;
+    const gender = unref($gender);
+    const weights = data.weights[gender];
+    if (weights) {
+      payload.forEach(row => {
+        row.value = weights[row.key];
+      });
     }
   });
 

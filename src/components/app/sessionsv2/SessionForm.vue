@@ -2,6 +2,7 @@
 	import {
     ref,
     toRef,
+    unref,
     reactive,
     computed,
     onMounted,
@@ -22,6 +23,7 @@
   })
 
   const id = toRef(props, 'id')
+  const $currentUser = inject('currentUser');
 
   const payload = reactive([
     { label: 'jarak', key: 'distance', value: 1 },
@@ -31,6 +33,10 @@
     { label: 'waktu', key: 'waktu', value: 1 },
     { label: 'jumlah spot', key: 'numberOfSpots', value: 1 }
   ])
+  const $gender = computed(() => {
+    const currentUser = unref($currentUser);
+    return currentUser.gender;
+  })
 
   const {
     $session,
@@ -39,7 +45,7 @@
     onSuccessUpdate,
     onErrorUpdate,
     $updateStatus
-  } = useSession({ $id: id, payload })
+  } = useSession({ $id: id, payload, $gender  })
 
   onSuccessUpdate(() => {
     alert('sukses mengubah bobot')
