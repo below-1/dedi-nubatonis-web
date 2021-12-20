@@ -11,9 +11,15 @@
 
   const router = useRouter()
 
+  const genderOptions = [
+    { value: 'man', text: 'Pria' },
+    { value: 'woman', text: 'Wanita' }
+  ]
+
   const payload = reactive({
+    username: '',
+    password: '',
     nama: 'dedi nubatonis',
-    description: '',
     summary: '',
     facebook: 'abcde',
     instagram: 'abcde',
@@ -58,6 +64,15 @@
       <form class="form-control p-6 bg-white">
         <q-field label="Nama" class="mb-4">
           <q-input v-model="payload.nama" />
+        </q-field>
+        <q-field label="Gender" class="mb-3">
+          <q-select v-model="payload.gender" :options="genderOptions" />
+        </q-field>
+        <q-field label="Username" class="mb-3">
+          <q-input v-model="payload.username" />
+        </q-field>
+        <q-field label="Password" class="mb-3">
+          <q-input type="password" v-model="payload.password" />
         </q-field>
         <q-field label="Info singkat fotografer" class="mb-4">
           <textarea v-model="payload.summary" class="w-full border border-gray-300"></textarea>

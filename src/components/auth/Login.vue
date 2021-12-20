@@ -30,7 +30,9 @@
   async function login() {
     buttonLoading.value = true
     const response = await post()
-    localStorage.setItem('quick.token', response)
+    console.log('response')
+    console.log(response)
+    await localStorage.setItem('quick.token', response)
     const user = await getCurentUser()
     currentUser.value = user
     setTimeout(() => {

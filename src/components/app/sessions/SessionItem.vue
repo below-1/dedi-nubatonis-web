@@ -5,6 +5,15 @@
   import MemberStat from './MemberStat.vue';
   import MemberCard from './MemberCard.vue';
 
+  const props = defineProps({
+    session: Object
+  })
+
+  const id = computed(() => {
+    if (props.session) return props.session._id;
+    return null;
+  })
+
   const $currentUser = inject('currentUser');
   const title = computed(() => {
     const currentUser = unref($currentUser);
@@ -17,8 +26,9 @@
     return 'mempelai wanita';
   })
 
-  const props = defineProps({
-    session: Object
+  const isOwner = computed(() => {
+    const currentUser = unref($currentUser)
+    return currentUser._id == props.session.user._id;
   })
 </script>
 
@@ -46,8 +56,10 @@
         <p class="font-bold text-gray-600">{{ session.user.nama }}</p>
         <p class="font-bold text-gray-500 text-sm">{{ session.createdAt }}</p>
       </div>
-      <button class="btn btn-sm mr-2">hapus</button>
-      <button class="btn btn-info btn-sm">input data {{ title }}</button>
+      <button v-if="isOwner" class="btn btn-sm mr-2">hapus</button>
+      <router-link 
+        :to="`/app/sessionv3/${id}`"
+        class="btn btn-info btn-sm">input data {{ title }}</router-link>
     </div>
   </li>
 </template>

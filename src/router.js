@@ -64,8 +64,9 @@ const routes = [
       component: NewSession2
     },
     { 
-      path: 'sessionv3',
-      component: SessionV3
+      path: 'sessionv3/:id',
+      component: SessionV3,
+      props: true
     },
     { 
       path: 'session',

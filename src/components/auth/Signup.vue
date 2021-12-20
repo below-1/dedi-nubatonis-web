@@ -16,7 +16,7 @@
     gender: 'man',
     username: '',
     password: '',
-    role: 'user'
+    role: 'admin'
   })
 
   const { post, status } = usePOST({

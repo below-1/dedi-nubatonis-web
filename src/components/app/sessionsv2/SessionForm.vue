@@ -1,6 +1,7 @@
 <script setup>
 	import {
     ref,
+    toRef,
     reactive,
     computed,
     onMounted,
@@ -10,13 +11,17 @@
   } from 'vue'
   import { api } from '@quick/serv/axios'
   import {
-    useCurrentSession
-  } from '@quick/compose/current-session';
+    useSession
+  } from '@quick/compose/session';
   import { useGET, usePUT } from '@quick/compose/axios'
   import PageHeader from '@quick/components/app/PageHeader.vue'
   import PageContainer from '@quick/components/app/PageContainer.vue'
 
-  const currentUser = inject('currentUser');
+  const props = defineProps({
+    id: String
+  })
+
+  const id = toRef(props, 'id')
 
   const payload = reactive([
     { label: 'jarak', key: 'distance', value: 1 },
@@ -27,14 +32,14 @@
     { label: 'jumlah spot', key: 'numberOfSpots', value: 1 }
   ])
 
-  const { 
+  const {
+    $session,
+    loadSession,
     updateSession,
-    $updateStatus,
     onSuccessUpdate,
-    onErrorUpdate
-  } = useCurrentSession({
-    payload
-  });
+    onErrorUpdate,
+    $updateStatus
+  } = useSession({ $id: id, payload })
 
   onSuccessUpdate(() => {
     alert('sukses mengubah bobot')
@@ -43,6 +48,8 @@
   onErrorUpdate(() => {
     alert('gagal mengubah bobot')
   })
+
+  onMounted(loadSession)
 </script>
 
 <template>

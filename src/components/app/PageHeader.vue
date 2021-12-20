@@ -1,15 +1,20 @@
 <script setup>
-  import { computed } from 'vue'
+  import { computed, unref } from 'vue'
   import { useRoute, useRouter } from 'vue-router'
   import useCurrentUser from '@quick/compose/current-user';
   import { usePOST } from '@quick/compose/axios';
+
+  const props = defineProps({
+    title: String,
+    subtitle: String
+  })
 
   const route = useRoute()
   const router = useRouter()
 
   const {
     currentUser,
-    getCurrentUser
+    loadUser
   } = useCurrentUser();
 
   const currentSession = computed(() => currentUser.value ? currentUser.value.currentSession : null);
@@ -28,27 +33,27 @@
   })
 
   async function editCurrentSession() {
-    router.push('/app/sessionv3');
+    const user = unref(currentUser)
+    const session = user.currentSession
+    router.push(`/app/sessionv3/${session._id}`);
   }
 
   async function onOpenSession() {
     if (!currentUser.value) {
       return;
     }
-    const user = currentUser.value;
-    if (!user.currentSession) {
+    if (!currentUser.value.currentSession) {
       await createSession();
-      await getCurrentUser();
+      // Reload user with the new session
+      await loadUser();
+      const session = currentUser.value.currentSession;
+      console.log('session');
+      console.log(session);
       // After creating new session...
-      router.push('/app/sessionv3')
+      router.push(`/app/sessionv3/${session._id}`);
       // console.log('time open new session...');
     }
   }
-
-  const props = defineProps({
-    title: String,
-    subtitle: String
-  })
 </script>
 
 <template>
