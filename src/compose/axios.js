@@ -12,6 +12,7 @@ export function usePOST(options) {
   }
 
   const status = ref('idle')
+  const error = ref(null)
   let _onSuccess = null
   async function post() {
     status.value = 'loading'
@@ -26,11 +27,13 @@ export function usePOST(options) {
     } catch (err) {
       console.log(err)
       status.value = 'error'
+      error.value = err
     }
   }
 
   return {
     status,
+    error,
     post,
     onSuccess: (f) => {
       _onSuccess = f
@@ -119,7 +122,7 @@ export function usePUT(options) {
       const response = await api.put(unref(options.url), payload)
       status.value = 'idle'
       if (_onSuccess) {
-        _onSuccess(response.dat)
+        _onSuccess(response.data)
       }
       return response.data
     } catch (err) {

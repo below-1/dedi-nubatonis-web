@@ -73,6 +73,7 @@
       >
         <SessionItem
           :session="item"
+          @deleted="get"
           class="mb-4"
         />
         <!-- <li class="flex py-4 px-6 bg-white border-b border-gray-200">

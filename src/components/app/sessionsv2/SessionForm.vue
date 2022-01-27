@@ -33,6 +33,11 @@
     { label: 'waktu', key: 'waktu', value: 1 },
     { label: 'jumlah spot', key: 'numberOfSpots', value: 1 }
   ])
+
+  const totalWeights = computed(() => payload.map(it => it.value).reduce((a, b) => a + b, 0))
+  const lessThan100 = computed(() => totalWeights.value < 100)
+  const moreThan100 = computed(() => totalWeights.value > 100)
+
   const $gender = computed(() => {
     const currentUser = unref($currentUser);
     return currentUser.gender;
@@ -47,7 +52,7 @@
     $updateStatus
   } = useSession({ $id: id, payload, $gender  })
 
-  onSuccessUpdate(() => {
+  onSuccessUpdate((data) => {
     alert('sukses mengubah bobot')
   })
 
@@ -66,7 +71,7 @@
   </PageHeader>
   <PageContainer>
     <h1 class="text-2xl text-gray-500 text-center mb-12">Input Bobot Kriteria  </h1>
-    <h1 class="text-xl font-medium text-gray-700 text-center mb-12">Silahkan Masukan Nilai Bobot 1 sampai 100 Secara Random </h1>
+    <h1 class="text-xl font-medium text-gray-700 text-center mb-12">Silahkan Masukan Nilai Bobot 1 sampai 100</h1>
     <div class="w-4/5 mx-auto">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <template v-for="item in payload">
@@ -75,10 +80,14 @@
           </q-field>
         </template>
       </div>
-      <div class="flex justify-center">
+      <div class="flex flex-col justify-center">
+        <div v-if="lessThan100 || moreThan100">
+          <h3 class="text-red-500 font-bold text-2xl">Jumlah bobot harus sama dengan 100</h3>
+        </div>
         <button 
           @click="updateSession"
-          class="btn btn-primary my-12"
+          :disabled="lessThan100 || moreThan100"
+          class="btn btn-primary my-12 disabled:opacity-50"
         >
           <template v-if="$updateStatus == 'idle'">
             Simpan Bobot

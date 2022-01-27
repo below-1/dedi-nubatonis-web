@@ -1,5 +1,21 @@
 import { ref, unref, inject, onMounted, computed } from 'vue'
 import { usePUT, useGET } from '@quick/compose/axios'
+import useCurrentUser from '@quick/compose/current-user';
+import { api } from '@quick/serv/axios';
+import rank from '@quick/serv/rank';
+
+async function updateSessionResult({ id, location, borda }) {
+  const url = `/v1/api/sessions/${id}/result`;
+  try {
+    const response = await api.put(url, {
+      location,
+      borda
+    })
+  } catch (err) {
+    console.log(err);
+    alert('gagal menyimpan hasil sistem');
+  }
+}
 
 export function useSession({ $id, payload, $gender }) {
   const url = computed(() => {
@@ -45,10 +61,32 @@ export function useSession({ $id, payload, $gender }) {
     onError: onErrorUpdate
   } = usePUT({ url, payload: $updatePayload });
 
+  const {
+    loadUser
+  } = useCurrentUser();
+
+  const decoratedOnSuccess = (f) => {
+    const decorated = async (response) => {
+      console.log('response')
+      console.log(response)
+      if (response.complete) {
+        const rankResult = await rank(response.weights);
+        console.log(rankResult);
+        await updateSessionResult({
+          id: $id.value,
+          ...rankResult
+        })
+        await loadUser();
+      }
+      return f(response);
+    }
+    onSuccessUpdate(decorated);
+  }
+
   return {
     loadSession,
     $session,
-    onSuccessUpdate,
+    onSuccessUpdate: decoratedOnSuccess,
     onErrorUpdate,
     updateSession,
     $updateStatus,

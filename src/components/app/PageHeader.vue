@@ -17,7 +17,7 @@
     loadUser
   } = useCurrentUser();
 
-  const currentSession = computed(() => currentUser.value ? currentUser.value.currentSession : null);
+  const currentSession = computed(() => currentUser.value ? currentUser.value.currentSession : null)
 
   const {
     post: createSession,
@@ -39,10 +39,13 @@
   }
 
   async function onOpenSession() {
+    console.log(!currentUser.value);
     if (!currentUser.value) {
       return;
     }
     if (!currentUser.value.currentSession) {
+      console.log('heeereee');
+      return;
       await createSession();
       // Reload user with the new session
       await loadUser();
@@ -65,27 +68,28 @@
     <slot name="actions">
     </slot>
     <div class="flex items-center">
-      <button 
-        v-if="currentSession"
-        @click="editCurrentSession"
-        class="btn btn-info flex my-2 md:ml-4"
-        tag="button"
-      >
-        <span>edit data bobot anda</span>
-      </button>
+      <template v-if="currentUser.role != 'photographer' && currentUser.role != 'admin'">
+        <button 
+          v-if="currentSession"
+          @click="editCurrentSession"
+          class="btn btn-info flex my-2 md:ml-4"
+          tag="button"
+        >
+          <span>edit data bobot anda</span>
+        </button>
 
-      <button 
-        v-if="showCreateSession"
-        @click="onOpenSession"
-        class="btn btn-info flex my-2 md:ml-4"
-        tag="button"
-      >
-        <template v-if="createSessionStatus != 'loading'">
-          <span>tentukan lokasi</span>
-        </template>
-        <q-spinner v-else class="w-4 h-4">
-        </q-spinner>
-      </button>
+        <button 
+          v-if="showCreateSession"
+          @click="onOpenSession"
+          class="btn btn-info flex my-2 md:ml-4"
+        >
+          <template v-if="createSessionStatus != 'loading'">
+            <span>tentukan lokasi</span>
+          </template>
+          <q-spinner v-else class="w-4 h-4">
+          </q-spinner>
+        </button>
+      </template>
     </div>
   </div>
 </template>

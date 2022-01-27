@@ -57,7 +57,7 @@
     subtitle="Daftar fotografer"
   >
     <template #actions>
-      <a class="btn"><router-link to="/app/fotografer/create">tambah fotografer</router-link></a>
+      <a class="btn" v-if="isAdmin"><router-link to="/app/fotografer/create">tambah fotografer</router-link></a>
     </template>
   </PageHeader>
   <PageContainer>

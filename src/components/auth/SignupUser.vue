@@ -6,6 +6,11 @@
   import { usePOST } from '@quick/compose/axios'
   import { useRouter } from 'vue-router'
 
+  const genderOptions = [
+    { value: 'man', text: 'Pria' },
+    { value: 'woman', text: 'Wanita' }
+  ]
+
   const payload = reactive({
     nama: '',
     gender: '',
@@ -37,7 +42,7 @@
             <q-input v-model="payload.nama" />
           </q-field>
           <q-field label="Gender" class="mb-3">
-            <q-select v-model="payload.gender" :options="['man', 'woman']" />
+            <q-select v-model="payload.gender" :options="genderOptions" />
           </q-field>
           <q-field label="Username" class="mb-3">
             <q-input v-model="payload.username" />

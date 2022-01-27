@@ -26,7 +26,7 @@
       <div
         v-for="item in photographersResult.data"
         :key="item._id"
-        :style="`background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('${item.avatar}'); background-position: center; background-size: cover; background-attachment: fixed;`"
+        :style="`background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('${item.avatar}'); background-position: center; background-size: cover;`"
         class="h-60 flex items-center justify-center"
       >
         <h1 class="text-white font-black text-xl">{{ item.nama }}</h1>
