@@ -26,6 +26,7 @@
     theme: 'indoor',
     avatar: ''
   })
+  const waktuFormatted = computed(() => payload.waktu == 2 ? '12 jam' : '6 jam')
 
   const transportationOptions = [
     { value: 'bike', text: 'Motor' },
@@ -128,7 +129,7 @@
         </li>
         <li class="py-4 px-2 flex justify-between items-center border-b border-grey-200">
           <span>Waktu</span>
-          <span class="font-bold">{{ payload.waktu }}</span>
+          <span class="font-bold">{{ waktuFormatted }}</span>
         </li>
         <li class="py-4 px-2 flex justify-between items-center border-b border-grey-200">
           <span>Tema</span>

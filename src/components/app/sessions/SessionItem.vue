@@ -6,6 +6,7 @@
   import MemberStat from './MemberStat.vue';
   import MemberCard from './MemberCard.vue';
   import useCurrentUser from '@quick/compose/current-user';
+  import rank from '@quick/serv/rank';
 
   const emit = defineEmits([
     'deleted'
@@ -39,6 +40,11 @@
     return currentUser._id == props.session.user._id;
   })
 
+  const isAdmin = computed(() => {
+    const currentUser = unref($currentUser)
+    return currentUser.role == 'admin'
+  })
+
   const isComplete = computed(() => {
     return props.session.complete
   })
@@ -59,6 +65,10 @@
     }
   }
 
+  function onDetail(id) {
+    
+  }
+
   function promptDelete() {
     alert({
       title: 'Hapus data session',
@@ -69,6 +79,10 @@
         emit('deleted')
       }
     })
+  }
+
+  async function onRecalc() {
+    await rank(props.session.weights)
   }
 </script>
 
@@ -101,8 +115,10 @@
       </div>
       <div class="flex items-center">
         <button v-if="isOwner" @click="promptDelete" class="btn btn-sm mr-2">hapus</button>
+        <!-- <button @click="onRecalc" class="btn btn-sm mr-2">recalc</button> -->
+        <router-link :to="`/app/sessions/${session._id}`" class="btn btn-sm mr-2">detail</router-link>
         <router-link 
-          v-if="!(!isOwner && isComplete)"
+          v-if="!isAdmin && !(!isOwner && isComplete)"
           :to="`/app/sessionv3/${id}`"
           class="btn btn-info btn-sm">input data {{ title }}</router-link>
       </div>

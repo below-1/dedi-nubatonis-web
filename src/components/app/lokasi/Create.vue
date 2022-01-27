@@ -4,7 +4,6 @@
   } from 'vue'
   import { useRouter } from 'vue-router'
   import { useMutation } from '@vue/apollo-composable'
-  import { create as GQL_create } from '@quick/gql/lokasi'
   import PageHeader from '@quick/components/app/PageHeader.vue'
   import PageContainer from '@quick/components/app/PageContainer.vue'
   import { usePOST } from '@quick/compose/axios'
@@ -25,13 +24,12 @@
 
   const transportationOptions = [
     { value: 'bike', text: 'Motor' },
-    { value: 'car', text: 'Mobil Pribadi' },
-    { value: 'rental-car', text: 'Rental Mobil' }
+    { value: 'car', text: 'Mobil Pribadi' }
   ]
 
   const waktuOptions = [
-    { value: 4, text: '06:00 AM - 06:00 PM' },
-    { value: 2, text: '12:00 PM - 06:00 PM' }
+    { value: 2, text: '12 jam' },
+    { value: 1, text: '6 jam' }
   ]
 
   const {

@@ -15,7 +15,7 @@
 </script>
 
 <template>
-  <div class="bg-gray-100 rounded p-2 flex items-center">
+  <div class="rounded p-2 flex items-center">
     <img :src="avatar" class="h-20 mr-2" />
     <div v-if="member">
       <p>{{ member.nama }}</p>

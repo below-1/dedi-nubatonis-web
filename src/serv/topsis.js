@@ -1,7 +1,7 @@
 export function transformRow(row) {
 	let result = []
-	if (row[0] < 4) { result.push(4); }
-	else if (row[0] >= 4 && row[0] < 7) { result.push(3); }
+	if (row[0] <= 4) { result.push(4); }
+	else if (row[0] > 4 && row[0] < 7) { result.push(3); }
 	else if (row[0] >= 7 && row[0] < 11) { result.push(2); }
 	else { result.push(1) }
 
@@ -15,22 +15,29 @@ export function transformRow(row) {
 	else if (row[2] >= 400000 && row[2] < 700000) { result.push(3) }
 	else { result.push(4) }
 
-	if (row[3] == 'car') { result.push(3) }
-	else if (row[3] == 'rental-car') { result.push(2) }
+	if (row[3] == 'car') { result.push(2) }
 	else { result.push(1) }
 
-	if (row[4] == 'outdoor') { result.push(4) }
-	else { result.push(2) }
+	if (row[4] == 'outdoor') { result.push(2) }
+	else { result.push(1) }
 
 	result.push(row[5])
-	// if (row[5] < 12) { result.push(4) }
-	// else { result.push(2) }
+	// if (row[5] == 12) { result.push(2) }
+	// else { result.push(1) }
 
 	return result
 }
 
 export function topsis({ data, weights }) {
-	// console.log(data)
+	const totalWeights = weights.reduce((a, b) => a + b, 0)
+	// const normalizedWeights = weights.map(w => w / totalWeights);
+	const normalizedWeights = [100, 1, 1, 1, 1, 1];
+
+	const MIN = 0;
+	const MAX = 100;
+
+	const customWeights = normalizedWeights.map(w => w * MAX);
+
 	const temp_1 = data.map(row => {
 		return row.map(x => Math.pow(x, 2))
 	});
@@ -48,14 +55,17 @@ export function topsis({ data, weights }) {
 	const M = data.map(row =>
 		row.map((x, j) => x / C[j])
 	)
+	// console.log('normalizedWeights')
+	// console.log(normalizedWeights)
+	// console.log('M')
+	// console.log(M)
 
 	const MW = M.map(row =>
-		row.map((x, j) => x * weights[j])
+		row.map((x, j) => x * normalizedWeights[j])
 	)
-	console.log('MW')
-	console.log(MW)
 
 
+	// const cost = [ true, ]
 	const IDEAL = {
 		'-': [ 0, 0, 0, 0, 0, 0 ],
 		'+': [ 0, 0, 0, 0, 0, 0 ],
@@ -73,14 +83,20 @@ export function topsis({ data, weights }) {
 			.map((x, j) => Math.pow(x - IDEAL['+'][j], 2))
 			.reduce((a, b) => a + b, 0))
 	)
+	console.log('D_plus')
+	console.log(D_plus)
 	const D_min =   MW.map(row => 
 		Math.sqrt(row
 			.map((x, j) => Math.pow(x - IDEAL['-'][j], 2))
 			.reduce((a, b) => a + b, 0))
 	)
+	console.log('D_min')
+	console.log(D_min)
 	
 
 	let prefs = D_min.map((x, i) => x / (x + D_plus[i]))
+	console.log('prefs')
+	console.log(prefs)
 	prefs = prefs.map((p, i) => ({
 		p,
 		i

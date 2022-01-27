@@ -20,7 +20,6 @@ export function useMenus() {
 
   const adminMenus = [
     ...baseMenus,
-    { path: '/app/weights', label: 'Bobot', icon: DocumentIcon },
     { path: '/app/survey-result', label: 'Hasil Survey', icon: DocumentIcon }
   ]
 

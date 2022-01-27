@@ -61,9 +61,6 @@
     title="Sesi"
     subtitle="Daftar sesi"
   >
-    <template #actions>
-      <a class="btn btn-primary"><router-link to="/app/lokasi/create">Pilih Lokasi</router-link></a>
-    </template>
   </PageHeader>
   <PageContainer>
     <ul v-if="sessions.length">

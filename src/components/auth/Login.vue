@@ -49,9 +49,7 @@
       await localStorage.setItem('quick.token', response)
       const user = await getCurentUser()
       currentUser.value = user
-      setTimeout(() => {
-        router.push('/app')
-      }, 2000)
+      router.push('/app')
     } else {
       setTimeout(() => {
         alert(errorMessage.value)

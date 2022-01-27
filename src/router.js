@@ -24,6 +24,7 @@ import LokasiDetail from '@quick/components/app/lokasi/Detail.vue'
 import SessionV3 from '@quick/components/app/sessionsv2/SessionForm.vue'
 import NewSession2 from '@quick/components/app/sessions/NewSession2.vue'
 import ListSession from '@quick/components/app/sessions/List.vue'
+import SessionDetail from '@quick/components/app/sessions/Detail.vue'
 
 import Dashboard from '@quick/components/app/Dashboard.vue'
 import Survey from '@quick/components/app/Survey.vue'
@@ -62,6 +63,11 @@ const routes = [
     { 
       path: 'session/new',
       component: NewSession2
+    },
+    { 
+      path: 'sessions/:id',
+      component: SessionDetail,
+      props: true
     },
     { 
       path: 'sessionv3/:id',

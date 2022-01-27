@@ -28,8 +28,8 @@
   });
 
   const showCreateSession = computed(() => {
-    console.log(route.fullPath)
-    return route.fullPath != '/app/session'
+    const user = unref(currentUser)
+    return (user.role != 'admin') && (user.role != 'photographer') && (!user.currentSession)
   })
 
   async function editCurrentSession() {
@@ -44,8 +44,6 @@
       return;
     }
     if (!currentUser.value.currentSession) {
-      console.log('heeereee');
-      return;
       await createSession();
       // Reload user with the new session
       await loadUser();

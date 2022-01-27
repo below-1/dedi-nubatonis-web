@@ -28,13 +28,12 @@
 
   const transportationOptions = [
     { value: 'bike', text: 'Motor' },
-    { value: 'car', text: 'Mobil Pribadi' },
-    { value: 'rental-car', text: 'Rental Mobil' }
+    { value: 'car', text: 'Mobil' }
   ]
 
   const waktuOptions = [
-    { value: 4, text: '06:00 AM - 06:00 PM' },
-    { value: 2, text: '12:00 PM - 06:00 PM' }
+    { value: 2, text: '12 jam' },
+    { value: 1, text: '6 jam' }
   ]
 
   async function avatarChangeHandler(event) {
