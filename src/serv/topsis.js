@@ -30,7 +30,13 @@ export function transformRow(row) {
 
 export function topsis({ data, weights }) {
 	const totalWeights = weights.reduce((a, b) => a + b, 0)
-	const normalizedWeights = weights.map(w => w / totalWeights);
+	// const normalizedWeights = weights.map(w => w / totalWeights);
+	const normalizedWeights = [100, 1, 1, 1, 1, 1];
+
+	const MIN = 0;
+	const MAX = 100;
+
+	const customWeights = normalizedWeights.map(w => w * MAX);
 
 	const temp_1 = data.map(row => {
 		return row.map(x => Math.pow(x, 2))
@@ -59,21 +65,17 @@ export function topsis({ data, weights }) {
 	)
 
 
-	const cost = [ true, false, true, false, false, true ]
+	// const cost = [ true, ]
 	const IDEAL = {
 		'-': [ 0, 0, 0, 0, 0, 0 ],
 		'+': [ 0, 0, 0, 0, 0, 0 ],
 	}
 	for (let i = 0; i < 6; i++) {
 		const subs = MW.map(row => row[i])
-
 		const x_min = Math.min(...subs)
 		const x_max = Math.max(...subs)
-
-		// Ideal negative
-		IDEAL['-'][i] = cost[i] ? x_max : x_min
-		// Ideal positive
-		IDEAL['+'][i] = cost[i] ? x_min : x_max
+		IDEAL['-'][i] = x_min
+		IDEAL['+'][i] = x_max
 	}
 
 	const D_plus =  MW.map(row => 
@@ -81,15 +83,15 @@ export function topsis({ data, weights }) {
 			.map((x, j) => Math.pow(x - IDEAL['+'][j], 2))
 			.reduce((a, b) => a + b, 0))
 	)
-	// console.log('D_plus')
-	// console.log(D_plus)
+	console.log('D_plus')
+	console.log(D_plus)
 	const D_min =   MW.map(row => 
 		Math.sqrt(row
 			.map((x, j) => Math.pow(x - IDEAL['-'][j], 2))
 			.reduce((a, b) => a + b, 0))
 	)
-	// console.log('D_min')
-	// console.log(D_min)
+	console.log('D_min')
+	console.log(D_min)
 	
 
 	let prefs = D_min.map((x, i) => x / (x + D_plus[i]))
