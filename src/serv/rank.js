@@ -13,14 +13,6 @@ async function getLocations() {
 function convertLocationToAlternative(locations) {
 	return locations
 		.map(location => {
-      console.log([
-        location.distance,
-        location.numberOfSpots,
-        parseInt(location.price.$numberDecimal),
-        location.transportation,
-        location.theme,
-        location.waktu
-      ])
 			return [
 				location.distance,
 	      location.numberOfSpots,
@@ -56,6 +48,9 @@ export default async function rank(weights) {
     const ranked = topsis({ data: alternatives, weights: W[indexOfPreference] });
     topsisResults.push(ranked)
   }
+  console.log(locations);
+  console.log('topsisResults');
+  console.log(topsisResults);
 
   const N_ALT = locations.length;
 

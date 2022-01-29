@@ -29,9 +29,10 @@
   })
 
   async function onRecalc() {
-    console.log('recalc')
-    console.log(session.value.weights)
-    await rank(session.value.weights)
+    // console.log('recalc')
+    // console.log(session.value.weights)
+    const result = await rank(session.value.weights)
+    console.log(result)
   }
 
 	onMounted(getSession);
