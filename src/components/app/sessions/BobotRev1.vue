@@ -78,7 +78,7 @@
 
 <template>
   <h1 class="text-2xl text-gray-500 text-center mb-12">Input Bobot Kriteria  </h1>
-  <h1 class="text-xl font-medium text-gray-700 text-center mb-12">Silahkan Masukan Nilai Bobot 1 sampai 100 Secara Random </h1>
+  <h1 class="text-xl font-medium text-gray-700 text-center mb-12">Silahkan Masukan Nilai Bobot maksimal 100</h1>
   <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
     <template v-for="item in payload">
       <q-field :label="item.label" class="mb-4">

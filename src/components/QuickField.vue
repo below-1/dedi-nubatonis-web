@@ -6,7 +6,7 @@
 
 <template>
   <div>
-    <label class="text-gray-500 text-sm">
+    <label class="text-gray-600">
       {{ label }}
     </label>
     <slot></slot>

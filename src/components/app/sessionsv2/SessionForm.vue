@@ -35,6 +35,7 @@
   ])
 
   const totalWeights = computed(() => payload.map(it => it.value).reduce((a, b) => a + b, 0))
+  const weightDiff = computed(() => Math.abs(totalWeights.value - 100))
   const lessThan100 = computed(() => totalWeights.value < 100)
   const moreThan100 = computed(() => totalWeights.value > 100)
 
@@ -71,19 +72,24 @@
   </PageHeader>
   <PageContainer>
     <h1 class="text-2xl text-gray-500 text-center mb-12">Input Bobot Kriteria  </h1>
-    <h1 class="text-xl font-medium text-gray-700 text-center mb-12">Silahkan Masukan Nilai Bobot 1 sampai 100</h1>
+    <h1 class="text-xl font-medium text-gray-700 text-center mb-12">Silahkan Masukan Nilai Bobot maksimal 100</h1>
     <div class="w-4/5 mx-auto">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <template v-for="item in payload">
           <q-field :label="item.label" class="mb-4">
-            <q-input type="number" v-model="item.value" />
+            <q-input type="number" v-model="item.value" :max="100" :min="0" />
           </q-field>
         </template>
       </div>
       <div class="flex flex-col justify-center">
-        <div v-if="lessThan100 || moreThan100">
-          <h3 class="text-red-500 font-bold text-2xl">Jumlah bobot harus sama dengan 100</h3>
+
+        <div v-if="moreThan100">
+          <h3 class="text-red-500 font-bold text-2xl">Jumlah Bobot Lebih {{ weightDiff }}</h3>
         </div>
+        <div v-else-if="lessThan100">
+          <h3 class="text-red-500 font-bold text-2xl">Jumlah bobot Kurang {{ weightDiff }}</h3>
+        </div>
+
         <button 
           @click="updateSession"
           :disabled="lessThan100 || moreThan100"
