@@ -21,7 +21,7 @@ export function usePOST(options) {
       const response = await api.post(unref(options.url), payload)
       status.value = 'idle'
       if (_onSuccess) {
-        _onSuccess(response.data)
+        await _onSuccess(response.data)
       }
       return response.data
     } catch (err) {

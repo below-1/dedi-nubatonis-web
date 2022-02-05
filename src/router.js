@@ -21,7 +21,8 @@ import LokasiCreate from '@quick/components/app/lokasi/Create.vue'
 import LokasiUpdate from '@quick/components/app/lokasi/Update.vue'
 import LokasiDetail from '@quick/components/app/lokasi/Detail.vue'
 
-import SessionV3 from '@quick/components/app/sessionsv2/SessionForm.vue'
+import SessionFormPage from '@quick/components/app/sessionsv2/SessionFormPage.vue'
+import SessionNew from '@quick/components/app/sessionsv2/SessionNew.vue'
 import NewSession2 from '@quick/components/app/sessions/NewSession2.vue'
 import ListSession from '@quick/components/app/sessions/List.vue'
 import SessionDetail from '@quick/components/app/sessions/Detail.vue'
@@ -63,16 +64,14 @@ const routes = [
       path: 'weights',
       component: WeightEditor
     },
-    { 
-      path: 'session/new',
-      component: NewSession2
-    },
+    
+    { path: 'sessions/new', component: SessionNew },
     { path: 'sessions/:id', component: SessionDetail, props: true },
     { path: 'sessions/:id/choose-photographer', component: SessionChoosePhotographer, props: true },
     { path: 'session-send-wa/:token', component: SessionSendWA, props: true },
     { 
       path: 'sessionv3/:id',
-      component: SessionV3,
+      component: SessionFormPage,
       props: true
     },
     { 

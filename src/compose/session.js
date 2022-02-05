@@ -17,16 +17,69 @@ async function updateSessionResult({ id, location, borda }) {
   }
 }
 
-export function useSession({ $id, payload, $gender }) {
+export function useGetSession(options) {
+  const url = computed(() => {
+    let result = null
+    if (options.$id) {
+      const id = unref(options.$id)
+      result = `/v1/api/sessions/${id}`
+    } else if (options.$token) {
+      const token = unref(options.$token)
+      result = `/v1/api/sessions/${token}`
+    }
+    return result
+  })
+
+  const { 
+    result,
+    get
+  } = useGET({
+    url
+  })
+
+  return {
+    getSession: get,
+    sessionResult: result
+  }
+}
+
+export const defaultWeights = [
+  { label: 'jarak', key: 'distance', value: 1 },
+  { label: 'transportasi', key: 'transportation', value: 1 },
+  { label: 'harga', key: 'price', value: 1 },
+  { label: 'tema', key: 'theme', value: 1 },
+  { label: 'waktu', key: 'waktu', value: 1 },
+  { label: 'jumlah spot', key: 'numberOfSpots', value: 1 }
+]
+
+export function mutateArrayWeights({ $session, $gender, $weights }) {
+  if (!$session || !$gender) {
+    return [];
+  }
+  const session = unref($session)
+  const gender = unref($gender)
+  if (!session.weights || !session.weights[gender]) {
+    return []
+  }
+  $weights.forEach(row => {
+    row.value = session.weights[gender][row.key];
+  })
+}
+
+export function useSession({ $id, $token, payload, $gender }) {
   const url = computed(() => {
     const id = unref($id)
     return `/v1/api/sessions/${id}`
   })
 
+  const updateWeightsURL = computed(() => `${url.value}/weights`)
+
   const { 
     get: loadSession, 
     result: $getResponse,
-    onSuccess } = useGET({ url })
+    onSuccess
+  } = useGET({ url });
+  const doneLoad = ref(false);
 
   onSuccess((data) => {
     const gender = unref($gender);
@@ -38,6 +91,7 @@ export function useSession({ $id, payload, $gender }) {
         });
       }
     }
+    doneLoad.value = true;
   });
 
   const $session = computed(() => {
@@ -61,7 +115,10 @@ export function useSession({ $id, payload, $gender }) {
     status: $updateStatus,
     onSuccess: onSuccessUpdate,
     onError: onErrorUpdate
-  } = usePUT({ url, payload: $updatePayload });
+  } = usePUT({ 
+    url: updateWeightsURL, 
+    payload: $updatePayload 
+  });
 
   const {
     loadUser
@@ -92,5 +149,6 @@ export function useSession({ $id, payload, $gender }) {
     onErrorUpdate,
     updateSession,
     $updateStatus,
+    $doneLoad: doneLoad
   }
 }

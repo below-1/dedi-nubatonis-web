@@ -74,9 +74,9 @@
           <span>edit data bobot anda</span>
         </button>
 
-        <button 
+        <router-link
           v-if="showCreateSession"
-          @click="onOpenSession"
+          to="/app/sessions/new"
           class="btn btn-info flex my-2 md:ml-4"
         >
           <template v-if="createSessionStatus != 'loading'">
@@ -84,7 +84,8 @@
           </template>
           <q-spinner v-else class="w-4 h-4">
           </q-spinner>
-        </button>
+        </router-link>
+
       </template>
     </div>
   </div>
