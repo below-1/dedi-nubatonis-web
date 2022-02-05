@@ -86,13 +86,21 @@ export function useGET(options) {
 
 export function useDELETE(options) {
   const status = ref('idle')
+  let _onSuccess = null
+  let _onError = null
   async function del(url) {
     status.value = 'loading'
     try {
       const response = await api.delete(unref(url))
       status.value = 'idle'
+      if (_onSuccess) {
+        _onSuccess(response.data)
+      }
       return response.data
     } catch (err) {
+      if (_onError) {
+        _onError(err)
+      }
       console.log(err)
       status.value = 'error'
     }
@@ -100,7 +108,13 @@ export function useDELETE(options) {
 
   return {
     status,
-    del
+    del,
+    onSuccess: (f) => {
+      _onSuccess = f
+    },
+    onError: (f) => {
+      _onError = f
+    }
   }
 }
 

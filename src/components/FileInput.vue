@@ -1,35 +1,33 @@
 <script setup>
-	const emit = defineEmits(['onChange'])
+  import { ref, unref, computed, nextTick } from 'vue';
 
-	function onChange(event) {
-		emit('onChange', event)
+	const emit = defineEmits(['change', 'update:error'])
+  const file = ref(null)
+  const error = computed(() => {
+    if (!file.value) return null;
+    const f = unref(file);
+    const filesize = f.size / 1024;
+    return filesize <= 1024 ? null : 'Ukuran file terlalu besar. Harus kurang dari 1MB';
+  })
+
+  function emitFileUpdate() {
+    const f = unref(file);
+    if (error.value || !file.value) return;
+    emit('change', file.value);
+  }
+
+	async function onChange(event) {
+    file.value = event.currentTarget.files[0];
+    await nextTick();
+    emitFileUpdate();
+    // setTimeout(emitFileUpdate, 1000);
 	}
 </script>
 
 <template>
-	<label
-    class="
-      w-64
-      flex flex-col
-      items-center
-      px-4
-      py-6
-      bg-white
-      rounded-md
-      shadow-md
-      tracking-wide
-      uppercase
-      border border-blue
-      cursor-pointer
-      hover:bg-purple-600 hover:text-white
-      text-purple-600
-      ease-linear
-      transition-all
-      duration-150
-    "
-  >
+	<div>
     <i class="fas fa-cloud-upload-alt fa-3x"></i>
-    <span class="mt-2 text-base leading-normal">Select a file</span>
-    <input @change="onChange" type="file" class="hidden" />
-  </label>
+    <input @change.stop="onChange" type="file" />
+    <div v-if="error" class="text-red-600">{{ error }}</div>
+  </div>
 </template>

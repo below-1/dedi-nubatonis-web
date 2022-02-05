@@ -48,8 +48,6 @@
       // Reload user with the new session
       await loadUser();
       const session = currentUser.value.currentSession;
-      console.log('session');
-      console.log(session);
       // After creating new session...
       router.push(`/app/sessionv3/${session._id}`);
       // console.log('time open new session...');
@@ -58,7 +56,7 @@
 </script>
 
 <template>
-  <div class="py-6 md:py-0 md:h-20 flex flex-col md:flex-row md:items-center px-8 border-b border-gray-200">
+  <div class="py-6 px-3 md:px-8 md:py-0 md:h-20 border-b border-gray-200">
     <div class="flex-grow mb-4 md:mb-0">
       <h1 class="text-2xl font-bold text-gray-700" style="line-height: 100%;">{{ title }}</h1>
       <h2 class="text-gray-700">{{ subtitle }}</h2>

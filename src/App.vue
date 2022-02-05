@@ -15,7 +15,8 @@ html {
 </style>
 
 <template>
-  <div id="main">
+  <div id="main" class="w-screen">
+  	<!-- <h1>Hallo</h1> -->
     <router-view/>
   </div>
 </template>

@@ -26,12 +26,12 @@
     avatar: ''
   })
 
-  async function avatarChangeHandler(event) {
-    let files = event.target.files || event.dataTransfer.files;
-    if (!files.length) {
-      return;
+  async function avatarChangeHandler(file) {
+    console.log('avatarChangeHandler called');
+    if (!file) {
+      throw new Error('file is undefined');
     }
-    const base64 = await imgToBase64( files[0] )
+    const base64 = await imgToBase64( file )
     payload.avatar = base64
   }
 

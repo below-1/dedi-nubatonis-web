@@ -60,7 +60,7 @@
 
 <template>
   <Container>
-    <div class="card bg-white shadow-2xl">
+    <div class="mx-6 card bg-white shadow-2xl">
       <div class="card-body">
         <h2 class="card-title">Login untuk masuk kedalam sistem</h2>
         <h4 v-if="errorMessage" class="text-red-600 font-bold">{{ errorMessage }}</h4>

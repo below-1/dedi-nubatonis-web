@@ -57,8 +57,8 @@
     </template>
   </PageHeader>
   <PageContainer>
-  	<div class="flex flex-col md:flex-row md:gap-x-8" v-if="session && session.weights">
-  		<div class="md:w-1/3">
+  	<div class="grid grid-cols-1 gap-y-2 md:grid-cols-3" v-if="session && session.weights">
+  		<div>
   			<template v-if="session.weights.man">
 	  			<ParticipantCard
 	  				:member="session.man"
@@ -67,7 +67,7 @@
 	  			/>
   			</template>
   		</div>
-  		<div class="md:w-1/3" v-if="session.weights.woman">
+  		<div v-if="session.weights.woman">
   			<template v-if="session.woman && session.weights.woman">
 	  			<ParticipantCard 
 	  				:member="session.woman"
@@ -76,7 +76,7 @@
 	  			/>
   			</template>
   		</div>
-  		<div class="md:w-1/3" v-if="session.weights.photographer">
+  		<div v-if="session.weights.photographer">
   			<template v-if="session.photographer && session.weights.photographer">
 	  			<ParticipantCard 
 	  				:member="session.photographer"

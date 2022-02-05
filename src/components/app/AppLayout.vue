@@ -110,13 +110,16 @@
         <span class="lowercase text-lg font-bold">Logout</span>
       </button>
     </nav>
+    <div class="">
+      <router-view/>
+    </div>
 
-    <div id="app-wrapper" class="flex flex-col min-h-screen md:ml-64">
+    <!-- <div id="app-wrapper" class="flex flex-col min-h-screen md:ml-64">
       <div class="flex-grow flex flex-col">
-        <router-view/>
       </div>
       <QuickFooter/>
-    </div>
+    </div> -->
+    
   </div>
 
   <TransitionRoot appear :show="dialogIsOpen" as="template">

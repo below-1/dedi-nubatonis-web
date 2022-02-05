@@ -30,11 +30,13 @@ export function useSession({ $id, payload, $gender }) {
 
   onSuccess((data) => {
     const gender = unref($gender);
-    const weights = data.weights[gender];
-    if (weights) {
-      payload.forEach(row => {
-        row.value = weights[row.key];
-      });
+    if (data.weights && data.weights[gender]) {
+      const weights = data.weights[gender];
+      if (weights) {
+        payload.forEach(row => {
+          row.value = weights[row.key];
+        });
+      }
     }
   });
 

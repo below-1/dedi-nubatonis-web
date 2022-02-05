@@ -14,6 +14,7 @@
   import {
     useSession
   } from '@quick/compose/session';
+  import WhatsAppSVG from '@quick/assets/whatsapp-svgrepo-com.svg'
   import { useGET, usePUT } from '@quick/compose/axios'
   import PageHeader from '@quick/components/app/PageHeader.vue'
   import PageContainer from '@quick/components/app/PageContainer.vue'
@@ -71,37 +72,49 @@
   >
   </PageHeader>
   <PageContainer>
-    <h1 class="text-2xl text-gray-500 text-center mb-12">Input Bobot Kriteria  </h1>
-    <h1 class="text-xl font-medium text-gray-700 text-center mb-12">Silahkan Masukan Nilai Bobot maksimal 100</h1>
-    <div class="w-4/5 mx-auto">
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <template v-for="item in payload">
-          <q-field :label="item.label" class="mb-4">
-            <q-input type="number" v-model="item.value" :max="100" :min="0" />
-          </q-field>
-        </template>
+    <template v-if="$session">
+      <div class="py-6 bg-gray-200 rounded mb-12 text-center flex flex-col items-center justify-center">
+        <h2 class="text-lg mx-4">Kirimkan Token dibawah kepada pasangan anda</h2>
+        <h1 class="text-3xl font-bold">{{ $session.token }}</h1>
+        <router-link :to="`/app/session-send-wa/${$session.token}`" class="my-4 bg-white p-2 rounded flex items-center shadow-lg">
+          <span class="mr-2 font-bold">Kirim Melalui WhatsApp</span>
+          <inline-svg
+            :src="WhatsAppSVG"
+            class="w-8 h-8"
+          ></inline-svg>
+        </router-link>
       </div>
-      <div class="flex flex-col justify-center">
-
-        <div v-if="moreThan100">
-          <h3 class="text-red-500 font-bold text-2xl">Jumlah Bobot Lebih {{ weightDiff }}</h3>
-        </div>
-        <div v-else-if="lessThan100">
-          <h3 class="text-red-500 font-bold text-2xl">Jumlah bobot Kurang {{ weightDiff }}</h3>
-        </div>
-
-        <button 
-          @click="updateSession"
-          :disabled="lessThan100 || moreThan100"
-          class="btn btn-primary my-12 disabled:opacity-50"
-        >
-          <template v-if="$updateStatus == 'idle'">
-            Simpan Bobot
+      <h1 class="text-2xl text-gray-500 text-center mb-12">Input Bobot Kriteria  </h1>
+      <h1 class="text-xl font-medium text-gray-700 text-center mb-12">Silahkan Masukan Nilai Bobot maksimal 100</h1>
+      <div class="px-4 mx-auto md:px-0 md:w-4/5">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <template v-for="item in payload">
+            <q-field :label="item.label" class="mb-4">
+              <q-input type="number" v-model="item.value" :max="100" :min="0" />
+            </q-field>
           </template>
-          <q-spinner v-else class="w-4 h-4">
-          </q-spinner>
-        </button>
+        </div>
+        <div class="flex flex-col justify-center">
+          <div v-if="moreThan100">
+            <h3 class="text-red-500 font-bold text-2xl">Jumlah Bobot Lebih {{ weightDiff }}</h3>
+          </div>
+          <div v-else-if="lessThan100">
+            <h3 class="text-red-500 font-bold text-2xl">Jumlah bobot Kurang {{ weightDiff }}</h3>
+          </div>
+
+          <button 
+            @click="updateSession"
+            :disabled="lessThan100 || moreThan100"
+            class="btn btn-primary my-12 disabled:opacity-50"
+          >
+            <template v-if="$updateStatus == 'idle'">
+              Simpan Bobot
+            </template>
+            <q-spinner v-else class="w-4 h-4">
+            </q-spinner>
+          </button>
+        </div>
       </div>
-    </div>
+    </template>
   </PageContainer>
 </template>

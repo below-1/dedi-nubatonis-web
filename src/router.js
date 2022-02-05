@@ -25,6 +25,9 @@ import SessionV3 from '@quick/components/app/sessionsv2/SessionForm.vue'
 import NewSession2 from '@quick/components/app/sessions/NewSession2.vue'
 import ListSession from '@quick/components/app/sessions/List.vue'
 import SessionDetail from '@quick/components/app/sessions/Detail.vue'
+import SessionSendWA from '@quick/components/app/sessions/SendWA.vue'
+import SessionChoosePhotographer from '@quick/components/app/sessions/SessionChoosePhotographer.vue'
+import SessionTokenInput from '@quick/components/app/sessions/SessionTokenInput.vue'
 
 import Dashboard from '@quick/components/app/Dashboard.vue'
 import Survey from '@quick/components/app/Survey.vue'
@@ -64,11 +67,9 @@ const routes = [
       path: 'session/new',
       component: NewSession2
     },
-    { 
-      path: 'sessions/:id',
-      component: SessionDetail,
-      props: true
-    },
+    { path: 'sessions/:id', component: SessionDetail, props: true },
+    { path: 'sessions/:id/choose-photographer', component: SessionChoosePhotographer, props: true },
+    { path: 'session-send-wa/:token', component: SessionSendWA, props: true },
     { 
       path: 'sessionv3/:id',
       component: SessionV3,
@@ -78,7 +79,8 @@ const routes = [
       path: 'session',
       component: ListSession
     }
-  ]}
+  ]},
+  { path: '/token-input/:token', props: true, component: SessionTokenInput },
 ]
 
 export const router = createRouter({
