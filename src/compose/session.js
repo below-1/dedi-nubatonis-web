@@ -1,5 +1,5 @@
-import { ref, unref, inject, onMounted, computed } from 'vue'
-import { usePUT, useGET } from '@quick/compose/axios'
+import { reactive, ref, unref, inject, onMounted, computed } from 'vue'
+import { usePUT, usePOST, useGET } from '@quick/compose/axios'
 import useCurrentUser from '@quick/compose/current-user';
 import { api } from '@quick/serv/axios';
 import rank from '@quick/serv/rank';
@@ -64,6 +64,23 @@ export function mutateArrayWeights({ $session, $gender, $weights }) {
   $weights.forEach(row => {
     row.value = session.weights[gender][row.key];
   })
+}
+
+export function useComputeLocation(response) {
+  const { loadUser } = useCurrentUser();
+
+  async function computeLocation(response) {
+    if (response.status != 'READY') return false;
+    const rankResult = await rank(response.weights);
+    await updateSessionResult({
+      id: response._id,
+      ...rankResult
+    })
+    await loadUser();
+    return true;
+  }
+
+  return computeLocation;
 }
 
 export function useSession({ $id, $token, payload, $gender }) {
@@ -150,5 +167,60 @@ export function useSession({ $id, $token, payload, $gender }) {
     updateSession,
     $updateStatus,
     $doneLoad: doneLoad
+  }
+}
+
+export function useSessionByToken({ token, payload }) {
+  const url = computed(() => {
+    const tokenVal = unref(token)
+    const result = `/v1/api/sessions/by-token/${tokenVal}`
+    return result
+  })
+
+  const { 
+    get: loadSessionByToken, 
+    status: loadStatus,
+    result: sessionResult } = useGET({ url })
+  const session = computed(() => sessionResult.value.type == 'data' ? sessionResult.value.data : null)
+
+  const { 
+    put: updateSessionByToken, 
+    onSuccess: onSuccessUpdate, 
+    status: updateStatus } = usePUT({ url, payload })
+
+  return {
+    session,
+
+    sessionResult,
+    loadSessionByToken,
+    loadStatus,
+
+    updateSessionByToken,
+    updateStatus,
+    onSuccessUpdate,
+  }
+}
+
+export function useSessionWeights() {
+  const weights = reactive([
+    { label: 'jarak', key: 'distance', value: 1 },
+    { label: 'transportasi', key: 'transportation', value: 1 },
+    { label: 'harga', key: 'price', value: 1 },
+    { label: 'tema', key: 'theme', value: 1 },
+    { label: 'waktu', key: 'waktu', value: 1 },
+    { label: 'jumlah spot', key: 'numberOfSpots', value: 1 }
+  ])
+
+  const totalWeights = computed(() => weights.map(it => it.value).reduce((a, b) => a + b, 0))
+  const weightDiff = computed(() => Math.abs(totalWeights.value - 100))
+  const lessThan100 = computed(() => totalWeights.value < 100)
+  const moreThan100 = computed(() => totalWeights.value > 100)
+
+  return {
+    weights,
+    totalWeights,
+    weightDiff,
+    lessThan100,
+    moreThan100
   }
 }

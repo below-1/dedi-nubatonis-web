@@ -67,10 +67,16 @@ export function useGET(options) {
       }
       return response.data
     } catch (err) {
-      console.log(err)
+      let response
+      let message = 'terjadi kesalahan'
+      if (err.response) {
+        response = err.response
+        message = err.response.data.message
+      }
       result.value = {
         type: 'error',
-        error: err
+        response,
+        message
       }
     }
   }

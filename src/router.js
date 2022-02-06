@@ -30,6 +30,8 @@ import SessionSendWA from '@quick/components/app/sessions/SendWA.vue'
 import SessionChoosePhotographer from '@quick/components/app/sessions/SessionChoosePhotographer.vue'
 import SessionTokenInput from '@quick/components/app/sessions/SessionTokenInput.vue'
 
+import GuestContainer from '@quick/components/guest/GuestContainer.vue'
+
 import Dashboard from '@quick/components/app/Dashboard.vue'
 import Survey from '@quick/components/app/Survey.vue'
 import SurveyResult from '@quick/components/app/SurveyResult.vue'
@@ -79,7 +81,15 @@ const routes = [
       component: ListSession
     }
   ]},
-  { path: '/token-input/:token', props: true, component: SessionTokenInput },
+  {
+    path: '/guest',
+    component: GuestContainer,
+    children: [
+      { path: 'token-input/:token', props: true, component: SessionTokenInput },
+      { path: 'token-survey/:token', props: true, component: SessionTokenInput },
+      { path: 'sessions/:id', component: SessionDetail, props: true }
+    ]
+  }
 ]
 
 export const router = createRouter({

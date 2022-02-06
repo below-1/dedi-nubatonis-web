@@ -1,7 +1,11 @@
 <script setup>
-  // Third Party Libraries
+  // Vue
   import { inject, unref, computed } from 'vue';
+
+  // Third Party Libraries
   import { CheckIcon } from '@heroicons/vue/solid'
+  import { format } from 'date-fns'
+  import { id as localeID } from 'date-fns/locale'
 
   // SVG Files
   import ManSVG from '@quick/assets/man-svgrepo-com.svg';
@@ -27,6 +31,10 @@
     session: Object
   })
 
+  const formattedDate = computed(() => {
+    const session = props.session
+    return format(new Date(session.date), 'PPPP', { locale: localeID })
+  })
   const memberKeys = ['man', 'woman', 'photographer'];
 
   // Mapping for members' icon
@@ -106,10 +114,6 @@
     }
   }
 
-  function onDetail(id) {
-    
-  }
-
   function promptDelete() {
     console.log('ON PROMPT DELETE')
     alert({
@@ -132,7 +136,7 @@
   <li>
     <div class="rounded bg-gray-100 py-2 md:hidden">
       <div class="flex items-center justify-between pb-2 px-4">
-        <div class="text-gray-600">2 menit yang lalu</div>
+        <div class="text-gray-600">{{ formattedDate }}</div>
         <SessionPopoverActions 
           :session="session" 
           @delete="promptDelete"
@@ -148,6 +152,13 @@
           :nama="member.nama"
           :done-input="member.doneInput"
         />
+        <div 
+          v-if="session.status == 'DONE'"
+          class="bg-indigo-100 px-4 py-2"
+        >
+          <div class="font-black text-2xl text-indigo-900">{{ session.location.nama }}</div>
+          <div class="text-sm text-indigo-900">{{ session.location.latitude }}, {{ session.location.longitude }}</div>
+        </div>
       </div>
     </div>
 

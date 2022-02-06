@@ -21,6 +21,7 @@ import QuickLoadingPane from '@quick/components/QuickLoadingPane.vue'
 import QuickLoading from '@quick/components/QuickLoading.vue'
 import QuickConfirmDelete from '@quick/components/QuickConfirmDelete.vue'
 import QuickSpinner from '@quick/components/QuickSpinner.vue'
+import QuickNotFound from '@quick/components/QuickNotFound.vue'
 import FileInput from '@quick/components/FileInput.vue'
 
 createApp(App)
@@ -38,6 +39,7 @@ createApp(App)
   .component('q-loading', QuickLoading)
   .component('q-confirm-delete', QuickConfirmDelete)
   .component('q-spinner', QuickSpinner)
+  .component('q-not-found', QuickNotFound)
   .component('file-input', FileInput)
   .component('inline-svg', InlineSvg)
   .mount('#app')

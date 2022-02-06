@@ -89,15 +89,15 @@
   	<div class="flex items-center justify-center p-16 bg-gray-100" v-else>
   		<div class="text-xl font-bold text-gray-700">Data Bobot Belum Diinput Oleh User</div>
   	</div>
-    <div v-if="session && session.complete">
+    <div v-if="session && session.status == 'DONE'">
       <template v-for="pack, i in topFives">
-        <div class="flex items-start justify-start my-12">
-          <div class="py-6 px-6 text-center">
+        <div class="flex items-start justify-start my-12 px-4">
+          <div class="hidden md:block py-6 text-center">
             <h1 class="font-bold text-2xl">{{ i + 1 }}</h1>
           </div>
         	<div>
-        		<div class="flex items-center">
-        			<img class="w-10 h-10 md:w-20 md:h-20 mr-4" :src="pack.location.avatar" />
+        		<div class="flex">
+        			<img class="w-16 h-16 md:w-20 md:h-20 mr-4" :src="pack.location.avatar" />
       	  		<div>
       	  			<h2 class="text-xl font-bold">{{ pack.location.nama }}</h2>
       	  			<a 

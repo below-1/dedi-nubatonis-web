@@ -38,6 +38,12 @@
 
   const menus = computed(() => {
   	let result = [
+      { 
+        id: 'session_detail', 
+        type: 'link', 
+        path: `/app/sessions/${props.session._id}`, 
+        label: 'detail' 
+      },
   		{ 
   			id: 'choose_photographer', 
   			type: 'link', 
