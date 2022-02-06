@@ -64,7 +64,7 @@
     <slot name="actions">
     </slot>
     <div class="flex items-center">
-      <template v-if="currentUser.role != 'photographer' && currentUser.role != 'admin'">
+      <template v-if="currentUser && currentUser.role != 'photographer' && currentUser.role != 'admin'">
         <button 
           v-if="currentSession"
           @click="editCurrentSession"

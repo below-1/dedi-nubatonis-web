@@ -3,21 +3,16 @@ import { usePOST, useGET } from '@quick/compose/axios'
 import { useRouter } from 'vue-router'
 
 export const questions = [
-  'Saya mudah mempelajari cara menggunakan Aplikasi pemilihan loksi pre-wedding',
-  'Saya menggunakan Apliakasi pemilihan lokasi pre-wedding untuk mempermudah pekerjaan saya',
-  'Saya dapat berinteraksi dengan Aplikasi pemeilihan lokasi pre-wedding dengan jelas',
-  'Saya dapat menggunakan Apliaksi pemilihan lokasi pre-wedding  dengan mudah',
-  'Saya beranggapan bahwa Aplikasi pemilihan lokasi pre-wedding merupakan program yang fleksibel',
-  'Saya mampu mengerjakan pekerjaan lebih cepat  dengan Aplikasi pemilihan lokasi pre-wedding',
-  'Saya beranggapan bahwa pekerjaan saya menjadi lebih mudah dengan menggunakan Aplikasi pemilihan lokasi pre-wedding',
-  'Saya dapat meningkatkan produktivitas kerja dengan Aplikasi pemilihan lokasi pre-wedding',
-  'Saya beranggapan bahwa Aplikasi pemilihan lokasi pre-wedding dapat berguna untuk saya',
-  'Saya nyaman menggunakan Apliakasi pemilihan loksi pre-wedding',
-  'Saya menikmati penggunaan Aplikasi pemilihan lokasi Pre-wedding',
-  'saya beranggapan bahwa Aplikasi pemilihan lokasi pre-wedding tidak membosankan',
-  'Aplikasi pemilihan lokasi pre-wedding menyediakan informasih yang saya butuhkan',
-  'Aplikasi pemilihan lokasi pre-wedding menyediakan informasih yang akurat',
-  'Saya menggunakan Aplikasi pemilihan lokasi pre-wedding dalam durasi waktu yang panjang'
+  'Apakah tampilan pada aplikasi ini menarik ?',
+  'Apakah tampilan menu pada aplikasi ini sesui dengan yang diharapkan ?',
+  'Apakah tampilan menu login pada aplikasi ini sesuai dengan yang diharapkan ?',
+  'Apakah tampilan menu pada aplikasi ini sesuai dengan yang diharapkan?',
+  'Apakah komposisi warna pada aplikasi ini menarik?',
+  'Apakah aplikasi ini sesuai dengan yang diharapkan ?',
+  'Apakah aplikasi ini pada saat dijalankan terdapat eror ?',
+  'Apakah aplikasi ini saat dijalankan tidak terdapat menu yang tidak berjalan ? ',
+  'Apakah aplikasi ini cocok diterapkan di tempat kerja?',
+  'Apakah aplikasi ini bersifat user friendly (mudah digunakan) ?',
 ];
 
 export function useSurvey(options) {
@@ -35,8 +30,10 @@ export function useSurvey(options) {
     result: surveyResult
   } = useGET({ url })
 
+  const survey = computed(() => surveyResult.value.type == 'data' ? surveyResult.value.data.survey : null)
+
   const answers = reactive(questions.map((x, i) => {
-    return 4;
+    return 5;
   }));
 
   const payload = computed(() => {
@@ -56,6 +53,7 @@ export function useSurvey(options) {
   return {
     answers,
   	surveyResult,
+    survey,
   	loadSurvey,
     updateSurvey,
     updateResult,

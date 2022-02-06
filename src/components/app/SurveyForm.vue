@@ -2,9 +2,7 @@
 	import { onMounted, reactive, ref, toRef, computed } from 'vue';
 	import { StarIcon as StarSolid } from '@heroicons/vue/solid'
 	import { StarIcon as StarOutline } from '@heroicons/vue/outline'
-	import PageHeader from '@quick/components/app/PageHeader.vue'
-  import PageContainer from '@quick/components/app/PageContainer.vue'
-  import { useSurvey } from '@quick/compose/survey';
+  import { useSurvey, questions } from '@quick/compose/survey';
 
   const props = defineProps({
   	id: String
@@ -22,6 +20,7 @@
 	const activeIndex = ref(0);
 	const canBack = computed(() => activeIndex.value == 0);
 	const canNext = computed(() => activeIndex.value == (questions.length - 1));
+	const N_STAR = 5
 
 	const activeQuestion = computed(() => {
 		return questions[activeIndex.value];
@@ -36,7 +35,7 @@
 	async function onNext() {
 		const current = activeIndex.value;
 		if (current == questions.length - 1) {
-			await saveSurvey();
+			await updateSurvey();
 			await loadSurvey();
 			alert('sukses menyimpan data');
 			return;
@@ -61,7 +60,7 @@
   		{{ activeQuestion }}
   	</div>
   	<div class="flex items-center justify-center gap-x-2 my-6">
-  		<template v-for="i in 4">
+  		<template v-for="i in N_STAR">
   			<StarSolid 
   				@click="onRateStar(i)" 
   				class="w-16 h-16" 
@@ -75,6 +74,6 @@
   	</div>
 	</div>
 	<div class="w-2/3 mx-auto" v-else>
-		<h1 class="text-center text-2xl">Terimakasih atas masukan anda...</h1>
+		<h1 class="text-center text-2xl">Anda telah mengikuti survey. Terimakasih atas masukan anda...</h1>
 	</div>
 </template>

@@ -170,6 +170,44 @@ export function useSession({ $id, $token, payload, $gender }) {
   }
 }
 
+export function useGetSessionByToken({ token }) {
+  const url = computed(() => {
+    const tokenVal = unref(token)
+    const result = `/v1/api/sessions/by-token/${tokenVal}`
+    return result
+  })
+
+  const { 
+    get: loadSessionByToken, 
+    result: sessionResult } = useGET({ url })
+  const session = computed(() => sessionResult.value.type == 'data' ? sessionResult.value.data : null)
+
+  return {
+    session,
+    sessionResult,
+    loadSessionByToken,
+  }
+}
+
+export function useUpdateSessionByToken({ token, payload }) {
+  const url = computed(() => {
+    const tokenVal = unref(token)
+    const result = `/v1/api/sessions/by-token/${tokenVal}`
+    return result
+  })
+
+  const { 
+    put: updateSessionByToken, 
+    onSuccess: onSuccessUpdate, 
+    status: updateStatus } = usePUT({ url, payload })
+
+  return {
+    updateSessionByToken,
+    updateStatus,
+    onSuccessUpdate,
+  }
+}
+
 export function useSessionByToken({ token, payload }) {
   const url = computed(() => {
     const tokenVal = unref(token)

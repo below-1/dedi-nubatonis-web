@@ -9,7 +9,7 @@
   import PageContainer from '@quick/components/app/PageContainer.vue'
 
   // Internal Composables
-  import { useSessionByToken, useSessionWeights } from '@quick/compose/session'
+  import { useUpdateSessionByToken, useSessionWeights, mutateArrayWeights } from '@quick/compose/session'
   import { useComputeLocation } from '@quick/compose/session'
   import { useBase64Input } from '@quick/compose/base64input'
 
@@ -19,8 +19,11 @@
   const router = useRouter()
 
   const showNotification = inject('notification.show')
+
   const guestUser = inject('guestUser')
-  const spouse = ref(null)
+  const guestSession = inject('guestSession')
+  const sessionCreator = inject('sessionCreator')
+
   const token = toRef(props, 'token')
   const nama = ref('')
 
@@ -51,15 +54,11 @@
   })
 
   const {
-    session,
-    sessionResult,
-    loadSessionByToken,
-    loadStatus,
     updateSessionByToken,
     updateStatus,
     onSuccessUpdate
-  } = useSessionByToken({
-    token,
+  } = useUpdateSessionByToken({
+    token: guestSession.value.token,
     payload
   })
 
@@ -71,14 +70,13 @@
   const computeLocation = useComputeLocation();
 
   onSuccessUpdate(async (response) => {
-    console.log('session.value')
-    console.log(session.value)
     // After user created or updated
     // We should update guestUser
-    const spouseVal = unref(spouse)
-    const sessionVal = unref(session)
-    const currentUser = spouseVal._id == sessionVal.man._id ? sessionVal.woman : sessionVal.woman
-    guestUser.value = currentUser
+    if (response.man && response.man.role == 'spouse') {
+      guestUser.value = response.man
+    } else if (response.woman && response.woman.role == 'spouse') {
+      guestUser.value = response.woman
+    }
 
     if (response.status == 'READY') {
       const locationComputed = await computeLocation(response)
@@ -87,7 +85,10 @@
         showNotification({
           title: 'Lokasi Photoshoot telah ditentukan',
           description: 'Berdasarkan perhitungan sistem. Lokasi yang dipilih adalah Pantai Manikin',
-          okLabel: 'Lihat Detail'
+          okLabel: 'Lihat Detail',
+          onOk: () => {
+            router.push(`/guest/${response.token}/detail`)
+          }
         })
       }
     } else {
@@ -96,16 +97,30 @@
         description: 'Kami telah menyimpan data anda. Lokasi anda akan ditentukan secara otomatis ketika fotografer selesai menginput data',
         okLabel: 'Lihat Detail',
         onOk: () => {
-          router.push(`/sessions/${response._id}`)
+          router.push(`/guest/${response.token}/detail`)
         }
       })
     }
   })
 
   onMounted(async () => {
-    const response = await loadSessionByToken()
-    if (!response) return
-    spouse.value = response.man ? response.man : response.woman
+    if (!guestSession.value) return
+
+    const guestSessionVal = unref(guestSession)
+    if (guestSessionVal.man && guestSessionVal.man.role == 'spouse') {
+      mutateArrayWeights({
+        $session: guestSessionVal,
+        $gender: 'man',
+        $weights: weights
+      })
+    } else if (guestSessionVal.woman && guestSessionVal.woman.role == 'spouse') {
+      mutateArrayWeights({
+        $session: guestSessionVal,
+        $gender: 'woman',
+        $weights: weights
+      })
+    }
+
     if (guestUser.value) {
       const guestUserVal = unref(guestUser)
       nama.value = guestUserVal.nama
@@ -114,16 +129,8 @@
 </script>
 
 <template>
-  <q-spinner 
-    v-if="sessionResult.type == 'loading'"/>
-  <q-not-found 
-    v-else-if="sessionResult.type == 'error'" 
-    :message="sessionResult.message" 
-  />
-  <PageContainer
-    v-else-if="sessionResult.type == 'data' && spouse"
-  >
-  	<h1 class="text-xl">Selamat datang... Pasangan Anda <span class="font-bold">{{ spouse.nama }}</span>, 
+  <PageContainer>
+  	<h1 class="text-xl">Selamat datang... Pasangan Anda <span class="font-bold">{{ sessionCreator.nama }}</span>, 
   		mengirimkan permintaan penginputan data</h1>
     <div class="my-8">
 

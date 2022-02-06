@@ -25,12 +25,14 @@ import SessionFormPage from '@quick/components/app/sessionsv2/SessionFormPage.vu
 import SessionNew from '@quick/components/app/sessionsv2/SessionNew.vue'
 import NewSession2 from '@quick/components/app/sessions/NewSession2.vue'
 import ListSession from '@quick/components/app/sessions/List.vue'
-import SessionDetail from '@quick/components/app/sessions/Detail.vue'
+import SessionDetailPage from '@quick/components/app/sessions/SessionDetailPage.vue'
 import SessionSendWA from '@quick/components/app/sessions/SendWA.vue'
 import SessionChoosePhotographer from '@quick/components/app/sessions/SessionChoosePhotographer.vue'
 import SessionTokenInput from '@quick/components/app/sessions/SessionTokenInput.vue'
 
 import GuestContainer from '@quick/components/guest/GuestContainer.vue'
+import GuestSessionDetail from '@quick/components/guest/GuestSessionDetail.vue'
+import GuestSurvey from '@quick/components/guest/GuestSurvey.vue'
 
 import Dashboard from '@quick/components/app/Dashboard.vue'
 import Survey from '@quick/components/app/Survey.vue'
@@ -68,7 +70,7 @@ const routes = [
     },
     
     { path: 'sessions/new', component: SessionNew },
-    { path: 'sessions/:id', component: SessionDetail, props: true },
+    { path: 'sessions/:id', component: SessionDetailPage, props: true },
     { path: 'sessions/:id/choose-photographer', component: SessionChoosePhotographer, props: true },
     { path: 'session-send-wa/:token', component: SessionSendWA, props: true },
     { 
@@ -82,12 +84,13 @@ const routes = [
     }
   ]},
   {
-    path: '/guest',
+    path: '/guest/:token',
     component: GuestContainer,
+    props: true,
     children: [
-      { path: 'token-input/:token', props: true, component: SessionTokenInput },
-      { path: 'token-survey/:token', props: true, component: SessionTokenInput },
-      { path: 'sessions/:id', component: SessionDetail, props: true }
+      { path: 'token-input', component: SessionTokenInput },
+      { path: 'token-survey', component: GuestSurvey },
+      { path: 'detail', component: GuestSessionDetail }
     ]
   }
 ]

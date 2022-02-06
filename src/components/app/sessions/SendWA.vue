@@ -18,7 +18,7 @@
 	const spouseNumber = ref('6282297726443')
 
 	const loginTokenLink = computed(() => {
-		const result = encodeURIComponent(`${BASE_APP_URL}/#/token-input/${props.token}`)
+		const result = encodeURIComponent(`${BASE_APP_URL}/#/guest/${props.token}/token-input`)
 		console.log(`target = ${result}`)
 		return result
 	})

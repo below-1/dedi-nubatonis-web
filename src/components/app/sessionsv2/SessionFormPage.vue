@@ -13,7 +13,8 @@
   import { api } from '@quick/serv/axios'
   import {
     defaultWeights,
-    useSession
+    useSession,
+    useComputeLocation
   } from '@quick/compose/session';
   import WhatsAppSVG from '@quick/assets/whatsapp-svgrepo-com.svg'
   import { useGET, usePUT } from '@quick/compose/axios'
@@ -49,6 +50,8 @@
     $updateStatus,
     $doneLoad
   } = useSession({ $id: id, payload, $gender  })
+  const showNotification = inject('notification.show')
+  const computeLocation = useComputeLocation();
 
   const isCreator = computed(() => {
     const session = unref($session)
@@ -57,8 +60,18 @@
     return session.user._id == currentUser._id;
   })
 
-  onSuccessUpdate((data) => {
-    alert('sukses mengubah bobot')
+  onSuccessUpdate(async (response) => {
+    if (response.status == 'READY') {
+      const locationComputed = await computeLocation(response)
+
+      if (locationComputed) {
+        showNotification({
+          title: 'Lokasi Photoshoot telah ditentukan',
+          description: 'Berdasarkan perhitungan sistem. Lokasi yang dipilih adalah Pantai Manikin',
+          okLabel: 'Lihat Detail'
+        })
+      }
+    }
   })
 
   onErrorUpdate(() => {

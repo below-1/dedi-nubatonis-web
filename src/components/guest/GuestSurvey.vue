@@ -1,17 +1,15 @@
 <script setup>
-	import { onMounted, reactive, ref, computed } from 'vue';
+	import { inject, computed } from 'vue';
 	import { StarIcon as StarSolid } from '@heroicons/vue/solid'
 	import { StarIcon as StarOutline } from '@heroicons/vue/outline'
 	import PageHeader from '@quick/components/app/PageHeader.vue'
   import PageContainer from '@quick/components/app/PageContainer.vue'
-  import SurveyForm from './SurveyForm.vue'
+  import SurveyForm from '@quick/components/app/SurveyForm.vue'
   import useCurrentUser from '@quick/compose/current-user';
 
-  const {
-  	currentUser
-  } = useCurrentUser();
+  const guestUser = inject('guestUser');
 
-  const userId = computed(() => currentUser.value._id);
+  const userId = computed(() => guestUser.value ? guestUser.value._id : null);
 </script>
 
 <template>
@@ -21,6 +19,9 @@
   >
   </PageHeader>
   <PageContainer>
-  	<SurveyForm :id="userId" />
+  	<SurveyForm v-if="guestUser" :id="userId" />
+    <div v-else>
+      Anda belum menginput data bobot
+    </div>
   </PageContainer>
 </template>
