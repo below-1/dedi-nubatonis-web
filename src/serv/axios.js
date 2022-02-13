@@ -1,7 +1,7 @@
 import { create } from 'axios'
 
 export const api = create({
-  baseURL: 'http://localhost:5000'
+  baseURL: import.meta.env.VITE_BASE_URL
 })
 
 api.interceptors.request.use(

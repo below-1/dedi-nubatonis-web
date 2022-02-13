@@ -8,12 +8,17 @@
   import { useGET, usePUT } from '@quick/compose/axios'
   import PageHeader from '@quick/components/app/PageHeader.vue'
   import PageContainer from '@quick/components/app/PageContainer.vue'
-  import imgToBase64 from '@quick/serv/imgToBase64'
+  import { useBase64Input } from '@quick/compose/base64input'
 
   const router = useRouter()
   const props = defineProps({
     id: String
   })
+
+  const {
+    image,
+    imageChangeHandler
+  } = useBase64Input()
 
   const payload = reactive({
     nama: '',
@@ -22,9 +27,13 @@
     longitude: '',
     numberOfSpots: 0,
     waktu: 4,
-    theme: 'indoor',
-    avatar: ''
+    theme: 'indoor'
   })
+
+  const withImage = computed(() => ({
+    ...payload,
+    avatar: image.value
+  }))
 
   const transportationOptions = [
     { value: 'bike', text: 'Motor' },
@@ -67,7 +76,7 @@
     onSuccess: onSuccessUpdate
   } = usePUT({ 
     url,
-    payload,
+    payload: withImage,
     transformPayload: p => ({
       ...p,
       price: `${p.price}`
@@ -95,7 +104,7 @@
     </template>
   </PageHeader>
   <PageContainer>
-    <div class="w-2/5 mx-auto">
+    <div class="md:w-2/5 mx-auto">
       <form class="form-control p-6 bg-white">
         <q-field label="Nama" class="mb-4">
           <q-input v-model="payload.nama" />
@@ -142,7 +151,7 @@
           </div> 
         </q-field>
         <q-field label="Avatar" class="mb-4">
-          <file-input @change="avatarChangeHandler" />
+          <file-input @change="imageChangeHandler" />
         </q-field>
       </form>
     </div>

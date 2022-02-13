@@ -56,7 +56,7 @@
 </script>
 
 <template>
-  <div class="py-6 px-3 md:px-8 md:py-0 md:h-20 border-b border-gray-200">
+  <div class="py-6 px-3 md:px-8 md:py-0 md:h-20 border-b border-gray-200 md:flex md:items-center md:justify-between">
     <div class="flex-grow mb-4 md:mb-0">
       <h1 class="text-2xl font-bold text-gray-700" style="line-height: 100%;">{{ title }}</h1>
       <h2 class="text-gray-700">{{ subtitle }}</h2>

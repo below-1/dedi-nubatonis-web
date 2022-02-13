@@ -12,7 +12,7 @@
   import { useRouter } from 'vue-router'
   import PageHeader from '@quick/components/app/PageHeader.vue'
   import PageContainer from '@quick/components/app/PageContainer.vue'
-  import imgToBase64 from '@quick/serv/imgToBase64'
+  import { useBase64Input } from '@quick/compose/base64input'
 
   const router = useRouter()
 
@@ -25,14 +25,23 @@
     { value: 'woman', text: 'Wanita' }
   ]
 
+  const {
+    image,
+    imageChangeHandler
+  } = useBase64Input()
+
   const payload = reactive({
     username: '',
     nama: 'dedi nubatonis',
     summary: '',
     facebook: 'abcde',
-    instagram: 'abcde',
-    avatar: ''
+    instagram: 'abcde'
   })
+
+  const withImage = computed(() => ({
+    ...payload,
+    avatar: image.value
+  }))
 
   async function avatarChangeHandler(event) {
     let files = event.target.files || event.dataTransfer.files;
@@ -63,12 +72,12 @@
     onSuccess: onSuccessUpdate
   } = usePUT({
     url,
-    payload
+    payload: withImage
   })
 
   onSuccessUpdate(() => {
     alert('sukses mengubah data fotografer')
-    router.back()
+    // router.back()
   })
 
   const updatePasswordPayload = reactive({
@@ -96,12 +105,12 @@
 <template>
   <PageHeader
     title="Fotografer"
-    subtitle="Tambah fotografer"
+    subtitle="Edit fotografer"
   >
   </PageHeader>
   <PageContainer>
-    <div class="flex items-start gap-x-10">
-      <div class="w-1/2 border border-gray-300 rounded p-4">
+    <div class="flex items-start flex-wrap gap-x-10 gap-y-10">
+      <div class="md:w-1/2">
         <form class="form-control bg-white">
           <q-field label="Nama" class="mb-4">
             <q-input v-model="payload.nama" />
@@ -122,12 +131,12 @@
             <q-input v-model="payload.instagram" />
           </q-field>
           <q-field label="Avatar" class="mb-4">
-            <file-input @change="avatarChangeHandler" />
+            <file-input @change="imageChangeHandler" />
           </q-field>
           <button @click="updatePhotographer" class="btn btn-primary">simpan</button>
         </form>
       </div>
-      <div class="w-1/2 border border-gray-300 rounded p-4">
+      <div class="w-full md:w-1/2">
         <form>
           <q-field label="Ganti Password" class="mb-4">
             <q-input v-model="updatePasswordPayload.password" />

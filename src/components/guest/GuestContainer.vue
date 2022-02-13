@@ -108,7 +108,9 @@
   </nav>
 
   <q-spinner v-if="sessionResult.type == 'loading'" />
-  <router-view v-else-if="sessionResult.type == 'data'"/>
+  <div v-else-if="sessionResult.type == 'data'" class="w-full md:w-4/5 md:mx-auto">
+    <router-view/>
+  </div>
 
   <QuickFooter/>
   <div class="py-6 bg-gray-100 text-center">

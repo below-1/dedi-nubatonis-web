@@ -8,7 +8,7 @@
   import PageContainer from '@quick/components/app/PageContainer.vue'
 
   // NEED TO CHANGE TO BASE APP. DIFFER IN DEV AND PROD
-  const BASE_APP_URL = 'http://localhost:3000'
+  const BASE_APP_URL = import.meta.env.VITE_BASE_APP_URL
 
   const props = defineProps({
   	token: String

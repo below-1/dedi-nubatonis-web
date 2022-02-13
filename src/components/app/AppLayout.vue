@@ -110,7 +110,7 @@
         <span class="lowercase text-lg font-bold">Logout</span>
       </button>
     </nav>
-    <div class="">
+    <div class="md:ml-64">
       <router-view/>
     </div>
 

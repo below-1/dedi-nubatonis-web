@@ -134,7 +134,7 @@
 
 <template>
   <li>
-    <div class="rounded bg-gray-100 py-2 md:hidden">
+    <div class="rounded bg-gray-100 py-2">
       <div class="flex items-center justify-between pb-2 px-4">
         <div class="text-gray-600">{{ formattedDate }}</div>
         <SessionPopoverActions 
@@ -162,42 +162,5 @@
       </div>
     </div>
 
-    <div class="hidden md:block rounded bg-white border border-gray-300">
-      <div class="p-2 flex items-stretch">
-        <MemberCard
-          :member="session.man"
-          title="Mempelai Pria"
-          class="mr-3 w-1/3"
-        />
-        <MemberCard
-          :member="session.woman"
-          title="Mempelai Wanita"
-          class="mr-3 w-1/3"
-        />
-        <MemberCard
-          :member="session.photographer"
-          title="Fotografer"
-          class="w-1/3"
-        />
-      </div>
-      <div class="p-2 border-t border-gray-200 flex justify-between items-center">
-        <div>
-          <p class="font-bold text-gray-600">{{ session.user.nama }}</p>
-          <p class="font-bold text-gray-500 text-sm">{{ session.createdAt }}</p>
-        </div>
-        <div v-if="session.complete" class="">
-          <div class="font-bold text-xl">{{ session.location.nama }}</div>
-        </div>
-        <div class="flex items-center">
-          <button v-if="isOwner" @click="promptDelete" class="btn btn-sm mr-2">hapus</button>
-          <!-- <button @click="onRecalc" class="btn btn-sm mr-2">recalc</button> -->
-          <router-link :to="`/app/sessions/${session._id}`" class="btn btn-sm mr-2">detail</router-link>
-          <router-link 
-            v-if="!isAdmin && !(!isOwner && isComplete)"
-            :to="`/app/sessionv3/${id}`"
-            class="btn btn-info btn-sm">input data {{ title }}</router-link>
-        </div>
-      </div>
-    </div>
   </li>
 </template>

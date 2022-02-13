@@ -60,7 +60,7 @@
     </template>
   </PageHeader>
   <PageContainer>
-    <div class="w-2/5 mx-auto p-4 border border-gray-300 rounded">
+    <div class="w-full md:w-2/5 mx-auto">
       <form class="form-control p-6 bg-white">
         <q-field label="Nama" class="mb-4">
           <q-input v-model="payload.nama" />

@@ -62,6 +62,21 @@
 
   onSuccessUpdate(async (response) => {
     if (response.status == 'READY') {
+
+      // const weightsDummy = {
+      //   "distance": 1,
+      //   "transportation": 1,
+      //   "price": 1,
+      //   "theme": 1,
+      //   "waktu": 95,
+      //   "numberOfSpots": 1
+      // }
+      // response.weights.man = weightsDummy
+      // response.weights.woman = weightsDummy
+      // response.weights.photographer = weightsDummy
+      // console.log(response)
+      // throw new Error('stop')
+
       const locationComputed = await computeLocation(response)
 
       if (locationComputed) {

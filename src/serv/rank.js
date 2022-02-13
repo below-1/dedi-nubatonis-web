@@ -13,14 +13,6 @@ async function getLocations() {
 function convertLocationToAlternative(locations) {
 	return locations
 		.map(location => {
-      console.log([
-        location.distance,
-        location.numberOfSpots,
-        parseInt(location.price.$numberDecimal),
-        location.transportation,
-        location.theme,
-        location.waktu
-      ])
 			return [
 				location.distance,
 	      location.numberOfSpots,
@@ -57,6 +49,10 @@ export default async function rank(weights) {
     topsisResults.push(ranked)
   }
 
+  console.log(locations.map(it => it.nama))
+  console.log('topsisResults')
+  console.log(topsisResults)
+
   const N_ALT = locations.length;
 
   // Alternatif Index
@@ -86,12 +82,16 @@ export default async function rank(weights) {
   })
   bordaPacked.sort((a, b) => a.b - b.b)
   bordaPacked.reverse()
+  // console.log('bordaPacked')
+  // console.log(bordaPacked)
   const chosenAlternative = bordaPacked[0];
+  console.log('chosenAlternative');
+  console.log(chosenAlternative);
   const chosenLocation = locations[chosenAlternative.i];
   const chosenWeight = chosenAlternative.b;
   const result = {
-  	location: chosenLocation,
-  	borda: chosenWeight
+    location: chosenLocation,
+    borda: chosenWeight
   };
   return result;
 }
