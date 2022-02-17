@@ -82,8 +82,11 @@
       if (locationComputed) {
         showNotification({
           title: 'Lokasi Photoshoot telah ditentukan',
-          description: 'Berdasarkan perhitungan sistem. Lokasi yang dipilih adalah Pantai Manikin',
-          okLabel: 'Lihat Detail'
+          description: 'Berdasarkan perhitungan sistem. Lokasi yang dipilih adalah ...',
+          okLabel: 'Lihat Detail',
+          onOk: () => {
+            router.push(`/app/sessions/${response._id}`)
+          }
         })
       }
     }

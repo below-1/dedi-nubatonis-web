@@ -29,7 +29,7 @@
 </script>
 
 <template>
-	<div class="grid grid-cols-1 gap-y-2 md:grid-cols-3" v-if="session && session.weights">
+	<div class="grid grid-cols-1 gap-y-2 md:gap-x-4 md:grid-cols-3" v-if="session && session.weights">
 		<div>
 			<template v-if="session.weights.man">
   			<ParticipantCard

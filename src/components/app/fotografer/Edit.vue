@@ -77,7 +77,6 @@
 
   onSuccessUpdate(() => {
     alert('sukses mengubah data fotografer')
-    // router.back()
   })
 
   const updatePasswordPayload = reactive({
@@ -111,7 +110,7 @@
   <PageContainer>
     <div class="flex items-start flex-wrap gap-x-10 gap-y-10">
       <div class="md:w-1/2">
-        <form class="form-control bg-white">
+        <div class="form-control bg-white">
           <q-field label="Nama" class="mb-4">
             <q-input v-model="payload.nama" />
           </q-field>
@@ -134,15 +133,15 @@
             <file-input @change="imageChangeHandler" />
           </q-field>
           <button @click="updatePhotographer" class="btn btn-primary">simpan</button>
-        </form>
+        </div>
       </div>
       <div class="w-full md:w-1/2">
-        <form>
+        <div>
           <q-field label="Ganti Password" class="mb-4">
             <q-input v-model="updatePasswordPayload.password" />
           </q-field>
           <button @click="updatePassword" class="btn btn-primary">simpan</button>
-        </form>
+        </div>
       </div>
     </div>
   </PageContainer>

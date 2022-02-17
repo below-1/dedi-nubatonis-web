@@ -5,40 +5,35 @@
   import PageContainer from '@quick/components/app/PageContainer.vue'
   import { useGET, usePUT } from '@quick/compose/axios'
   import useCurrentUser from '@quick/compose/current-user'
+  import { useBase64Input } from '@quick/compose/base64input'
+
+  const {
+    image,
+    imageChangeHandler
+  } = useBase64Input()
 
   const {
     currentUser: $currentUser,
     loadUser
   }= useCurrentUser();
 
+
   const payload = reactive({
-    nama: '',
-    avatar: ''
+    nama: ''
   })
-
-  const avatarLabel = computed(() => {
-    if (!payload.avatar) {
-      return 'Belum ada foto'
-    }
-    return payload.avatar
-  })
-
-  async function avatarChangeHandler(event) {
-    let files = event.target.files || event.dataTransfer.files;
-    if (!files.length) {
-      return;
-    }
-    const base64 = await imgToBase64( files[0] )
-    payload.avatar = base64
-  }
+  const withImage = computed(() => ({
+    ...payload,
+    avatar: image.value
+  }))
 
   const {
     put: updateUser,
+    status: updateStatus,
     onSuccess: onSuccessUpdate,
     onError: onErrorUpdate
   } = usePUT({
     url: '/auth/me',
-    payload
+    payload: withImage
   })
 
   onSuccessUpdate(async data => {
@@ -70,11 +65,21 @@
         <q-input v-model="payload.nama" />
       </q-field>
       <div class="mb-4">
-        <div>Avatar</div>
-        <img v-if="payload.avatar" :src="payload.avatar" class="my-3 p-2 rounded" />
-        <file-input @change="avatarChangeHandler" />
+        <q-field label="Avatar" class="mb-4">
+          <file-input @change="imageChangeHandler" />
+        </q-field>
       </div>
-      <button @click="updateUser" class="btn btn-primary my-2">simpan</button>
+      <button 
+        @click="updateUser" 
+        :disabled="updateStatus == 'loading'" 
+        class="btn btn-primary my-2"
+      >
+        <template v-if="updateStatus != 'loading'">
+          <span>simpan</span>
+        </template>
+        <q-spinner v-else class="w-4 h-4">
+        </q-spinner>
+      </button>
     </div>
   </PageContainer>
 </template>

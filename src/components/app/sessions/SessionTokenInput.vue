@@ -22,6 +22,7 @@
 
   const guestUser = inject('guestUser')
   const guestSession = inject('guestSession')
+  const reloadGuestSession = inject('reloadGuestSession')
   const sessionCreator = inject('sessionCreator')
 
   const token = toRef(props, 'token')
@@ -72,6 +73,8 @@
   onSuccessUpdate(async (response) => {
     // After user created or updated
     // We should update guestUser
+    await reloadGuestSession()
+    
     if (response.man && response.man.role == 'spouse') {
       guestUser.value = response.man
     } else if (response.woman && response.woman.role == 'spouse') {

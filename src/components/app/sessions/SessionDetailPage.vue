@@ -57,7 +57,7 @@
     </template>
   </PageHeader>
   <PageContainer>
-  	<div class="grid grid-cols-1 gap-y-2 md:grid-cols-3" v-if="session && session.weights">
+  	<div class="grid grid-cols-1 gap-x-4 gap-y-2 md:grid-cols-3" v-if="session && session.weights">
   		<div>
   			<template v-if="session.weights.man">
 	  			<ParticipantCard

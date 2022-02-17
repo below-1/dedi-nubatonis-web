@@ -72,7 +72,7 @@
 
   const {
     put: updateLocation,
-    result,
+    status: updateStatus,
     onSuccess: onSuccessUpdate
   } = usePUT({ 
     url,
@@ -97,10 +97,16 @@
   >
     <template #actions>
       <button
-        :disabled="initialData.type != 'data'"
+        :disabled="initialData.type != 'data' || updateStatus != 'idle'"
         @click="updateLocation"
         class="btn btn-primary"
-      >Simpan</button>
+      >
+        <template v-if="updateStatus != 'loading'">
+          <span>simpan</span>
+        </template>
+        <q-spinner v-else class="w-4 h-4">
+        </q-spinner>
+      </button>
     </template>
   </PageHeader>
   <PageContainer>

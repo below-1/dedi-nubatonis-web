@@ -16,6 +16,15 @@
     'done'
   ]);
 
+  function onDone() {
+    const total = weights.reduce((a, b) => a + b, 0);
+    if (total != 100) {
+      emit('done');
+    } else {
+      alert('periksa kembali jumlah bobot anda');
+    }
+  }
+
   const weights = reactive([]);
 
   const totalWeights = computed(() => weights.map(it => it.value).reduce((a, b) => a + b, 0))
@@ -57,7 +66,7 @@
     </div>
 
     <button 
-      @click="emit('done')"
+      @click="onDone"
       :disabled="lessThan100 || moreThan100"
       class="btn btn-primary my-12 disabled:opacity-50"
     >

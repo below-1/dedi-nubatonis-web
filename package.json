@@ -19,6 +19,7 @@
     "date-fns": "^2.27.0",
     "graphql": "^15.6.1",
     "graphql-tag": "^2.12.5",
+    "imagekit": "^3.2.5",
     "openrouteservice-js": "^0.1.29",
     "vue": "^3.2.6",
     "vue-chart-3": "^3.0.3",

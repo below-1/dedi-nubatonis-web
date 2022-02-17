@@ -57,6 +57,7 @@
   		</q-field>
   		<button 
   			@click="updatePhotographer"
+        :disabled="!payload.photographer"
   			class="btn btn-primary"
   		>Simpan</button>
 		</div>

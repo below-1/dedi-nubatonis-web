@@ -1,9 +1,10 @@
 <script setup>
 	// Vue
-	import { reactive } from 'vue'
+	import { reactive, computed } from 'vue'
 
 	// Third party libraries
 	import { useRouter } from 'vue-router'
+	import { parse, isValid } from 'date-fns'
 
 	// Internal composables
 	import { usePOST } from '@quick/compose/axios'
@@ -18,6 +19,15 @@
 	})
 
 	const router = useRouter()
+	const dateIsValid = computed(() => {
+		if (!payload.date) return false;
+		const d = new Date(payload.date)
+		const result = isValid(d)
+		console.log(`payload.date = ${payload.date}`)
+		console.log(`d = ${d}`)
+		console.log(`result = ${result}`)
+		return result
+	})
 
 	const {
 		loadUser
@@ -54,6 +64,7 @@
   		</q-field>
   		<button 
   			@click="createSession" 
+  			:disabled="!dateIsValid"
   			class="btn btn-primary my-4"
   		>
   			simpan

@@ -37,26 +37,32 @@
   }
 
   const menus = computed(() => {
+    const currentUser = unref($currentUser)
+
   	let result = [
       { 
         id: 'session_detail', 
         type: 'link', 
         path: `/app/sessions/${props.session._id}`, 
         label: 'detail' 
-      },
-  		{ 
-  			id: 'choose_photographer', 
-  			type: 'link', 
-  			path: `/app/sessions/${props.session._id}/choose-photographer`, 
-  			label: 'pilih photographer' 
-      },
-  		{ 
-  			id: 'delete_sesi',
-  			type: 'button', 
-  			label: 'hapus sesi',
-        action: onDelete
-  		}
+      }
   	]
+    if (currentUser._id == props.session.user._id || currentUser.role == 'admin') {
+      result.push({
+        id: 'delete_sesi',
+        type: 'button', 
+        label: 'hapus sesi',
+        action: onDelete
+      })
+    }
+    if (!props.session.photographer && currentUser.role == 'admin') {
+      result.push({
+        id: 'choose_photographer', 
+        type: 'link', 
+        path: `/app/sessions/${props.session._id}/choose-photographer`, 
+        label: 'pilih photographer' 
+      })
+    }
     if (isTargetPhotographer.value) {
       result.push({
         id: 'photographer_input', 

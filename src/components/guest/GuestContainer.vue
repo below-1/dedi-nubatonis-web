@@ -39,6 +39,7 @@
 
   provide('guestUser', guestUser)
   provide('guestSession', session)
+  provide('reloadGuestSession', loadSessionByToken)
   provide('sessionCreator', sessionCreator)
 
 	const menus = computed(() => {

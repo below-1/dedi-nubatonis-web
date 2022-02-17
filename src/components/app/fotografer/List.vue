@@ -69,7 +69,7 @@
         <li class="flex py-4 px-3 md:px-6 bg-white border-b border-gray-200">
           <img 
             class="w-12 h-12 rounded-full md:w-20 md:h-20 mr-2 md:mr-4" 
-            :src="item.avatar" />
+            :src="item.avatarUrl ? item.avatarUrl : item.avatar" />
           <div class="flex-grow">
             <div class="text-gray-800 capitalize text-xl">{{ item.nama }}</div>
             <div class="hidden md:block text-sm md:w-3/5">{{ item.summary }}</div>
